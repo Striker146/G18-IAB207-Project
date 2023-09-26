@@ -1,0 +1,44 @@
+body {
+  font-family: 'Roboto', sans-serif;  /* Replace 'Roboto' with your font name */
+}
+
+/* If you want to change the font for headings only */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;  /* Replace 'Roboto' with your font name */
+}
+
+.padding{
+  padding: 20px;
+}
+
+.bottom_padding{
+  padding-bottom: 20px;
+}
+
+
+.booking-id {
+  font-size: 1.2rem;
+  color: #ff5733; /* Choose a color that stands out */
+  margin-top: 10px; /* Adjust the margin to control spacing */
+}
+
+.badge-theme {
+  background-color: red;
+  color: white;
+}
+
+.button-theme {
+  background-color: red;
+  color: white;
+}
+
+/* Change the text color to black on hover */
+.button-theme:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #2e2e2e;
+}
+
+.container-padding{
+  padding-left: 25%;
+  padding-right: 25%;
+}

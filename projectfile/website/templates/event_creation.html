@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <title>RollTables</title>
+  
+    <!-- Your Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+  
+  </head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html"><img src="img/logo.png" width="50"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="event_creation.html">Create Session</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_events.html">My Sessions</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn button-theme" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row text-center">
+            <h2>Title</h2>
+        </div>
+        <div class="row">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="bi bi-book"></i></span>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="row text-center">
+            <h2>Description</h2>
+        </div>
+        <div class="row">
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+
+        <div class="row text-center text-center d-flex justify-content-center bottom_padding">
+            <div class="col-12 col-md-6 col-lg-4">
+                Game System
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="bi bi-gear-fill"></i></span>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>... Select Game System...</option>
+                        <option value="1">DnD 5e</option>
+                        <option value="2">Cyberpunk RED</option>
+                        <option value="3">Alien: The Roleplaying Game</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                Cost
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon3">$</span>
+                    <input type="number" class="form-control" id="exampleFormControlInput1">
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                Location
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="bi bi-globe2"></i></span>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-6 col-lg-4">
+                Images
+                <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="inputGroupFile02">
+                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                Time
+                <div class="input-group mb-3">
+                    <input type="time" class="form-control">
+                    <span class="input-group-text">to</span>
+                    <input type="time" class="form-control">
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                Available seats
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon3"><i class="bi bi-person-fill"></i></span>
+                    <input type="number" class="form-control text-center" value="1" min="1">
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                Date
+                <input type="date" class="form-control">
+            </div>
+        </div>
+        <hr>
+        
+        <div class="container">
+            <div class="row text-center text-center d-flex justify-content-center bottom_padding">
+                <h3>Tags</h3>
+                <div class="col-12 col-md-6 col-lg-4">
+                    Age Group
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-patch-question-fill"></i></span>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Eveyone</option>
+                            <option value="1">18+</option>
+                            <option value="2">13 - 17</option>
+                            <option value="3">Under 13</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    Campaign Focus
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-chat-dots-fill"></i></span>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Balanced</option>
+                            <option value="1">Combat</option>
+                            <option value="2">Roleplay</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    Player Skill Level
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-award-fill"></i></span>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>...</option>
+                            <option value="1">Amateur/New</option>
+                            <option value="2">Intermediate</option>
+                            <option value="3">Veteran</option>
+                        </select>
+                        <span class="input-group-text">to</span>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>...</option>
+                            <option value="1">Amateur/New</option>
+                            <option value="2">Intermediate</option>
+                            <option value="3">Veteran</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="formcheck1">
+                    <label class="form-check-label" for="formcheck1">
+                        One Shot
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="formcheck2">
+                    <label class="form-check-label" for="formcheck2">
+                        Starting from Session Zero
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="formcheck3">
+                    <label class="form-check-label" for="formcheck3">
+                        Homebrew Rules
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="formcheck4">
+                    <label class="form-check-label" for="formcheck4">
+                        Open World
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center text-center d-flex justify-content-center bottom_padding">
+        <div class="col-12 padding">
+            <a class="btn button-theme" href="index.html" role="button">Create Event</a>
+        </div>
+    </div>
+
+    </div>
+    </div>
+
+
+
+
+
+    <!-- Bootstrap CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    </main>
+
+</body>
+
+<footer>
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="container">
+        <div class="row container-padding">
+          <div class="col text-center">
+            <a href="#" class="link-dark text-center">About us</a>
+          </div>
+          <div class="col text-center">
+            <a href="#" class="link-dark text-center">Support</a>
+          </div>
+          <div class="col text-center">
+            <a href="#" class="link-dark text-center">Careers</a>
+          </div>
+        </div>
+        <hr>
+        <div class="text-center">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias quam laboriosam ex necessitatibus inventore
+          distinctio sapiente totam pariatur recusandae porro rem in, maiores laudantium eligendi, rerum reiciendis,
+          cupiditate vel asperiores. Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt perferendis nihil
+          dignissimos unde eos cumque consectetur! Dolores, nulla recusandae! Consequatur pariatur mollitia veniam
+          explicabo, fugiat exercitationem adipisci id nisi itaque.
+        </div>
+        <div class="text-center text-muted padding">
+          Copyright © 2023 RollTables Pty Ltd
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</html>
