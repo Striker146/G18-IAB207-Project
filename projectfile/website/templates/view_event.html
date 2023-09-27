@@ -1,274 +1,105 @@
-<!doctype html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-  <!-- Bootstrap Font Icon CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-  <title>RollTables</title>
-
-  <!-- Your Custom CSS -->
-  <link rel="stylesheet" type="text/css" href="styles/style.css">
-
-</head>
-
-<body>
-  <header>
-    <div class="d-grid gap-3">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="index.html"><img src="img/logo.png" width="50"></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+{% block content %} 
+  <div class="container bottom_padding">
+    <div class="row d-flex justify-content-center">
+      <div class="col-12  col-sm-12 col-md-6">
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner w-20">
+            <div class="carousel-item active">
+              <img src="img/image_1.jpg" class="d-block w-100 rounded" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="img/image_2.jpg" class="d-block w-100 rounded" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="img/image_3.jpg" class="d-block w-100 rounded" alt="...">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Register</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="event_creation.html">Create Session</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="my_events.html">My Sessions</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn button-theme" type="submit">Search</button>
-            </form>
-          </div>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-      </nav>
-
-
-      <div class="container bottom_padding">
-        <div class="row d-flex justify-content-center">
-          <div class="col-12  col-sm-12 col-md-6">
-            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner w-20">
-                <div class="carousel-item active">
-                  <img src="img/image_1.jpg" class="d-block w-100 rounded" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="img/image_2.jpg" class="d-block w-100 rounded" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="img/image_3.jpg" class="d-block w-100 rounded" alt="...">
-                </div>
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
-            <div class="text-center">
-              <h1>Whispers of the Obsidian Citadel</h1>
+        <div class="text-center">
+          <h1>Whispers of the Obsidian Citadel</h1>
+        </div>
+      </div>
+      <div class="col-12  col-sm-12 col-md-6">
+        <div class="card text-center">
+          <div class="card-header">
+            <div class="row d-flex justify-content-center">
+              <span class="badge badge-theme">Active</span>
             </div>
           </div>
-          <div class="col-12  col-sm-12 col-md-6">
-            <div class="card text-center">
-              <div class="card-header">
-                <div class="row d-flex justify-content-center">
-                  <span class="badge badge-theme">Active</span>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="card-title">
-                  <p class="fw-light">purchase a ticket for</p>
-                  <h1>$9.99</h1>
-                  <div>
+          <div class="card-body">
+            <div class="card-title">
+              <p class="fw-light">purchase a ticket for</p>
+              <h1>$9.99</h1>
+              <div>
+                <p class="card-text">
+                <p class="fw-bold">Whispers of the Obsidian Citadel</p>
+                </p>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><i class="bi bi-person-fill"></i> 1 of 4 seats remaining </li>
+                  <li class="list-group-item"><i class="bi-globe"> Brisbane, QLD </i></li>
+                  <li class="list-group-item"> <i class="bi bi-calendar-date"></i> 15/07/2023 6:00pm - 10:00pm </i>
+                  </li>
+                  <li class="list-group-item"> <i class="bi bi-gear-fill"></i> Dungeons and Dragons 5e </i></li>
+  
+                  <li class="list-group-item">
                     <p class="card-text">
-                    <p class="fw-bold">Whispers of the Obsidian Citadel</p>
+                      <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
+                        Focused</span> <span class="badge badge-theme">Amateur - Veteran Players</span>
+                      <span class="badge badge-theme">One Shot</span> <span class="badge badge-theme">From Session
+                        Zero</span> <span class="badge badge-theme">Homebrew Rules</span> <span
+                        class="badge badge-theme">Open World</span>
                     </p>
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item"><i class="bi bi-person-fill"></i> 1 of 4 seats remaining </li>
-                      <li class="list-group-item"><i class="bi-globe"> Brisbane, QLD </i></li>
-                      <li class="list-group-item"> <i class="bi bi-calendar-date"></i> 15/07/2023 6:00pm - 10:00pm </i>
-                      </li>
-                      <li class="list-group-item"> <i class="bi bi-gear-fill"></i> Dungeons and Dragons 5e </i></li>
-      
-                      <li class="list-group-item">
-                        <p class="card-text">
-                          <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
-                            Focused</span> <span class="badge badge-theme">Amateur - Veteran Players</span>
-                          <span class="badge badge-theme">One Shot</span> <span class="badge badge-theme">From Session
-                            Zero</span> <span class="badge badge-theme">Homebrew Rules</span> <span
-                            class="badge badge-theme">Open World</span>
-                        </p>
-                      </li>
-                    </ul>
+                  </li>
+                </ul>
 
-                      <div class="d-flex justify-content-center padding">
-                        <div class="input-group w-50">
-                          <span class="input-group-btn">
-                            <button type="button" class="btn btn-secondary btn-minus">-</button>
-                          </span>
-                          <input type="number" class="form-control text-center" value="1" min="1">
-                          <span class="input-group-btn">
-                            <button type="button" class="btn btn-secondary btn-plus">+</button>
-                          </span>
-                        </div>
-                      </div>
-
-                    </ul>
-                    <div class="padding">
-                      <button type="button" class="btn button-theme" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        Purchase Ticket's
-                      </button>
-                    </div>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                      aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            You're Purchasing X tickets for $X.
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn button-theme" data-bs-dismiss="modal">Confirm
-                              Purchase</button>
-                          </div>
-                        </div>
-                      </div>
+                  <div class="d-flex justify-content-center padding">
+                    <div class="input-group w-50">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-secondary btn-minus">-</button>
+                      </span>
+                      <input type="number" class="form-control text-center" value="1" min="1">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-secondary btn-plus">+</button>
+                      </span>
                     </div>
                   </div>
+
+                </ul>
+                <div class="padding">
+                  <button type="button" class="btn button-theme" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Purchase Ticket's
+                  </button>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr>
-        <div class="row d-flex justify-content-center">
-          <div class="col-6  col-sm-12 col-md-6">
 
-            <h1> Description</h1>
-            <h4> lorem ipsum</h4>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id egestas purus. Praesent tincidunt
-            sollicitudin ligula eget rutrum. Suspendisse condimentum mauris lectus, eget porta leo posuere hendrerit.
-            Cras scelerisque magna sed turpis varius feugiat. Morbi maximus felis sed lorem imperdiet, quis auctor magna
-            ultricies. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec ullamcorper dui. Integer
-            vel massa interdum, lobortis felis id, vulputate lectus.
-            <h4> lorem ipsum</h4>
-            Donec fringilla purus nec feugiat ultrices. Quisque et tortor quis orci sodales rhoncus. Nunc congue
-            venenatis arcu eu tempor. Pellentesque sed magna sed lectus mollis varius. Nunc ante nisl, interdum vitae
-            faucibus vel, auctor ornare purus. Donec est purus, vulputate eu interdum tempor, congue in nunc. Nulla
-            dignissim fermentum egestas. Integer vitae mi velit. Nunc molestie viverra ante, ut malesuada magna varius
-            vel.
-            <h4> lorem ipsum</h4>
-            Suspendisse rhoncus, mi vel sollicitudin consectetur, magna magna finibus nunc, sed iaculis sapien arcu
-            finibus nisi. Integer eget mattis mauris, non mollis ipsum. Ut mollis et lacus in pellentesque. Quisque a
-            eros a nisl maximus commodo dapibus sit amet massa. Donec venenatis leo ex, vel faucibus erat blandit
-            posuere. Etiam rhoncus justo et rutrum sodales. Phasellus sed vestibulum enim. Nunc tristique, sapien quis
-            vulputate venenatis, neque turpis tincidunt nisl, eu pharetra ipsum nisl vitae dolor. Nulla dictum odio at
-            viverra pretium. Suspendisse aliquet nisi at velit vestibulum consequat. Phasellus ultrices sem vitae dui
-            condimentum, imperdiet ultrices turpis egestas. Mauris congue enim nulla, vel varius nisi placerat in. Sed
-            mattis iaculis purus eget mollis. Vivamus mi nisl, fringilla in libero in, eleifend facilisis ipsum.
-            <h4> lorem ipsum</h4>
-            Nullam a porttitor diam. Mauris convallis, felis et pulvinar commodo, lorem odio aliquam lectus, vel
-            sagittis velit velit ac nibh. Mauris ut vehicula urna, non consectetur arcu. Maecenas hendrerit ultrices
-            diam, vitae porttitor sem condimentum dignissim. Nullam sed mi eget risus egestas accumsan. Suspendisse
-            consequat tincidunt interdum. Sed ut libero vulputate tortor aliquam porttitor nec in odio. Aliquam posuere
-            magna magna, vitae iaculis neque sagittis rhoncus. Fusce commodo porta finibus. Duis lacinia, ante ac
-            finibus suscipit, lacus nunc ornare augue, eget cursus nisi orci ac justo. Curabitur metus ipsum, gravida ac
-            elit vel, tempor consequat diam. Suspendisse facilisis libero eget viverra convallis. Vestibulum orci neque,
-            vestibulum porttitor massa quis, maximus malesuada purus. Duis tincidunt nec massa in viverra. Etiam
-            sollicitudin nisi vitae eleifend venenatis. In lectus dui, scelerisque ac sollicitudin eget, molestie vel
-            turpis.
-            <h4> lorem ipsum</h4>
-            Quisque lacinia sollicitudin finibus. Nunc id diam interdum, sodales metus et, tristique lorem. Cras dictum
-            tortor velit, vitae pretium leo finibus et. Aenean tincidunt aliquet magna et aliquet. Morbi nec lorem
-            tortor. Aenean volutpat urna nec eros feugiat, ut iaculis ipsum tincidunt. Sed eget nisi maximus, interdum
-            leo vel, dignissim neque. Cras at venenatis quam. Donec aliquam, urna in ultrices maximus, lectus tortor
-            ultrices mauris, a convallis turpis nisl eget mi. Pellentesque lacinia augue sit amet odio interdum volutpat
-            ac ut quam. Nam eu sem iaculis, accumsan purus quis, egestas ante. Morbi volutpat massa eu lacus hendrerit
-            vehicula.
-          </div>
-
-          <div class="col-12 col-md-6">
-            <div class="text-center">
-              <h1> Comments</h1>
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Post Comment</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-              </div>
-              <div class="row d-flex justify-content-end">
-                <button type="button" class="btn button-theme">Post Comment</button>
-              </div>
-              <hr>
-              <div class="container">
-                <div class="row row-cols-1">
-                  <div class="col">
-                    <div class="card border-dark mb-3">
-                      <div class="card-body">
-                        <h5 class="card-title">Commentor 1</h5>
-                        <p class="card-text">
-                          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam nostrum
-                          neque doloribus impedit quae quasi id! Consectetur, laborum impedit tempora id, eaque
-                          molestiae repellat aliquam odit libero necessitatibus similique neque!.
-                        </p>
-
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                    </div>
-
-                    <div class="card border-dark mb-3">
-                      <div class="card-body">
-                        <h5 class="card-title">Commentor 2</h5>
-                        <p class="card-text">
-                          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam nostrum
-                          neque doloribus impedit quae quasi id! Consectetur, laborum impedit tempora id, eaque
-                          molestiae repellat aliquam odit libero necessitatibus similique neque!.
-                        </p>
-
+                      <div class="modal-body">
+                        You're Purchasing X tickets for $X.
                       </div>
-                    </div>
-                    <div class="card border-dark mb-3">
-                      <div class="card-body">
-                        <h5 class="card-title">Commentor 3</h5>
-                        <p class="card-text">
-                          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam nostrum
-                          neque doloribus impedit quae quasi id! Consectetur, laborum impedit tempora id, eaque
-                          molestiae repellat aliquam odit libero necessitatibus similique neque!.
-                        </p>
-
-                      </div>
-                    </div>
-                    <div class="card border-dark mb-3">
-                      <div class="card-body">
-                        <h5 class="card-title">Commentor 4</h5>
-                        <p class="card-text">
-                          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam nostrum
-                          neque doloribus impedit quae quasi id! Consectetur, laborum impedit tempora id, eaque
-                          molestiae repellat aliquam odit libero necessitatibus similique neque!.
-                        </p>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn button-theme" data-bs-dismiss="modal">Confirm
+                          Purchase</button>
                       </div>
                     </div>
                   </div>
@@ -279,7 +110,123 @@
         </div>
       </div>
     </div>
-  </header>
+    
+    
+    <hr>
+    <div class="row d-flex justify-content-center">
+      <div class="col-6  col-sm-12 col-md-6">
+
+        <h1> Description</h1>
+        <h4> lorem ipsum</h4>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id egestas purus. Praesent tincidunt
+        sollicitudin ligula eget rutrum. Suspendisse condimentum mauris lectus, eget porta leo posuere hendrerit.
+        Cras scelerisque magna sed turpis varius feugiat. Morbi maximus felis sed lorem imperdiet, quis auctor magna
+        ultricies. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec ullamcorper dui. Integer
+        vel massa interdum, lobortis felis id, vulputate lectus.
+        <h4> lorem ipsum</h4>
+        Donec fringilla purus nec feugiat ultrices. Quisque et tortor quis orci sodales rhoncus. Nunc congue
+        venenatis arcu eu tempor. Pellentesque sed magna sed lectus mollis varius. Nunc ante nisl, interdum vitae
+        faucibus vel, auctor ornare purus. Donec est purus, vulputate eu interdum tempor, congue in nunc. Nulla
+        dignissim fermentum egestas. Integer vitae mi velit. Nunc molestie viverra ante, ut malesuada magna varius
+        vel.
+        <h4> lorem ipsum</h4>
+        Suspendisse rhoncus, mi vel sollicitudin consectetur, magna magna finibus nunc, sed iaculis sapien arcu
+        finibus nisi. Integer eget mattis mauris, non mollis ipsum. Ut mollis et lacus in pellentesque. Quisque a
+        eros a nisl maximus commodo dapibus sit amet massa. Donec venenatis leo ex, vel faucibus erat blandit
+        posuere. Etiam rhoncus justo et rutrum sodales. Phasellus sed vestibulum enim. Nunc tristique, sapien quis
+        vulputate venenatis, neque turpis tincidunt nisl, eu pharetra ipsum nisl vitae dolor. Nulla dictum odio at
+        viverra pretium. Suspendisse aliquet nisi at velit vestibulum consequat. Phasellus ultrices sem vitae dui
+        condimentum, imperdiet ultrices turpis egestas. Mauris congue enim nulla, vel varius nisi placerat in. Sed
+        mattis iaculis purus eget mollis. Vivamus mi nisl, fringilla in libero in, eleifend facilisis ipsum.
+        <h4> lorem ipsum</h4>
+        Nullam a porttitor diam. Mauris convallis, felis et pulvinar commodo, lorem odio aliquam lectus, vel
+        sagittis velit velit ac nibh. Mauris ut vehicula urna, non consectetur arcu. Maecenas hendrerit ultrices
+        diam, vitae porttitor sem condimentum dignissim. Nullam sed mi eget risus egestas accumsan. Suspendisse
+        consequat tincidunt interdum. Sed ut libero vulputate tortor aliquam porttitor nec in odio. Aliquam posuere
+        magna magna, vitae iaculis neque sagittis rhoncus. Fusce commodo porta finibus. Duis lacinia, ante ac
+        finibus suscipit, lacus nunc ornare augue, eget cursus nisi orci ac justo. Curabitur metus ipsum, gravida ac
+        elit vel, tempor consequat diam. Suspendisse facilisis libero eget viverra convallis. Vestibulum orci neque,
+        vestibulum porttitor massa quis, maximus malesuada purus. Duis tincidunt nec massa in viverra. Etiam
+        sollicitudin nisi vitae eleifend venenatis. In lectus dui, scelerisque ac sollicitudin eget, molestie vel
+        turpis.
+        <h4> lorem ipsum</h4>
+        Quisque lacinia sollicitudin finibus. Nunc id diam interdum, sodales metus et, tristique lorem. Cras dictum
+        tortor velit, vitae pretium leo finibus et. Aenean tincidunt aliquet magna et aliquet. Morbi nec lorem
+        tortor. Aenean volutpat urna nec eros feugiat, ut iaculis ipsum tincidunt. Sed eget nisi maximus, interdum
+        leo vel, dignissim neque. Cras at venenatis quam. Donec aliquam, urna in ultrices maximus, lectus tortor
+        ultrices mauris, a convallis turpis nisl eget mi. Pellentesque lacinia augue sit amet odio interdum volutpat
+        ac ut quam. Nam eu sem iaculis, accumsan purus quis, egestas ante. Morbi volutpat massa eu lacus hendrerit
+        vehicula.
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="text-center">
+          <h1> Comments</h1>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Post Comment</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <div class="row d-flex justify-content-end">
+            <button type="button" class="btn button-theme">Post Comment</button>
+          </div>
+          <hr>
+          <div class="container">
+            <div class="row row-cols-1">
+              <div class="col">
+                <div class="card border-dark mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">Commentor 1</h5>
+                    <p class="card-text">
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam nostrum
+                      neque doloribus impedit quae quasi id! Consectetur, laborum impedit tempora id, eaque
+                      molestiae repellat aliquam odit libero necessitatibus similique neque!.
+                    </p>
+
+                  </div>
+                </div>
+
+                <div class="card border-dark mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">Commentor 2</h5>
+                    <p class="card-text">
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam nostrum
+                      neque doloribus impedit quae quasi id! Consectetur, laborum impedit tempora id, eaque
+                      molestiae repellat aliquam odit libero necessitatibus similique neque!.
+                    </p>
+
+                  </div>
+                </div>
+                <div class="card border-dark mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">Commentor 3</h5>
+                    <p class="card-text">
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam nostrum
+                      neque doloribus impedit quae quasi id! Consectetur, laborum impedit tempora id, eaque
+                      molestiae repellat aliquam odit libero necessitatibus similique neque!.
+                    </p>
+
+                  </div>
+                </div>
+                <div class="card border-dark mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">Commentor 4</h5>
+                    <p class="card-text">
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam nostrum
+                      neque doloribus impedit quae quasi id! Consectetur, laborum impedit tempora id, eaque
+                      molestiae repellat aliquam odit libero necessitatibus similique neque!.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+</header>
 
 
 

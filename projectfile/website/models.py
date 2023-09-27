@@ -1,71 +1,44 @@
 from flask_login import UserMixin
 from . import db
 
-class User:
-    def __init__(self):
-        self.id = None
-        self.username = None
-        self.password = None
-        self.email = None
-
-    def register(self, username, password, email):
-        self.user_name = username
-        self.password = password
-        self.email = email
-
-    def __repr__(self):
-        str = "Name :{}, Email: {}, User type: {}"
-        str = str.format(self.user_name,self.email,self.user_type)
-        return str
+class User(db.Model, UserMixin):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), index=True, nullable=False)
+    email = db.Column(db.String(100), index=True, nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
     
-class Event:
-    def __init__(self):
-        self.id = None
-        self.title = None
-        self.owner:user.User = None
-        self.description = None
-        self.cost = None
-        self.location = None
-        self.time = None
-        self.date = None
-        self.image = None
-        self.total_tickets = None
-        self.purchased_tickets = 0
-        self.remaining_tickets = None
-        self.status = None
-        self.age_range = None
-        self.game_system = None
-        self.new_campaign = None
-        self.is_oneshot = None
-        self.player_experience = None
-        
-    def register(self, title,owner:User, description, cost, location, time,
-                 date, image, total_tickets,age_range, game_system,
-                 new_campaign, is_oneshot, player_experience):
-        self.title = title
-        self.owner:User = owner
-        self.description = description
-        self.cost = cost
-        self.location = location
-        self.time = time
-        self.date = date
-        self.image = image
-        self.total_tickets = total_tickets
-        self.remaining_tickets = total_tickets
-        self.age_range = age_range
-        self.game_system = game_system
-        self.new_campaign = new_campaign
-        self.is_oneshot = is_oneshot
-        self.player_experience = player_experience
 
-    def __repr__(self):
-        str = f"""title:{self.title},owner:{self.owner.id},description:{self.description},cost:{self.cost},location:{self.location},time:{self.time},date:{self.date},image:{self.image},total_tickets{self.total_tickets}
-        purchased_tickets:{self.purchased_tickets},status:{self.status},age_range:{self.age_range},game_system:{self.game_system},new_campaign:{self.new_campaign},is_oneshot{self.is_oneshot},player_experience{self.player_experience}"""
-        return str
+class EventStatus(db.Model):
+    __tablename__ = 'event_statuses'
+    id = db.Column(db.Integer, primary_key=True)
+    statusType = db.Column(db.String(100), primary_key=True)
     
-    def purchase_tickets(self,amount):
-        self.purchased_tickets = self.purchased_tickets + amount
-        self.remaining_tickets = self.total_tickets - self.purchased_tickets
+
+class GameSystem(db.Model):
+    __tablename__ = 'game_systems'
+    id = db.Column(db.Integer, primary_key=True)
+    game_system = db.Column(db.String(100), primary_key=True)
+    
+    
+
+    
+class Event(db.Model):
+    __tablename__ = 'events'
+    id = db.Column(db.Integer, primary_key=True)
+    status_id = db.Column(db.Integer, db.ForeignKey('event_statuses.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    game_system_id = db.Column(db.Integer, db.ForeignKey('game_systems.id'))
+    title = db.Column(db.String(100), index=True, nullable=False)
+    description = db.Column(db.String(100), index=True, nullable=False)
+    cost = db.Column(db.Float(100), index=True, nullable=False)
+    location = db.Column(db.String(100), index=True, nullable=False)
+    time = db.Column(db.DateTime, nullable=False)
+    image = db.Column(db.String(400))
+    total_tickets = db.Column(db.Integer, nullable=False)
+    purchased_tickets = db.Column(db.Integer, default=0, nullable=False)
+    remaining_tickets = db.Column(db.Integer, default=0, nullable=False)
+    
 
 class Booking:
     def __init__(self):

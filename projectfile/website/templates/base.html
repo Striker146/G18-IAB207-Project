@@ -32,19 +32,19 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link {% if active_page == 'home' %}active{% endif %}" aria-current="page" href="/">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link {% if active_page == 'login' %}active{% endif %}" href="#">Login</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Register</a>
+                    <a class="nav-link {% if active_page == 'register' %}active{% endif %}" href="#">Register</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/event_creation">Create Session</a>
+                    <a class="nav-link {% if active_page == 'create_session' %}active{% endif %}" href="/event_creation">Create Session</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/my_events">My Sessions</a>
+                    <a class="nav-link {% if active_page == 'my_sessions' %}active{% endif %}" href="/my_events">My Sessions</a>
                   </li>
                 </ul>
                 <form class="d-flex" role="search">
