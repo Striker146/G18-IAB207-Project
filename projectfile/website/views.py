@@ -14,3 +14,7 @@ def event_creation():
 @bp.route('/my_events')
 def my_events():
     return render_template('my_events.html')
+
+#@bp.route('/login')
+#def login():
+#    return render_template('login.html')

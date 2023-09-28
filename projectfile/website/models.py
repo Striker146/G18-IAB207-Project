@@ -1,9 +1,10 @@
 from flask_login import UserMixin
+from datetime import datetime
 from . import db
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
     username = db.Column(db.String(100), index=True, nullable=False)
     email = db.Column(db.String(100), index=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
@@ -11,14 +12,14 @@ class User(db.Model, UserMixin):
 
 class EventStatus(db.Model):
     __tablename__ = 'event_statuses'
-    id = db.Column(db.Integer, primary_key=True)
-    statusType = db.Column(db.String(100), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    statusType = db.Column(db.String(100))
     
 
 class GameSystem(db.Model):
     __tablename__ = 'game_systems'
-    id = db.Column(db.Integer, primary_key=True)
-    game_system = db.Column(db.String(100), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    game_system = db.Column(db.String(100))
     
     
 
@@ -40,25 +41,15 @@ class Event(db.Model):
     remaining_tickets = db.Column(db.Integer, default=0, nullable=False)
     
 
-class Booking:
-    def __init__(self):
-        self.id = None
-        self.unique_identifier = None
-        self.seats_booked = None
-        self.purchase_date =  None
-        self.user:User = None
-        self.event:Event = None
-        
-    def register(self,seats_booked,purchase_date,user:User, event : Event):
-        self.seats_booked = seats_booked
-        self.purchase_date = purchase_date
-        self.user = user
-        self.event = event
-        self.event.purchase_tickets(seats_booked)
-        
-    def __repr__(self):
-        str = f"id{self.id},unique_identifier:{self.unique_identifier},seats_booked:{self.seats_booked},purchased_date:{self.purchase_date},user:{self.user.id}, event:{self.event.id}"
-        return str
+class Booking(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    unique_identifier = db.Column(db.String(100), index=True, nullable=False)
+    seats_booked = db.Column(db.Integer, nullable=False)
+    purchase_date =  db.Column(db.DateTime, default=datetime.now())
+
+    
     
 class Comment:
     def __init__(self):
