@@ -1,5 +1,5 @@
 #from package import Class
-from flask import Flask 
+from flask import Flask
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -15,6 +15,8 @@ def create_app():
     app.secret_key='somesecretgoeshere'
     #set the app configuration data 
     app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///mydbname.sqlite'
+    UPLOAD_FOLDER = 'H:/My Assortment Of Files/Work/University/IAB207/Assignment 3 Project/G18-IAB207-Project/projectfile/website/static/uploads'
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     #initialise db with flask app
     db.init_app(app)
 
@@ -33,6 +35,10 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+    
+
+    
+
 
     #importing views module here to avoid circular references
     # a common practice.
@@ -42,6 +48,7 @@ def create_app():
 
     from . import auth
     app.register_blueprint(auth.bp)
+    
     
     return app
 

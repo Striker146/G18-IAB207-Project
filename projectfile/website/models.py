@@ -34,11 +34,17 @@ class Event(db.Model):
     description = db.Column(db.String(100), index=True, nullable=False)
     cost = db.Column(db.Float(100), index=True, nullable=False)
     location = db.Column(db.String(100), index=True, nullable=False)
-    time = db.Column(db.DateTime, nullable=False)
-    image = db.Column(db.String(400))
+    time = db.Column(db.Time, nullable=False)
+    date = db.Column(db.Date, nullable=False)
     total_tickets = db.Column(db.Integer, nullable=False)
     purchased_tickets = db.Column(db.Integer, default=0, nullable=False)
     remaining_tickets = db.Column(db.Integer, default=0, nullable=False)
+    
+class EventImage(db.Model):
+    __tablename__ = 'event_images'
+    id = db.Column(db.Integer, primary_key=True)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    image = db.Column(db.String(400))
     
 
 class Booking(db.Model):

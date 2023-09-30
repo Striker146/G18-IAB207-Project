@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% set active_page = 'create_session' %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %} 
     <div class="container">
@@ -168,5 +169,16 @@
     </div>
 
     </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="page-header">
+            <h4>{{ heading }}</h4>
+        </div>
+        
+        <!-- Form rendering is simple and easy if using bootstrap -->
+        <div class="col-md-6 ml-5">
+          {{ render_form(form) }}
+        </div>
     </div>
     {% endblock %}
