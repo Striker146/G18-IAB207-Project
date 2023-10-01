@@ -1,2 +1,4 @@
 **.pyc
 **.db
+projectfile/website/static/uploads/*
+!projectfile/website/static/uploads/missing_image.JPG
