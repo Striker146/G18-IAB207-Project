@@ -74,13 +74,16 @@ def register():
 @login_required
 def event_creation():
     def save_event_images(images :list, event_title):
+        BASE_PATH = os.path.dirname(__file__)
         if images.count == 0:
             return
         for image in images:
             print(image)
-            filename = secure_filename(image.filename)
-            image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            event_image = EventImage(event_id=new_event.id,image=filename)
+            filename = image.filename
+            upload_path = os.path.join(BASE_PATH, 'static\\uploads', secure_filename(filename))
+            db_upload_path = '\\static\\uploads\\' + secure_filename(filename)
+            image.save(upload_path)
+            event_image = EventImage(event_id=new_event.id,image=db_upload_path)
             db.session.add(event_image)
         
     create_event_form = EventCreationForm()
