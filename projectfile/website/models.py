@@ -8,18 +8,25 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(100), index=True, nullable=False)
     email = db.Column(db.String(100), index=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    
+    events = db.relationship('Event', backref='owner')
+    comments = db.relationship('Comment', backref='user')
+    bookings = db.relationship('Booking', backref='user')
+
+
+
 
 class EventStatus(db.Model):
     __tablename__ = 'event_statuses'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     statusType = db.Column(db.String(100))
+    events = db.relationship("Event",backref='event_status')
     
 
 class GameSystem(db.Model):
     __tablename__ = 'game_systems'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    game_system = db.Column(db.String(100))
+    name = db.Column(db.String(100))
+    events = db.relationship("Event",backref='game_system')
     
     
 
@@ -39,12 +46,19 @@ class Event(db.Model):
     total_tickets = db.Column(db.Integer, nullable=False)
     purchased_tickets = db.Column(db.Integer, default=0, nullable=False)
     remaining_tickets = db.Column(db.Integer, default=0, nullable=False)
+    comments = db.relationship('Comment', backref='event')
+    images = db.relationship('EventImage',backref="event")
+    bookings = db.relationship("Booking",backref="event")
+    
+    def __repr__(self):
+        str = f"id {self.id}, title:{self.title}"
+        return str
     
 class EventImage(db.Model):
     __tablename__ = 'event_images'
     id = db.Column(db.Integer, primary_key=True)
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
-    image = db.Column(db.String(400))
+    filepath = db.Column(db.String(400))
     
 
 class Booking(db.Model):
@@ -57,18 +71,8 @@ class Booking(db.Model):
 
     
     
-class Comment:
-    def __init__(self):
-        self.id = None
-        self.user = None
-        self.message = None
-        self.date = None
-        self.time = None
-        
-    def register(self, user, message, date,time):
-        self.user = user
-        self.message = message
-        self.date = date
-        self.time = time
-        
-    
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    message = db.Column(db.String(100), nullable=False)

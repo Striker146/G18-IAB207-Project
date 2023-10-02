@@ -32,11 +32,15 @@ class EventCreationForm(FlaskForm):
     date  = DateField('Date')
     time = TimeField('Time')
     images =MultipleFileField("Images",validators=[InputRequired()])
-    total_tickets = IntegerField("Total Ticketds", validators=[InputRequired()])
+    total_tickets = IntegerField("Total Tickets", validators=[InputRequired()])
     submit = SubmitField("Create Event")
     
     def validate_image(form, field):
         if field.data:
             field.data = re.sub(r'[^a-z0-9_.-]', '_', field.data)
+            
+class CommentForm(FlaskForm):
+    message = TextAreaField("Comment", validators=[InputRequired()])
+    submit = SubmitField("Create Comment")
     
     
