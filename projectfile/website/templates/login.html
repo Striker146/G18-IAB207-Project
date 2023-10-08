@@ -27,7 +27,15 @@
         </div>
     </div>
 </div>
-
+<div class="container">
+     <form method = "POST">
+        {{form.hidden_tag()}}
+        {{form.user_name.label}} {{form.user_name}} <br>
+        {{form.password.label}} {{form.password}}
+        <input class="btn button-theme" type="submit" value = "Login">
+     </form> 
+     
+</div>
 <div class="container-fluid">
     <div class="page-header">
         <h4>{{ heading }}</h4>

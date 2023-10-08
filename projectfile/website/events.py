@@ -78,3 +78,18 @@ def event_creation():
     #the else is called when the HTTP request calling this page is a GET
     else:
         return render_template('events/creation.html', form=create_event_form, heading='event_creation')
+
+
+@bp.route('/event/<id>/comment', methods = ['GET', 'POST'])
+@login_required
+def comment(id):
+    form = CommentForm()
+    event = db.session.scalar(db.select(Event).where(Event.id==id))
+    if form.validate_on_submit():
+        comment = Comment(text= form.text.data, event=event, user=current_user)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been added', 'success')    
+    
+    return redirect(url_for('event.show', id=id))
+    

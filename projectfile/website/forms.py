@@ -1,9 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, TelField, SelectField, DecimalField, DateField, TimeField, MultipleFileField, IntegerField
-from wtforms.validators import InputRequired, Length, Email, EqualTo
+from wtforms.validators import InputRequired, Length, Email, EqualTo, Regexp, NoneOf, NumberRange
 from datetime import datetime
-
-
 
 #creates the login information
 class LoginForm(FlaskForm):
@@ -15,10 +13,14 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     user_name=StringField("User Name", validators=[InputRequired()])
     email_id = StringField("Email Address", validators=[Email("Please enter a valid email")])
-    phone_number = TelField("Phone Number")
+    phone_number = TelField("Phone Number" ,validators=[Regexp('[0-9]', message='Please enter a legitimate phone number with exactly 10 digits.')])
     #linking two fields - password should be equal to data entered in confirm
     password=PasswordField("Password", validators=[InputRequired(),
-                  EqualTo('confirm', message="Passwords should match")])
+                  EqualTo('confirm', message="Passwords should match"),
+                  Length(min=8, max=20, message='Password must be between 8 and 20 characters'),
+                  Regexp('^(?=.*[0-9])(?=.*[a-zA-Z])', message='Password must contain letters and numbers only'),
+                  NoneOf(" ", message='Password must not contain spaces')])
+
     confirm = PasswordField("Confirm Password")
     #submit button
     submit = SubmitField("Register")
@@ -38,7 +40,7 @@ class EventCreationForm(FlaskForm):
     def validate_image(form, field):
         if field.data:
             field.data = re.sub(r'[^a-z0-9_.-]', '_', field.data)
-            
+
 class CommentForm(FlaskForm):
     message = TextAreaField("Comment", validators=[InputRequired()])
     submit = SubmitField("Create Comment")
