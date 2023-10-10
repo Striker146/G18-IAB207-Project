@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, render_template, request, url_for, redirect, current_app
 from werkzeug.security import generate_password_hash,check_password_hash
-from .models import User, Event, GameSystem, EventImage, Comment
+from .models import User, Event, GameSystem, EventImage, Comment, AgeGroup, CampaignFocus, PlayerSkillLevel, EventStatus, EventTag
 from flask_login import login_user, login_required,logout_user, current_user
 from . import db
 from .forms import EventCreationForm, CommentForm
@@ -44,32 +44,79 @@ def event_creation():
             image.save(upload_path)
             event_image = EventImage(event_id=new_event.id,filepath=db_upload_path)
             db.session.add(event_image)
+    
+    def get_choices(create_event_form):
+        game_system_list = GameSystem.query.all()
+        result = [(game_system.id, game_system.name) for game_system in game_system_list]
+        create_event_form.game_system.choices = result
+        
+        age_group_list = AgeGroup.query.all()
+        result = [(age_group.id, age_group.name) for age_group in age_group_list]
+        create_event_form.age_group.choices = result
+        
+        campaign_focus_list = CampaignFocus.query.all()
+        result = [(cf.id, cf.name) for cf in campaign_focus_list]
+        create_event_form.campaign_focus.choices = result
+        
+        player_skill_level_list = PlayerSkillLevel.query.all()
+        result = [(psl.id, psl.name) for psl in player_skill_level_list]
+        print(result)
+        create_event_form.player_lower_skill_level.choices = result
+        create_event_form.player_higher_skill_level.choices = result
+        
+        
+        create_event_form.game_system.default = 1
+        create_event_form.age_group.default = 1
+        create_event_form.campaign_focus.default = 1
+        
+        create_event_form.player_higher_skill_level.default = 3
+        create_event_form.player_lower_skill_level.default = 1
         
     create_event_form = EventCreationForm()
     game_system_choices = [game_system_list.name for game_system_list in GameSystem.query.all()]
     create_event_form.game_system.choices = game_system_choices
+    get_choices(create_event_form)
     if (create_event_form.validate_on_submit()==True):
             title = create_event_form.title.data
             description = create_event_form.description.data
             owner_id = current_user.id
-            game_system_name = create_event_form.game_system.data
-            game_system_id = GameSystem.query.filter_by(name=game_system_name).first().id
+            game_system_id = create_event_form.game_system.data[0]
+            age_group_id = create_event_form.age_group.data[0]
+            campaign_focus_id = create_event_form.campaign_focus.data[0]
+            lower_player_skill_level_id = create_event_form.player_lower_skill_level.data[0]
+            higher_player_skill_level_id = create_event_form.player_higher_skill_level.data[0]
+            print(game_system_id)
             cost = create_event_form.cost.data
             location = create_event_form.location.data
             date = create_event_form.date.data
-            time = create_event_form.time.data
+            start_time = create_event_form.start_time.data
+            end_time = create_event_form.end_time.data
             total_tickets = create_event_form.total_tickets.data
+            one_shot = create_event_form.one_shot.data
+            session_zero = create_event_form.session_zero.data
+            homebrew = create_event_form.homebrew.data
+            open_world = create_event_form.open_world.data
+            
             print(game_system_id)
             event = db.session.scalar(db.select(Event).where(Event.title==title and User.id == owner_id))
-            if event:
-                flash("You've already made an event with this title, please try another")
-                
-                return redirect(url_for('events.event_creation'))
+            #if event:
+            #    flash("You've already made an event with this title, please try another")
+            #    
+            #    return redirect(url_for('events.event_creation'))
             new_event = Event(status_id=1, owner_id=owner_id, game_system_id=game_system_id, 
                               title=title, description=description, cost=cost, location=location, 
-                              time=time, date=date,total_tickets=total_tickets, remaining_tickets=total_tickets )
+                              start_time=start_time, end_time=end_time, date=date,total_tickets=total_tickets, remaining_tickets=total_tickets )
+            
+            
             db.session.add(new_event)
             db.session.flush()
+            new_event_tag = EventTag(event_id = new_event.id, age_group_id = age_group_id, campaign_focus_id = campaign_focus_id,
+                                     lower_player_skill_level_id = lower_player_skill_level_id,
+                                     higher_player_skill_level_id = higher_player_skill_level_id,
+                                     one_shot = one_shot, session_zero = session_zero,
+                                     homebrew= homebrew, open_world = open_world)
+            db.session.add(new_event_tag)
+            
             save_event_images(create_event_form.images.data, title)
             db.session.commit()
             #commit to the database and redirect to HTML page

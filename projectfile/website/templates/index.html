@@ -118,7 +118,7 @@
           <div class="card h-100">
 
             <span class="badge text-bg-secondary">Cancelled</span>
-            <img src="img/image_4.jpg" class="card-img-top">
+            <img src={{ url_for('static', filename=event.images[0].filepath) }} class="card-img-top">
             <div class="card-body">
               <h5 class="card-title">{{event.title}}</h5>
               <ul class="list-group list-group-flush">
@@ -154,8 +154,8 @@
             </div>
           </div>
         </div>
-      </div>
       {%endfor%}
+    </div>
       <div class="mb-3"></div>
 
       <div class="d-grid gap-2 ml-3 padding">
