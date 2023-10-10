@@ -1,8 +1,9 @@
 #from package import Class
-from flask import Flask
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+import datetime
 
 db=SQLAlchemy()
 
@@ -52,6 +53,15 @@ def create_app():
     from . import events
     app.register_blueprint(events.bp)
     
+    @app.errorhandler(404)
+    def not_found(e):
+        return render_template("404.html", error=e)
+    
+    @app.context_processor
+    def get_context():
+      year = datetime.datetime.today().year
+      return dict(year=year)
+  
     return app
 
 

@@ -34,21 +34,31 @@
                   <li class="nav-item">
                     <a class="nav-link {% if active_page == 'home' %}active{% endif %}" aria-current="page" href="/">Home</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link {% if active_page == 'login' %}active{% endif %}" href="/login">Login</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link {% if active_page == 'register' %}active{% endif %}" href="/register">Register</a>
-                  </li>
+                  
                   <li class="nav-item">
                     <a class="nav-link {% if active_page == 'create_session' %}active{% endif %}" href="/event/creation">Create Session</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link {% if active_page == 'my_sessions' %}active{% endif %}" href="/my_events">My Sessions</a>
                   </li>
+                  {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                      <a class="nav-item nav-link disabled text-muted" href="#">{{current_user.username}}</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-item nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
+                    </li>
+                  {% else %}
+                    <li class="nav-item">
+                      <a class="nav-link {% if active_page == 'login' %}active{% endif %}" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if active_page == 'register' %}active{% endif %}" href="/register">Register</a>
+                    </li>
+                  {% endif %}
                 </ul>
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex" role="search" action="{{url_for('main.search')}}">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
                   <button class="btn button-theme" type="submit">Search</button>
                 </form>
               </div>

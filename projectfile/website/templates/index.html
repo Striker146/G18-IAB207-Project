@@ -76,10 +76,10 @@
         </div>
         <div class="col">
           <div class="card h-100">
-            <span class="badge text-bg-secondary">Inactive</span>
-            <img src="img/image_2.jpg" class="card-img-top">
+            <span class="badge badge-theme">Active</span>
+            <img src="img/image_1.jpg" class="card-img-top">
             <div class="card-body">
-              <h5 class="card-title">Whispers of the Obsidian Citadel</h5>
+              <h5 class="card-title">Haha</h5>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                   <h3>$9.99</h3>
@@ -90,7 +90,6 @@
                 <li class="list-group-item">
                   <i class="bi bi-clock"></i> 6:00pm - 10:00pm
                 </li>
-
                 <li class="list-group-item"><i class="bi bi-person-fill"></i> 1 of 4 seats remaining </li>
                 <li class="list-group-item"><i class="bi-globe"> Brisbane, QLD </i></li>
                 <li class="list-group-item">
@@ -108,78 +107,37 @@
                   </p>
                 </li>
               </ul>
-
             </div>
             <div class="card-footer">
               <a href="view_event.html" class="btn button-theme stretched-link">View Game Details</a>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card h-100">
-
-            <span class="badge text-bg-warning">Sold out</span>
-            <img src="img/image_3.jpg" class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">Sands of the Shattered Realms</h5>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <h3>$13.99</h3>
-                </li>
-                <li class="list-group-item">
-                  <i class="bi bi-calendar-date"></i> 15/07/2023
-                </li>
-                <li class="list-group-item">
-                  <i class="bi bi-clock"></i> 6:00pm - 10:00pm
-                </li>
-                <li class="list-group-item"><i class="bi bi-person-fill"></i> 0 of 5 seats remaining </li>
-                <li class="list-group-item"><i class="bi-globe"> Brisbane, QLD </i></li>
-                <li class="list-group-item">
-                  <p class="card-text">
-                    A short description of the event </p>
-                </li>
-
-                <li class="list-group-item">
-                  <p class="card-text">
-                    <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
-                      Focused</span> <span class="badge badge-theme">Amateur - Veteran Players</span>
-                    <span class="badge badge-theme">One Shot</span> <span class="badge badge-theme">From Session
-                      Zero</span> <span class="badge badge-theme">Homebrew Rules</span> <span
-                      class="badge badge-theme">Open World</span>
-                  </p>
-                </li>
-              </ul>
-
-            </div>
-            <div class="card-footer">
-              <a href="view_event.html" class="btn button-theme stretched-link">View Game Details</a>
-            </div>
-          </div>
-        </div>
+        {%for event in events%}
         <div class="col">
           <div class="card h-100">
 
             <span class="badge text-bg-secondary">Cancelled</span>
             <img src="img/image_4.jpg" class="card-img-top">
             <div class="card-body">
-              <h5 class="card-title">Cosmic Dread: Beyond the Veil</h5>
+              <h5 class="card-title">{{event.title}}</h5>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                  <h3>$21.20</h3>
+                  <h3>{{event.cost}}</h3>
                 </li>
                 <li class="list-group-item">
-                  <i class="bi bi-calendar-date"></i> 15/07/2023
+                  <i class="bi bi-calendar-date"></i> {{event.date}}
                 </li>
                 <li class="list-group-item">
-                  <i class="bi bi-clock"></i> 6:00pm - 10:00pm
+                  <i class="bi bi-clock"></i> {{event.time}}
                 </li>
                 <li class="list-group-item"><i class="bi bi-person-fill"></i> 1 of 4 seats remaining </li>
-                <li class="list-group-item"><i class="bi-globe"> Brisbane, QLD </i></li>
+                <li class="list-group-item"><i class="bi-globe"> {{event.location}} </i></li>
                 <li class="list-group-item">
                   <p class="card-text">
-                    A short description of the event </p>
+                    {{event.description}} </p>
                 </li>
-
+        
                 <li class="list-group-item">
                   <p class="card-text">
                     <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
@@ -197,6 +155,7 @@
           </div>
         </div>
       </div>
+      {%endfor%}
       <div class="mb-3"></div>
 
       <div class="d-grid gap-2 ml-3 padding">
