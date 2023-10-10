@@ -2,183 +2,125 @@
 {% set active_page = 'create_session' %}
 {% from 'bootstrap5/form.html' import render_form %}
 
-{% block content %} 
-    <div class="container">
-        <div class="row text-center">
-            <h2>Title</h2>
+{% block content %}
+  <div class="container">
+    <form action="" method="post" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <div class="row text-center">
+        <h2>Title</h2>
+      </div>
+      <div class="row">
+        <div class="input-group mb-3">
+          <span class="input-group-text"><i class="bi bi-book"></i></span>
+          {{ form.title(class_ = 'form-control', size = 32) }}
         </div>
-        <div class="row">
-            <div class="input-group mb-3">
-                <span class="input-group-text"><i class="bi bi-book"></i></span>
-                <input type="text" class="form-control">
-            </div>
+      </div>
+      <div class="row text-center">
+        <h2>Description</h2>
+      </div>
+      <div class="row">{{ form.description(class_ = 'form-control', size = 32) }}</div>
+
+      <div class="row text-center text-center d-flex justify-content-center bottom_padding">
+        <div class="col-12 col-md-6 col-lg-4">
+          Game System<div class="input-group mb-3">
+            <span class="input-group-text"><i class="bi bi-gear-fill"></i></span>
+            {{ form.game_system(class_ = 'form-control') }}
+          </div>
         </div>
-        <div class="row text-center">
-            <h2>Description</h2>
+        <div class="col-12 col-md-6 col-lg-4">
+          Cost<div class="input-group">
+            <span class="input-group-text" id="basic-addon3">$</span>
+            {{ form.cost(class_ = 'form-control') }}
+          </div>
         </div>
-        <div class="row">
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <div class="col-12 col-md-6 col-lg-4">
+          Location<div class="input-group mb-3">
+            <span class="input-group-text"><i class="bi bi-globe2"></i></span>
+            {{ form.location(class_ = 'form-control') }}
+          </div>
         </div>
 
+        <div class="col-12 col-md-6 col-lg-4">
+          Images<div class="input-group mb-3">{{ form.images(class_ = 'form-control') }}</div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          Time<div class="input-group mb-3">
+            {{ form.start_time(class_ = 'form-control') }}
+            <span class="input-group-text">to</span>
+            {{ form.end_time(class_ = 'form-control') }}
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          Available seats<div class="input-group">
+            <span class="input-group-text" id="basic-addon3"><i class="bi bi-person-fill"></i></span>
+            {{ form.total_tickets(class_ = 'form-control') }}
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">Date
+          {{ form.date(class_ = 'form-control') }}</div>
+      </div>
+      <hr />
+
+      <div class="container">
         <div class="row text-center text-center d-flex justify-content-center bottom_padding">
-            <div class="col-12 col-md-6 col-lg-4">
-                Game System
-                <div class="input-group mb-3">
-                    <span class="input-group-text"><i class="bi bi-gear-fill"></i></span>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>... Select Game System...</option>
-                        <option value="1">DnD 5e</option>
-                        <option value="2">Cyberpunk RED</option>
-                        <option value="3">Alien: The Roleplaying Game</option>
-                    </select>
-                </div>
-
+          <h3>Tags</h3>
+          <div class="col-12 col-md-6 col-lg-4">
+            Age Group<div class="input-group mb-3">
+              <span class="input-group-text"><i class="bi bi-patch-question-fill"></i></span>
+              {{ form.age_group(class_ = 'form-control') }}
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                Cost
-                <div class="input-group">
-                    <span class="input-group-text" id="basic-addon3">$</span>
-                    <input type="number" class="form-control" id="exampleFormControlInput1">
-                </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            Campaign Focus<div class="input-group mb-3">
+              <span class="input-group-text"><i class="bi bi-chat-dots-fill"></i></span>
+              {{ form.campaign_focus(class_ = 'form-control') }}
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                Location
-                <div class="input-group mb-3">
-                    <span class="input-group-text"><i class="bi bi-globe2"></i></span>
-                    <input type="text" class="form-control">
-                </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            Player Skill Level<div class="input-group mb-3">
+              <span class="input-group-text"><i class="bi bi-award-fill"></i></span>
+              {{ form.player_lower_skill_level(class_ = 'form-control') }}
+              <span class="input-group-text">to</span>
+              {{ form.player_higher_skill_level(class_ = 'form-control') }}
             </div>
-
-
-            <div class="col-12 col-md-6 col-lg-4">
-                Images
-                <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="inputGroupFile02">
-                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                </div>
-
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                Time
-                <div class="input-group mb-3">
-                    <input type="time" class="form-control">
-                    <span class="input-group-text">to</span>
-                    <input type="time" class="form-control">
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                Available seats
-                <div class="input-group">
-                    <span class="input-group-text" id="basic-addon3"><i class="bi bi-person-fill"></i></span>
-                    <input type="number" class="form-control text-center" value="1" min="1">
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                Date
-                <input type="date" class="form-control">
-            </div>
+          </div>
         </div>
-        <hr>
-        
-        <div class="container">
-            <div class="row text-center text-center d-flex justify-content-center bottom_padding">
-                <h3>Tags</h3>
-                <div class="col-12 col-md-6 col-lg-4">
-                    Age Group
-                    <div class="input-group mb-3">
-                        <span class="input-group-text"><i class="bi bi-patch-question-fill"></i></span>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Eveyone</option>
-                            <option value="1">18+</option>
-                            <option value="2">13 - 17</option>
-                            <option value="3">Under 13</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    Campaign Focus
-                    <div class="input-group mb-3">
-                        <span class="input-group-text"><i class="bi bi-chat-dots-fill"></i></span>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Balanced</option>
-                            <option value="1">Combat</option>
-                            <option value="2">Roleplay</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    Player Skill Level
-                    <div class="input-group mb-3">
-                        <span class="input-group-text"><i class="bi bi-award-fill"></i></span>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>...</option>
-                            <option value="1">Amateur/New</option>
-                            <option value="2">Intermediate</option>
-                            <option value="3">Veteran</option>
-                        </select>
-                        <span class="input-group-text">to</span>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>...</option>
-                            <option value="1">Amateur/New</option>
-                            <option value="2">Intermediate</option>
-                            <option value="3">Veteran</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-check">
+            {{ form.one_shot(class_ = '<input type="form-check-input">', id_ = 'formcheck1', type_ = "checkbox") }}
+            <label class="form-check-label" for="formcheck1">One Shot</label>
+          </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="formcheck1">
-                    <label class="form-check-label" for="formcheck1">
-                        One Shot
-                    </label>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="formcheck2">
-                    <label class="form-check-label" for="formcheck2">
-                        Starting from Session Zero
-                    </label>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="formcheck3">
-                    <label class="form-check-label" for="formcheck3">
-                        Homebrew Rules
-                    </label>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="formcheck4">
-                    <label class="form-check-label" for="formcheck4">
-                        Open World
-                    </label>
-                </div>
-            </div>
+        <div class="col">
+          <div class="form-check">
+            {{ form.session_zero(class_ = '<input type="form-check-input">', id_ = 'formcheck2', type_ = "checkbox") }}
+            <label class="form-check-label" for="formcheck2">Starting from Session Zero</label>
+          </div>
         </div>
-    </div>
-    <div class="row text-center text-center d-flex justify-content-center bottom_padding">
+        <div class="col">
+          <div class="form-check">
+            {{ form.homebrew(class_ = '<input type="form-check-input">', id_ = 'formcheck3', type_ = "checkbox") }}
+            <label class="form-check-label" for="formcheck3">Homebrew Rules</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-check">
+            {{ form.open_world(class_ = '<input type="form-check-input">', id_ = 'formcheck4', type_ = "checkbox") }}
+            <label class="form-check-label" for="formcheck4">Open World</label>
+          </div>
+        </div>
+      </div>
+
+
+
+      </div>
+      <div class="row text-center text-center d-flex justify-content-center bottom_padding">
         <div class="col-12 padding">
-            <a class="btn button-theme" href="index.html" role="button">Create Event</a>
+          {{ form.submit(class_ = "button-theme", size=23) }}
         </div>
-    </div>
+      </div>
+    </form>
 
-    </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="page-header">
-            <h4>{{ heading }}</h4>
-        </div>
-        
-        <!-- Form rendering is simple and easy if using bootstrap -->
-        <div class="col-md-6 ml-5">
-          {{ render_form(form) }}
-        </div>
-    </div>
-    {% endblock %}
+{% endblock %}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, TelField, SelectField, DecimalField, DateField, TimeField, MultipleFileField, IntegerField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, TelField, SelectField, DecimalField, DateField, TimeField, MultipleFileField, IntegerField, BooleanField
 from wtforms.validators import InputRequired, Length, Email, EqualTo, Regexp, NoneOf, NumberRange
 from datetime import datetime
 
@@ -28,13 +28,25 @@ class RegisterForm(FlaskForm):
 class EventCreationForm(FlaskForm):
     title=StringField("Title", validators=[InputRequired()])
     description=TextAreaField("Description", validators=[InputRequired()])
-    game_system = SelectField("Game System",choices=["Dnd 5e", "DnD 4e"])
+    game_system = SelectField("Game System")
     cost = DecimalField("Cost", validators=[InputRequired()])
     location = StringField("Location", validators=[InputRequired()])
     date  = DateField('Date')
-    time = TimeField('Time')
+    start_time = TimeField('End Time')
+    end_time = TimeField("Start Time")
     images =MultipleFileField("Images",validators=[InputRequired()])
     total_tickets = IntegerField("Total Tickets", validators=[InputRequired()])
+    age_group = SelectField("Age Group")
+    campaign_focus = SelectField("Campaign Focus")
+    player_lower_skill_level = SelectField("Lower Player Skill Level")
+    player_higher_skill_level = SelectField("Higher Player Skill Level")
+    one_shot = BooleanField("Is oneshot")
+    session_zero = BooleanField("Starting from Session Zero")
+    homebrew = BooleanField("Homebrew Rules")
+    open_world = BooleanField("Open World")
+    
+    bool_tags = [one_shot, session_zero, homebrew, open_world]
+    
     submit = SubmitField("Create Event")
     
     def validate_image(form, field):

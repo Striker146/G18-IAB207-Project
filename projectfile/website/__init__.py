@@ -64,6 +64,26 @@ def create_app():
   
     return app
 
+def create_data_table(table : db.Model,data : list):
+    if len(table.query.all()) == 0:
+        for element in data:
+            row = table(name = element)
+            db.session.add(row)
+            
+            
 
-
-
+def create_data():
+    from .models import AgeGroup, CampaignFocus, PlayerSkillLevel, EventStatus, GameSystem
+    age_group_strs = ["Everybody", "18+", "Under 18"]
+    game_systems_str = ['Cybergeneration','Cyberpunk 2013', 'Cyberpunk 2020','Cyberpunk RED', 'Cyberspace', 'ADnD', 'DnD 4e', 'DnD 5e','Star Wars Roleplaying Game', 'Stormbringer', 'Supervillains', "Thieves' Guild", 'Trinity', 'Vampire: The Masquerade']
+    event_status_strs = ["Open","Inactive","Sold out", "Cancelled"]
+    player_skill_strs = ["Amateur","Intermediate","Veteran"]
+    campaign_focus_strs = ["Balanced", "Combat Focused", "Roleplay Focused"]
+    
+    create_data_table(AgeGroup, age_group_strs)
+    create_data_table(GameSystem, game_systems_str) 
+    create_data_table(EventStatus, event_status_strs)
+    create_data_table(PlayerSkillLevel, player_skill_strs) 
+    create_data_table(CampaignFocus, campaign_focus_strs) 
+    
+    db.session.commit()
