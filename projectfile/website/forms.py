@@ -57,4 +57,8 @@ class CommentForm(FlaskForm):
     message = TextAreaField("Comment", validators=[InputRequired()])
     submit = SubmitField("Create Comment")
     
+class BookingForm(FlaskForm):
+    amount = IntegerField("Amount of Tickets", validators=[InputRequired()])
+    submit = SubmitField("Purchase Ticket's")
+    
     

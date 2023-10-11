@@ -1,9 +1,9 @@
 from flask import Blueprint, flash, render_template, request, url_for, redirect, current_app
 from werkzeug.security import generate_password_hash,check_password_hash
-from .models import User, Event, GameSystem, EventImage, Comment, AgeGroup, CampaignFocus, PlayerSkillLevel, EventStatus, EventTag
+from .models import User, Event, GameSystem, EventImage, Comment, AgeGroup, CampaignFocus, PlayerSkillLevel, EventStatus, EventTag, Booking
 from flask_login import login_user, login_required,logout_user, current_user
 from . import db
-from .forms import EventCreationForm, CommentForm
+from .forms import EventCreationForm, CommentForm, BookingForm
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
@@ -14,8 +14,8 @@ bp = Blueprint('events', __name__)
 @bp.route('/event/<id>', methods=['GET', 'POST'])
 def showevent(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
-    comments = Comment.query.filter_by(event_id=id).all()
     comment_form = CommentForm()
+    booking_form = BookingForm()
     if (comment_form.validate_on_submit()==True):
         user_id = current_user.id
         event_id = id
@@ -25,8 +25,20 @@ def showevent(id):
         db.session.add(new_comment)
         db.session.commit()
         return redirect(url_for('events.showevent', id=id))
+    
+    if (booking_form.validate_on_submit()==True):
+        user_id = current_user.id
+        event_id = id
+        unique_identifier = "dwahdiuawdawkjndawndjk"
+        seats_booked = booking_form.amount.data
+        purchase_date =  datetime.now()
+        new_booking = Booking(user_id = user_id, event_id = event_id, unique_identifier = unique_identifier,
+                          seats_booked = seats_booked, purchase_date = purchase_date)
+        
+        db.session.add(new_booking)
+        db.session.commit()
 
-    return render_template('events/show.html', event=event, comment_form=comment_form)
+    return render_template('events/show.html', event=event, comment_form=comment_form, booking_form=booking_form)
 
 
 @bp.route('/event/creation', methods=['GET', 'POST'])

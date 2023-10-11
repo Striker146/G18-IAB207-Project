@@ -67,24 +67,19 @@
                 </li>
               </ul>
 
-              <div class="d-flex justify-content-center padding">
-                <div class="input-group w-50">
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-secondary btn-minus">-</button>
-                  </span>
-                  <input type="number" class="form-control text-center" value="1" min="1">
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-secondary btn-plus">+</button>
-                  </span>
+              <form action="" method="post" enctype="multipart/form-data">
+                {{ comment_form.hidden_tag() }}
+                <div class="d-flex justify-content-center padding">
+                  <div class="input-group w-50">
+                    {{ booking_form.amount(class_="form-control") }}
+                  </div>
                 </div>
-              </div>
+                </ul>
+                <div class="d-flex justify-content-center padding">
+                  {{booking_form.submit(class_="form-control w-50")}}
+                </div>
+              </form>
 
-              </ul>
-              <div class="padding">
-                <button type="button" class="btn button-theme" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Purchase Ticket's
-                </button>
-              </div>
 
               <!-- Modal -->
               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -135,34 +130,35 @@
         </form>
         {% else %}
         <div class="col">
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readonly> You must be logged in to create comments</textarea>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+            readonly> You must be logged in to create comments</textarea>
           <div class="col p-3">
             <a href="/login" class="btn button-theme" role="button">Go to Login Page</a>
           </div>
-        
-        {% endif %}
-      </div>
-    </div>
-    <hr>
-    <div class="container">
-      <div class="row row-cols-1">
-        <div class="col">
-          {%for comment in event.comments%}
-          <div class="card border-dark mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{comment.user.username}} - posted at {{comment.format_datetime()}}</h5>
-              <p class="card-text">
-                {{comment.message}}
-              </p>
 
+          {% endif %}
+        </div>
+      </div>
+      <hr>
+      <div class="container">
+        <div class="row row-cols-1">
+          <div class="col">
+            {%for comment in event.comments%}
+            <div class="card border-dark mb-3">
+              <div class="card-body">
+                <h5 class="card-title">{{comment.user.username}} - posted at {{comment.format_datetime()}}</h5>
+                <p class="card-text">
+                  {{comment.message}}
+                </p>
+
+              </div>
             </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 </div>
 {% endblock %}

@@ -107,7 +107,7 @@ class Booking(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     unique_identifier = db.Column(db.String(100), index=True, nullable=False)
     seats_booked = db.Column(db.Integer, nullable=False)
-    purchase_date =  db.Column(db.DateTime, default=datetime.now())
+    purchase_date =  db.Column(db.DateTime, nullable=False)
 
     
     
