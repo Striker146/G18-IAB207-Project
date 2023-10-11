@@ -26,7 +26,7 @@ def showevent(id):
         db.session.commit()
         return redirect(url_for('events.showevent', id=id))
 
-    return render_template('events/show.html', event=event, form=comment_form)
+    return render_template('events/show.html', event=event, comment_form=comment_form)
 
 
 @bp.route('/event/creation', methods=['GET', 'POST'])
@@ -85,7 +85,6 @@ def event_creation():
             campaign_focus_id = create_event_form.campaign_focus.data[0]
             lower_player_skill_level_id = create_event_form.player_lower_skill_level.data[0]
             higher_player_skill_level_id = create_event_form.player_higher_skill_level.data[0]
-            print(game_system_id)
             cost = create_event_form.cost.data
             location = create_event_form.location.data
             date = create_event_form.date.data
@@ -97,7 +96,6 @@ def event_creation():
             homebrew = create_event_form.homebrew.data
             open_world = create_event_form.open_world.data
             
-            print(game_system_id)
             event = db.session.scalar(db.select(Event).where(Event.title==title and User.id == owner_id))
             #if event:
             #    flash("You've already made an event with this title, please try another")

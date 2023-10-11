@@ -22,13 +22,20 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 10px; /* Adjust the margin to control spacing */
 }
 
-.badge-theme {
+
+.button-theme {
   background-color: red;
   color: white;
 }
 
-.button-theme {
+[type="submit"] {
   background-color: red;
+  color: white;
+}
+
+
+.button-theme-disabled {
+  background-color: #2e2e2e;
   color: white;
 }
 
@@ -37,6 +44,8 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
   background-color: #2e2e2e;
 }
+
+
 
 .container-padding{
   padding-left: 25%;
