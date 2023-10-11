@@ -2,6 +2,7 @@
 {% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
+<div class="padding"></div>
 <div class="container bottom_padding">
   <div class="row d-flex justify-content-center">
     <div class="col-12  col-sm-12 col-md-6">
@@ -123,18 +124,23 @@
     <div class="col-12 col-md-6">
       <div class="text-center">
         <h1> Comments</h1>
+        {% if current_user.is_authenticated %}
         <form action="" method="post" enctype="multipart/form-data">
           {{ comment_form.hidden_tag() }}
           <div class="col">
             {{ comment_form.message(class_ = 'form-control') }}
             <div class="col p-3">
-              {% if current_user.is_authenticated %}
               {{ comment_form.submit(class_ = 'form-control') }}
-              {% else %}
-              <button class="btn button-theme" type="button">View More Events</button>
-              {% endif %}
             </div>
         </form>
+        {% else %}
+        <div class="col">
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readonly> You must be logged in to create comments</textarea>
+          <div class="col p-3">
+            <a href="/login" class="btn button-theme" role="button">Go to Login Page</a>
+          </div>
+        
+        {% endif %}
       </div>
     </div>
     <hr>
@@ -144,7 +150,7 @@
           {%for comment in event.comments%}
           <div class="card border-dark mb-3">
             <div class="card-body">
-              <h5 class="card-title">{{comment.user.username}}</h5>
+              <h5 class="card-title">{{comment.user.username}} - posted at {{comment.format_datetime()}}</h5>
               <p class="card-text">
                 {{comment.message}}
               </p>

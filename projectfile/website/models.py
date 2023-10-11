@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from datetime import datetime
+from sqlalchemy import desc
 from . import db
 
 class User(db.Model, UserMixin):
@@ -48,14 +49,15 @@ class Event(db.Model):
     purchased_tickets = db.Column(db.Integer, default=0, nullable=False)
     remaining_tickets = db.Column(db.Integer, default=0, nullable=False)
     
-    
-    comments = db.relationship('Comment', backref='event')
+    comments = db.relationship('Comment', backref='event', order_by='Comment.id.desc()')
     images = db.relationship('EventImage',backref="event")
     bookings = db.relationship("Booking",backref="event")
+    
     
     def __repr__(self):
         str = f"id {self.id}, title:{self.title}"
         return str
+    
     
 class EventTag(db.Model):
     __tablename__ = 'event_tags'
@@ -113,4 +115,9 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    created_at = db.Column(db.DateTime, nullable=False)
     message = db.Column(db.String(100), nullable=False)
+    def format_datetime(self):
+        str = self.created_at.strftime("%d/%m/%Y, %H:%M:%S")
+        return str
+    

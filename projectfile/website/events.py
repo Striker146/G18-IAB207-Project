@@ -20,8 +20,8 @@ def showevent(id):
         user_id = current_user.id
         event_id = id
         message = comment_form.message.data
-        
-        new_comment = Comment(user_id=user_id,event_id=event_id,message=message)
+        created_at = datetime.now()
+        new_comment = Comment(user_id=user_id,event_id=event_id,message=message, created_at=created_at)
         db.session.add(new_comment)
         db.session.commit()
         return redirect(url_for('events.showevent', id=id))
