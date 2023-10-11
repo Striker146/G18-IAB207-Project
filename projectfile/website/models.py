@@ -72,6 +72,8 @@ class EventTag(db.Model):
     homebrew = db.Column(db.Boolean, default=False)
     open_world = db.Column(db.Boolean, default=False)
     event = db.relationship("Event", backref="tags", uselist=False)
+    lower_player_skill_level = db.relationship("PlayerSkillLevel", foreign_keys=[lower_player_skill_level_id],uselist=False)
+    higher_player_skill_level = db.relationship("PlayerSkillLevel", foreign_keys=[higher_player_skill_level_id],uselist=False)
     
 class AgeGroup(db.Model):
     __tablename__ = 'event_age_groups'
@@ -89,8 +91,12 @@ class PlayerSkillLevel(db.Model):
     __tablename__ = 'event_player_skill_levels'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), index=True, nullable=False, unique=True)
-    def get_events(self):
-        pass
+    
+    def get_event_tags(self):
+        db.session.scalar(db.select(EventTag).where(EventTag.lower_player_skill_level_id <= self.id and EventTag.lower_player_skill_level_id >= self.id))
+    
+    
+
             
         
         

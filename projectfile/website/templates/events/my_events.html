@@ -6,7 +6,7 @@
     <div class="container padding">
         <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
             {% for booking in bookings%}
-            <div class="col">
+            <div class="col p-2">
                 <div class="card h-100">
                     <span class="badge badge-theme">Active</span>
                     <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img-top">

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, TelField, SelectField, DecimalField, DateField, TimeField, MultipleFileField, IntegerField, BooleanField
-from wtforms.validators import InputRequired, Length, Email, EqualTo, Regexp, NoneOf, NumberRange
+from wtforms.validators import InputRequired, Length, Email, EqualTo, Regexp, NoneOf, NumberRange, NumberRange 
 from datetime import datetime
 
 #creates the login information
@@ -58,7 +58,7 @@ class CommentForm(FlaskForm):
     submit = SubmitField("Create Comment")
     
 class BookingForm(FlaskForm):
-    amount = IntegerField("Amount of Tickets", validators=[InputRequired()])
-    submit = SubmitField("Purchase Ticket's")
+    amount = IntegerField("Amount of Tickets", validators=[InputRequired(), NumberRange(min=1)], default=1)
+    submit = SubmitField("Confirm Purchase")
     
     

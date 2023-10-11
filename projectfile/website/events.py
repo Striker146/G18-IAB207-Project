@@ -21,6 +21,7 @@ def showevent(id):
         event_id = id
         message = comment_form.message.data
         created_at = datetime.now()
+        print("Check Check!")
         new_comment = Comment(user_id=user_id,event_id=event_id,message=message, created_at=created_at)
         db.session.add(new_comment)
         db.session.commit()
@@ -37,6 +38,7 @@ def showevent(id):
         
         db.session.add(new_booking)
         db.session.commit()
+        flash("Tickets Purchased Sucessfully")
 
     return render_template('events/show.html', event=event, comment_form=comment_form, booking_form=booking_form)
 

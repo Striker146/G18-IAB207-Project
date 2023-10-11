@@ -67,18 +67,19 @@
                 </li>
               </ul>
 
-              <form action="" method="post" enctype="multipart/form-data">
-                {{ comment_form.hidden_tag() }}
-                <div class="d-flex justify-content-center padding">
-                  <div class="input-group w-50">
-                    {{ booking_form.amount(class_="form-control") }}
-                  </div>
+
+
+              <div class="d-flex justify-content-center padding">
+                <div class="input-group w-50">
                 </div>
-                </ul>
-                <div class="d-flex justify-content-center padding">
-                  {{booking_form.submit(class_="form-control w-50")}}
-                </div>
-              </form>
+              </div>
+              </ul>
+              <div class="d-flex justify-content-center padding">
+                <button type="button" class="btn button-theme" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Purchase Ticket's
+                </button>
+              </div>
+
 
 
               <!-- Modal -->
@@ -86,18 +87,36 @@
                 aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Purchasing Tickets</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      You're Purchasing X tickets for $X.
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                      <button type="button" class="btn button-theme" data-bs-dismiss="modal">Confirm
-                        Purchase</button>
-                    </div>
+                    <form action="" method="post" enctype="multipart/form-data">
+                      {{ booking_form.hidden_tag() }}
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Purchasing Tickets</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+
+
+                        <div class="row">
+                          <div class="col-12 p-4">
+                            {{booking_form.amount(_class="form-control", id="ticketAmount",type="number")}}
+                          </div>
+                          <div class="col-12">
+                            <p>You're Purchasing <b><span id="ticketCount">0</span></b> tickets for <b><span
+                                  id="totalCost">$0</span></b>.</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <div class="row">
+                          <div class="col">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          </div>
+                          <div class="col">
+                            {{booking_form.submit(class_ = "form-control")}}
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -107,8 +126,6 @@
       </div>
     </div>
   </div>
-
-
   <hr>
   <div class="row d-flex justify-content-center">
     <div class="col-6  col-sm-12 col-md-6">
@@ -160,46 +177,26 @@
     </div>
   </div>
 </div>
-</div>
+
+<script>
+  // Get references to the input and spans for ticket count and total cost
+  const ticketAmountInput = document.getElementById("ticketAmount");
+  const ticketCountSpan = document.getElementById("ticketCount");
+  const totalCostSpan = document.getElementById("totalCost");
+
+
+  // Add an event listener to the input
+  ticketAmountInput.addEventListener("input", updateModalText);
+
+  function updateModalText() {
+    const amount = parseInt(ticketAmountInput.value, 10) || 0;
+    var eventCost = {{ event.cost| tojson
+  }}
+
+  ticketCountSpan.textContent = amount;
+  totalCostSpan.textContent = "$" + (amount * eventCost);
+  }
+
+  updateModalText()
+</script>
 {% endblock %}
-</header>
-
-
-
-<!-- Bootstrap CSS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-</main>
-
-</body>
-
-<footer>
-  <div class="p-5 mb-4 bg-light rounded-3">
-    <div class="container">
-      <div class="row container-padding">
-        <div class="col text-center">
-          <a href="#" class="link-dark text-center">About us</a>
-        </div>
-        <div class="col text-center">
-          <a href="#" class="link-dark text-center">Support</a>
-        </div>
-        <div class="col text-center">
-          <a href="#" class="link-dark text-center">Careers</a>
-        </div>
-      </div>
-      <hr>
-      <div class="text-center">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias quam laboriosam ex necessitatibus inventore
-        distinctio sapiente totam pariatur recusandae porro rem in, maiores laudantium eligendi, rerum reiciendis,
-        cupiditate vel asperiores. Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt perferendis nihil
-        dignissimos unde eos cumque consectetur! Dolores, nulla recusandae! Consequatur pariatur mollitia veniam
-        explicabo, fugiat exercitationem adipisci id nisi itaque.
-      </div>
-      <div class="text-center text-muted padding">
-        Copyright © 2023 RollTables Pty Ltd
-      </div>
-    </div>
-  </div>
-</footer>
-
-</html>
