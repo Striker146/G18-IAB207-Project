@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% set active_page = 'my_sessions' %}
+
+{% block content %} 
+
+    <div class="container padding">
+        <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+            {% for booking in bookings%}
+            <div class="col">
+                <div class="card h-100">
+                    <span class="badge badge-theme">Active</span>
+                    <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{booking.event.title}}</h5>
+                        <p class="booking-id"><strong>Booking ID:</strong> {{booking.unique_identifier}}</p>
+                        <p class="booking-id"><strong>Purchased on {{booking.format_datetime()}}</strong> </p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h3>$9.99</h3>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-calendar-date"></i>  {{booking.event.date.strftime("%d/%m/%Y")}}
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-clock"></i> {{booking.event.start_time.strftime("%I:%M %p")}} - {{booking.event.end_time.strftime("%I:%M %p")}}
+                            </li>
+                            <li class="list-group-item"><i class="bi-globe"> {{booking.event.location}} </i></li>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href={{url_for('events.showevent',id=booking.event.id)}} class="btn button-theme stretched-link">View Game Details</a>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            </div>
+        </div>
+    {% endblock %}

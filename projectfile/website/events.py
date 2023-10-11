@@ -29,7 +29,7 @@ def showevent(id):
     if (booking_form.validate_on_submit()==True):
         user_id = current_user.id
         event_id = id
-        unique_identifier = "dwahdiuawdawkjndawndjk"
+        unique_identifier = Booking.generate_uid()
         seats_booked = booking_form.amount.data
         purchase_date =  datetime.now()
         new_booking = Booking(user_id = user_id, event_id = event_id, unique_identifier = unique_identifier,
@@ -43,7 +43,7 @@ def showevent(id):
 
 @bp.route('/event/creation', methods=['GET', 'POST'])
 @login_required
-def event_creation():
+def creation():
     def save_event_images(images :list, event_title):
         BASE_PATH = os.path.dirname(__file__)
         if images.count == 0:
@@ -149,4 +149,13 @@ def comment(id):
         flash('Your comment has been added', 'success')    
     
     return redirect(url_for('event.show', id=id))
+
+
+
+@bp.route('/my_events')
+@login_required
+def my_events():
+    bookings = current_user.bookings
+    print(len(bookings))
+    return render_template('events/my_events.html', bookings = bookings)
     

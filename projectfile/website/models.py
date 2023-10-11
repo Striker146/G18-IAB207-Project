@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from datetime import datetime
 from sqlalchemy import desc
 from . import db
+from uuid import uuid4
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -11,7 +12,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(255), nullable=False)
     events = db.relationship('Event', backref='owner')
     comments = db.relationship('Comment', backref='user')
-    bookings = db.relationship('Booking', backref='user')
+    bookings = db.relationship('Booking', backref='user', order_by='Booking.id.desc()')
 
 
 
@@ -108,6 +109,15 @@ class Booking(db.Model):
     unique_identifier = db.Column(db.String(100), index=True, nullable=False)
     seats_booked = db.Column(db.Integer, nullable=False)
     purchase_date =  db.Column(db.DateTime, nullable=False)
+    
+    def format_datetime(self):
+        str = self.purchase_date.strftime("%d/%m/%Y, %H:%M:%S")
+        return str
+    
+    @staticmethod
+    def generate_uid():
+        unique_id = str(uuid4())
+        return unique_id
 
     
     

@@ -133,7 +133,7 @@
           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
             readonly> You must be logged in to create comments</textarea>
           <div class="col p-3">
-            <a href="/login" class="btn button-theme" role="button">Go to Login Page</a>
+            <a href="{{url_for('auth.login')}}" class="btn button-theme" role="button">Go to Login Page</a>
           </div>
 
           {% endif %}
