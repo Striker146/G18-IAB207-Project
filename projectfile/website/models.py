@@ -18,14 +18,14 @@ class User(db.Model, UserMixin):
 class EventStatus(db.Model):
     __tablename__ = 'event_statuses'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    statusType = db.Column(db.String(100))
+    name = db.Column(db.String(100), unique=True)
     events = db.relationship("Event",backref='event_status')
     
 
 class GameSystem(db.Model):
     __tablename__ = 'game_systems'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    name = db.Column(db.String(100))
+    name = db.Column(db.String(100), unique=True)
     events = db.relationship("Event",backref='game_system')
     
     
@@ -41,11 +41,14 @@ class Event(db.Model):
     description = db.Column(db.String(100), index=True, nullable=False)
     cost = db.Column(db.Float(100), index=True, nullable=False)
     location = db.Column(db.String(100), index=True, nullable=False)
-    time = db.Column(db.Time, nullable=False)
+    start_time = db.Column(db.Time, nullable=False)
+    end_time = db.Column(db.Time, nullable=False)
     date = db.Column(db.Date, nullable=False)
     total_tickets = db.Column(db.Integer, nullable=False)
     purchased_tickets = db.Column(db.Integer, default=0, nullable=False)
     remaining_tickets = db.Column(db.Integer, default=0, nullable=False)
+    
+    
     comments = db.relationship('Comment', backref='event')
     images = db.relationship('EventImage',backref="event")
     bookings = db.relationship("Booking",backref="event")
@@ -53,6 +56,41 @@ class Event(db.Model):
     def __repr__(self):
         str = f"id {self.id}, title:{self.title}"
         return str
+    
+class EventTag(db.Model):
+    __tablename__ = 'event_tags'
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), primary_key=True)
+    age_group_id = db.Column(db.Integer, db.ForeignKey('event_age_groups.id'), nullable=False)
+    campaign_focus_id = db.Column(db.Integer, db.ForeignKey('event_campaign_focuses.id'), nullable=False)
+    lower_player_skill_level_id = db.Column(db.Integer, db.ForeignKey('event_player_skill_levels.id'), nullable=False)
+    higher_player_skill_level_id = db.Column(db.Integer, db.ForeignKey('event_player_skill_levels.id'), nullable=False)
+    one_shot = db.Column(db.Boolean, default=False)
+    session_zero = db.Column(db.Boolean, default=False)
+    homebrew = db.Column(db.Boolean, default=False)
+    open_world = db.Column(db.Boolean, default=False)
+    event = db.relationship("Event", backref="tags", uselist=False)
+    
+class AgeGroup(db.Model):
+    __tablename__ = 'event_age_groups'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), index=True, nullable=False, unique=True)
+    event_tags = db.relationship('EventTag', backref='age_group')
+        
+class CampaignFocus(db.Model):
+    __tablename__ = 'event_campaign_focuses'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), index=True, nullable=False, unique=True)
+    event_tags = db.relationship('EventTag', backref='campaign_focus')
+    
+class PlayerSkillLevel(db.Model):
+    __tablename__ = 'event_player_skill_levels'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), index=True, nullable=False, unique=True)
+    def get_events(self):
+        pass
+            
+        
+        
     
 class EventImage(db.Model):
     __tablename__ = 'event_images'
