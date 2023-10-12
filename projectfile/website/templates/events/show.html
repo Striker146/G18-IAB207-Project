@@ -112,7 +112,7 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                           </div>
                           <div class="col">
-                            {{booking_form.submit(class_ = "form-control")}}
+                            {{booking_form.submit(class_ = "form-control", id="confirmPurchasebtn")}}
                           </div>
                         </div>
                       </div>
@@ -190,13 +190,16 @@
 
   function updateModalText() {
     const amount = parseInt(ticketAmountInput.value, 10) || 0;
-    var eventCost = {{ event.cost| tojson
-  }}
+    var eventCost = {{ event.cost| tojson }}
 
   ticketCountSpan.textContent = amount;
   totalCostSpan.textContent = "$" + (amount * eventCost);
   }
 
   updateModalText()
+
+  
+
 </script>
+
 {% endblock %}

@@ -59,6 +59,26 @@ class Event(db.Model):
         str = f"id {self.id}, title:{self.title}"
         return str
     
+    def update_status(self):
+        if self.remaining_tickets ==0:
+            self.status_id == 3
+    
+    def update_purchased_tickets(self):
+        bookings = Booking.query.filter(Booking.event_id == self.id).all()
+        new_purchased_tickets = sum(booking.tickets for booking in bookings)
+        print(new_purchased_tickets)
+        new_remaining_tickets = self.total_tickets - new_purchased_tickets
+        print(new_remaining_tickets)
+        self.purchased_tickets = new_purchased_tickets
+        self.remaining_tickets = new_remaining_tickets
+
+        self.update_status()
+        
+    
+        
+        
+        
+    
     
 class EventTag(db.Model):
     __tablename__ = 'event_tags'
@@ -113,7 +133,7 @@ class Booking(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     unique_identifier = db.Column(db.String(100), index=True, nullable=False)
-    seats_booked = db.Column(db.Integer, nullable=False)
+    tickets = db.Column(db.Integer, nullable=False)
     purchase_date =  db.Column(db.DateTime, nullable=False)
     
     def format_datetime(self):

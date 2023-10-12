@@ -16,29 +16,35 @@ def showevent(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
     comment_form = CommentForm()
     booking_form = BookingForm()
-    if (comment_form.validate_on_submit()==True):
-        user_id = current_user.id
-        event_id = id
-        message = comment_form.message.data
-        created_at = datetime.now()
-        print("Check Check!")
-        new_comment = Comment(user_id=user_id,event_id=event_id,message=message, created_at=created_at)
-        db.session.add(new_comment)
-        db.session.commit()
-        return redirect(url_for('events.showevent', id=id))
-    
-    if (booking_form.validate_on_submit()==True):
-        user_id = current_user.id
-        event_id = id
-        unique_identifier = Booking.generate_uid()
-        seats_booked = booking_form.amount.data
-        purchase_date =  datetime.now()
-        new_booking = Booking(user_id = user_id, event_id = event_id, unique_identifier = unique_identifier,
-                          seats_booked = seats_booked, purchase_date = purchase_date)
+    if request.method == 'POST':
+        if (comment_form.validate_on_submit()==True):
+            user_id = current_user.id
+            event_id = id
+            message = comment_form.message.data
+            created_at = datetime.now()
+            print("Check Check!")
+            new_comment = Comment(user_id=user_id,event_id=event_id,message=message, created_at=created_at)
+            db.session.add(new_comment)
+            db.session.commit()
+            return redirect(url_for('events.showevent', id=id))
         
-        db.session.add(new_booking)
-        db.session.commit()
-        flash("Tickets Purchased Sucessfully")
+        if (booking_form.validate_on_submit()==True):
+            user_id = current_user.id
+            event_id = id
+            unique_identifier = Booking.generate_uid()
+            tickets = booking_form.amount.data
+            purchase_date =  datetime.now()
+            new_booking = Booking(user_id = user_id, event_id = event_id, unique_identifier = unique_identifier,
+                            tickets = tickets, purchase_date = purchase_date)
+            
+            db.session.add(new_booking)
+            db.session.flush()
+            event.update_purchased_tickets()
+            db.session.commit()
+            return redirect(url_for('events.showevent', id=id))
+            flash("Tickets Purchased Sucessfully")
+            
+        
 
     return render_template('events/show.html', event=event, comment_form=comment_form, booking_form=booking_form)
 
