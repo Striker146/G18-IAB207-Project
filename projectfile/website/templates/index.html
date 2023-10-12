@@ -118,7 +118,7 @@
           <div class="card h-100">
 
             <span class="badge text-bg-secondary">Cancelled</span>
-            <img src={{ url_for('static', filename=event.images[0].filepath) }} class="card-img-top">
+            <img src="{{ url_for('static', filename=event.images[0].filepath) }}" class="card-img-top">
             <div class="card-body">
               <h5 class="card-title">{{event.title}}</h5>
               <ul class="list-group list-group-flush">
@@ -159,7 +159,7 @@
       <div class="mb-3"></div>
 
       <div class="d-grid gap-2 ml-3 padding">
-        <button class="btn button-theme" type="button">View More Events</button>
+        <a class="btn button-theme" type="button" href="/events">View More Events</a>
       </div>
     </div>
   </div>

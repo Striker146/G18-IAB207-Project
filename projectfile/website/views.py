@@ -7,7 +7,7 @@ bp = Blueprint('main', __name__)
 
 @bp.route('/')
 def index():
-    events = db.session.scalars(db.select(Event)).all()
+    events = db.session.scalars(db.select(Event)).fetchmany(4)
     return render_template('index.html', events = events)
 
 #@bp.route('/event_creation')

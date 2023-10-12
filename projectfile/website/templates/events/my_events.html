@@ -9,7 +9,7 @@
             <div class="col p-2">
                 <div class="card h-100">
                     <span class="badge badge-theme">Active</span>
-                    <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img-top">
+                    <img src="{{ url_for('static', filename=booking.event.images[0].filepath) }}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">{{booking.event.title}}</h5>
                         <p class="booking-id"><strong>Booking ID:</strong> {{booking.unique_identifier}}</p>
@@ -30,7 +30,7 @@
                         </ul>
                     </div>
                     <div class="card-footer">
-                        <a href={{url_for('events.showevent',id=booking.event.id)}} class="btn button-theme stretched-link">View Game Details</a>
+                        <a href="{{url_for('events.showevent', id=booking.event.id)}}" class="btn button-theme stretched-link">View Game Details</a>
                     </div>
                 </div>
             </div>

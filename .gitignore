@@ -3,3 +3,9 @@
 **.sqlite
 projectfile/website/static/uploads/*
 !projectfile/website/static/uploads/missing_image.JPG
+
+# mac stuff
+.DS_Store
+
+# venv
+/projectfile/init/

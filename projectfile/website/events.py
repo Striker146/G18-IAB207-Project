@@ -7,9 +7,15 @@ from .forms import EventCreationForm, CommentForm, BookingForm
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
+from . import db
 
 
 bp = Blueprint('events', __name__)
+
+@bp.route('/events')
+def all_events():
+    events = db.session.scalars(db.select(Event)).fetchall()
+    return render_template('events/list.html', events=events)
 
 @bp.route('/event/<id>', methods=['GET', 'POST'])
 def showevent(id):
@@ -17,7 +23,7 @@ def showevent(id):
     comment_form = CommentForm()
     booking_form = BookingForm()
     if request.method == 'POST':
-        if (comment_form.validate_on_submit()==True):
+        if (comment_form.validate_on_submit()):
             user_id = current_user.id
             event_id = id
             message = comment_form.message.data
@@ -28,7 +34,7 @@ def showevent(id):
             db.session.commit()
             return redirect(url_for('events.showevent', id=id))
         
-        if (booking_form.validate_on_submit()==True):
+        if (booking_form.validate_on_submit()):
             user_id = current_user.id
             event_id = id
             unique_identifier = Booking.generate_uid()
@@ -41,11 +47,9 @@ def showevent(id):
             db.session.flush()
             event.update_purchased_tickets()
             db.session.commit()
-            return redirect(url_for('events.showevent', id=id))
             flash("Tickets Purchased Sucessfully")
+            return redirect(url_for('events.showevent', id=id))
             
-        
-
     return render_template('events/show.html', event=event, comment_form=comment_form, booking_form=booking_form)
 
 
@@ -59,7 +63,7 @@ def creation():
         for image in images:
             print(image)
             filename = image.filename
-            upload_path = os.path.join(BASE_PATH, 'static\\uploads', secure_filename(filename))
+            upload_path = os.path.join(BASE_PATH, 'static', 'uploads', secure_filename(filename))
             db_upload_path = 'uploads/' + secure_filename(filename)
             image.save(upload_path)
             event_image = EventImage(event_id=new_event.id,filepath=db_upload_path)
