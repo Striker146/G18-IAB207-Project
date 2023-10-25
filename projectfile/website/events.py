@@ -163,7 +163,16 @@ def comment(id):
 @bp.route('/my_events')
 @login_required
 def my_events():
-    bookings = current_user.bookings
-    print(len(bookings))
-    return render_template('events/my_events.html', bookings = bookings)
+    user_events = get_events_by_username(current_user.username)
+
+    return render_template('events/my_events.html', events=user_events)
+
+def get_events_by_username(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        return []
+    
+    events_by_user = Event.query.filter_by(owner_id=user.id).all()
+    return events_by_user
     
