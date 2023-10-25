@@ -59,7 +59,7 @@ def creation():
         for image in images:
             print(image)
             filename = image.filename
-            upload_path = os.path.join(BASE_PATH, 'static\\uploads', secure_filename(filename))
+            upload_path = os.path.join(BASE_PATH, 'static//uploads', secure_filename(filename))
             db_upload_path = 'uploads/' + secure_filename(filename)
             image.save(upload_path)
             event_image = EventImage(event_id=new_event.id,filepath=db_upload_path)

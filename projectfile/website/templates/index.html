@@ -61,16 +61,16 @@
               <h5 class="card-title">{{event.title}}</h5>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                  <h3>{{event.cost}}</h3>
+                  <h3>A${{event.cost|float|round(2)}}</h3>
                 </li>
                 <li class="list-group-item">
                   <i class="bi bi-calendar-date"></i> {{event.date}}
                 </li>
                 <li class="list-group-item">
-                  <i class="bi bi-clock"></i> {{event.time}}
+                  <i class="bi bi-clock"></i> {{event.start_time}}
                 </li>
                 <li class="list-group-item"><i class="bi bi-person-fill"></i> {{event.remaining_tickets}} of {{event.total_tickets}} seats remaining </li>
-                <li class="list-group-item"><i class="bi-globe"> {{event.location}} </i></li>
+                <li class="list-group-item"><i class="bi-globe">  </i>{{event.location}}</li>
                 <li class="list-group-item">
                   <p class="card-text">
                     {{event.description}} </p>
