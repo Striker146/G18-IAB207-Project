@@ -83,7 +83,8 @@
               {% else %}
               <div class="d-flex justify-content-center padding">
                 <div class="col p-3">
-                  <a href="{{url_for('auth.login')}}" class="btn button-theme" role="button">Go to Login Page to buy a ticket</a>
+                  <a href="{{url_for('auth.login')}}" class="btn button-theme" role="button">Go to Login Page to buy a
+                    ticket</a>
                 </div>
               </div>
               {% endif %}
@@ -144,57 +145,53 @@
     <div class="col-12 col-md-6">
       <div>
         <h1> Comments</h1>
-        
-          <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-            <div class="card-body p-4">
-              {%for comment in event.comments%}
-              <div class="card mb-4">
-                <div class="card-body">
-                  <p>
-                    {{comment.message}}
-                  </p>
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex">
-                      <i class="fa-solid fa-user mt-1" style="color: red;"></i>
-                      <p class="small mb-0 ms-2">{{comment.user.username}}</p>
-                    </div>
-                    <div class="d-flex flex-row align-items-center">
-                      <p class="small text-muted mb-0">{{comment.format_datetime()}}</p>
-                    </div>
+
+        <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+          <div class="card-body p-4">
+            {%for comment in event.comments%}
+            <div class="card mb-4">
+              <div class="card-body">
+                <p>
+                  {{comment.message}}
+                </p>
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex">
+                    <i class="fa-solid fa-user mt-1" style="color: red;"></i>
+                    <p class="small mb-0 ms-2">{{comment.user.username}}</p>
+                  </div>
+                  <div class="d-flex flex-row align-items-center">
+                    <p class="small text-muted mb-0">{{comment.format_datetime()}}</p>
                   </div>
                 </div>
               </div>
-              {% endfor %}
-              {% if current_user.is_authenticated %}
-              <form action="" method="post" enctype="multipart/form-data">
-                {{ comment_form.hidden_tag() }}
-                <div class="form-outline mb-4">
-                  <div class = "col">
-                    {{ comment_form.message(class_ = 'form-control') }}
-                    <div class="col p-3">
-                      {{ comment_form.submit(class_ = 'form-control') }}
-                    </div>
+            </div>
+            {% endfor %}
+            {% if current_user.is_authenticated %}
+            <form action="" method="post" enctype="multipart/form-data">
+              {{ comment_form.hidden_tag() }}
+              <div class="form-outline mb-4">
+                <div class="col">
+                  {{ comment_form.message(class_ = 'form-control') }}
+                  <div class="col p-3">
+                    {{ comment_form.submit(class_ = 'form-control') }}
                   </div>
                 </div>
-              </form>
-              {% else %}
-              <div class="col">
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                  readonly> You must be logged in to create comments</textarea>
-                <div class="col p-3">
-                  <a href="{{url_for('auth.login')}}" class="btn button-theme" role="button">Go to Login Page</a>
-                </div>
-                {% endif %}
+              </div>
+            </form>
+            {% else %}
+            <div class="col">
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                readonly> You must be logged in to create comments</textarea>
+              <div class="col p-3">
+                <a href="{{url_for('auth.login')}}" class="btn button-theme" role="button">Go to Login Page</a>
+              </div>
+              {% endif %}
             </div>
           </div>
-        
-          
+        </div>
       </div>
-      
-      
     </div>
   </div>
-    
 </div>
 
 <script>
@@ -209,7 +206,8 @@
 
   function updateModalText() {
     const amount = parseInt(ticketAmountInput.value, 10) || 0;
-    var eventCost = {{ event.cost| tojson }}
+    var eventCost = {{ event.cost| tojson
+  }}
 
   ticketCountSpan.textContent = amount;
   totalCostSpan.textContent = "$" + (amount * eventCost);
@@ -217,7 +215,7 @@
 
   updateModalText()
 
-  
+
 
 </script>
 

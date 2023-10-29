@@ -60,5 +60,25 @@ class CommentForm(FlaskForm):
 class BookingForm(FlaskForm):
     amount = IntegerField("Amount of Tickets", validators=[InputRequired(), NumberRange(min=1)], default=1)
     submit = SubmitField("Confirm Purchase")
+
+class SearchForm(FlaskForm):
+    search = StringField("Search")
+    status = SelectField("Event Status")
+    game_system = SelectField("GameSystem")
+    age_group = SelectField("Age Group")
+    campaign_focus = SelectField("Campaign Focus")
+    player_skill_level = SelectField("Lower Player Skill Level")
+    one_shot = BooleanField("Is oneshot")
+    session_zero = BooleanField("Starting from Session Zero")
+    homebrew = BooleanField("Homebrew Rules")
+    open_world = BooleanField("Open World")
+    submit = SubmitField("Search")
     
+    def set_select_fields(self):
+        from .models import EventStatus, GameSystem, AgeGroup, CampaignFocus, PlayerSkillLevel
+        system_lists = [[self.status, EventStatus], [self.game_system,GameSystem], [self.age_group,AgeGroup], [self.player_skill_level,PlayerSkillLevel]]
+        for system_set in system_lists:
+            type_list = system_set[1].query.all()
+            result = [(element_type.id, element_type.name) for element_type in type_list]
+            system_set[0].choices = result
     

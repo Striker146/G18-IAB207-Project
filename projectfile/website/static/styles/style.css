@@ -15,6 +15,10 @@ h1, h2, h3, h4, h5, h6 {
   padding-bottom: 20px;
 }
 
+.top_padding{
+  padding-top: 20px;
+}
+
 
 .booking-id {
   font-size: 1.2rem;
