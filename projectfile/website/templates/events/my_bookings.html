@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% set active_page = 'my_bookings' %}
+
+{% block content %}
+
+<div class="container padding">
+    <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        {% for booking in bookings %}
+        <div class="col p-2">
+            <div class="card h-100">
+                <span class="badge badge-theme">{{booking.event.status_id}}</span>
+                <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{ booking.event.title }}</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h3>${{ booking.event.cost }}</h3>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-calendar-date"></i> {{ booking.event.date.strftime("%d/%m/%Y") }}
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-clock"></i> {{ booking.event.start_time.strftime("%I:%M %p") }} - {{
+                            booking.event.end_time.strftime("%I:%M %p") }}
+                        </li>
+                        <li class="list-group-item"><i class="bi-globe"> {{ booking.event.location }} </i></li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+
+                    <div class="dropdown">
+                        <button class="btn button-theme dropdown-toggle w-100" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Event Menu
+                        </button>
+                        <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href={{ url_for('events.showevent', id=booking.event.id) }}>View
+                                    Game
+                                    Details</a></li>
+                            <li><a class="dropdown-item" href={{ url_for('events.edit', id=booking.event.id) }}>Edit
+                                    Event</a></li>
+                            <li><a class="dropdown-item" href={{ url_for('events.cancel_event', id=booking.event.id) }}>Cancel
+                                    Event</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

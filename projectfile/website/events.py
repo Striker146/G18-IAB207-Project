@@ -133,6 +133,7 @@ def get_events_by_username(username):
     
     events_by_user = Event.query.filter_by(owner_id=user.id).all()
     return events_by_user
+
 @bp.route('/event/<id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit(id):
@@ -198,3 +199,12 @@ def cancel_event(id):
     db.session.commit()
     flash("Event Cancelled Successfully")
     return redirect(url_for('events.my_events', id=id))
+
+@bp.route('/events/my_bookings', methods=['GET', 'POST'])
+
+
+@bp.route('/my_bookings')
+@login_required
+def my_bookings():  
+    return render_template('events/my_bookings.html', bookings=current_user.bookings, heading="my_bookings")
+

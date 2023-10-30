@@ -45,6 +45,10 @@
               <a class="nav-link {% if active_page == 'my_sessions' %}active{% endif %}"
                 href="{{ url_for('events.my_events') }}">My Sessions</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link {% if active_page == 'my_bookings' %}active{% endif %}"
+                href="{{ url_for('events.my_bookings') }}">My Bookings</a>
+            </li>
             {% if current_user.is_authenticated %}
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle bg-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
