@@ -73,6 +73,7 @@ class Event(db.Model):
         for event in open_status.events:
             current_datetime = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
             combined_datetime = datetime.combine(event.date, event.start_time).strftime("%d/%m/%Y, %H:%M:%S")
+            print(combined_datetime)
             if current_datetime > combined_datetime:
                 event.status_id = 2
         db.session.commit()
