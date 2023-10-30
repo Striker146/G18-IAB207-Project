@@ -63,39 +63,10 @@ def creation():
             db_upload_path = 'uploads/' + secure_filename(filename)
             image.save(upload_path)
             event_image = EventImage(event_id=new_event.id,filepath=db_upload_path)
-            db.session.add(event_image)
-    
-    def get_choices(create_event_form):
-        game_system_list = GameSystem.query.all()
-        result = [(game_system.id, game_system.name) for game_system in game_system_list]
-        create_event_form.game_system.choices = result
-        
-        age_group_list = AgeGroup.query.all()
-        result = [(age_group.id, age_group.name) for age_group in age_group_list]
-        create_event_form.age_group.choices = result
-        
-        campaign_focus_list = CampaignFocus.query.all()
-        result = [(cf.id, cf.name) for cf in campaign_focus_list]
-        create_event_form.campaign_focus.choices = result
-        
-        player_skill_level_list = PlayerSkillLevel.query.all()
-        result = [(psl.id, psl.name) for psl in player_skill_level_list]
-        print(result)
-        create_event_form.player_lower_skill_level.choices = result
-        create_event_form.player_higher_skill_level.choices = result
-        
-        
-        create_event_form.game_system.default = 1
-        create_event_form.age_group.default = 1
-        create_event_form.campaign_focus.default = 1
-        
-        create_event_form.player_higher_skill_level.default = 3
-        create_event_form.player_lower_skill_level.default = 1
-        
+            db.session.add(event_image)    
     create_event_form = EventCreationForm()
-    game_system_choices = [game_system_list.name for game_system_list in GameSystem.query.all()]
-    create_event_form.game_system.choices = game_system_choices
-    get_choices(create_event_form)
+    create_event_form.get_choices()
+
     if (create_event_form.validate_on_submit()==True):
             title = create_event_form.title.data
             description = create_event_form.description.data
