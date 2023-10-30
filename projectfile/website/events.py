@@ -123,7 +123,7 @@ def comment(id):
 def my_events():
     user_events = get_events_by_username(current_user.username)
 
-    return render_template('events/my_events.html', events=user_events)
+    return render_template('events/my_events.html', events=user_events, heading="my_events")
 
 def get_events_by_username(username):
     user = User.query.filter_by(username=username).first()
@@ -190,4 +190,4 @@ def edit(id):
             edit_event_form.homebrew.data = event_tags.homebrew
             edit_event_form.open_world.data = event_tags.open_world
 
-    return render_template('events/edit_event.html', form=edit_event_form, event=event, heading='Edit Event')
+    return render_template('events/creation.html', form=edit_event_form, event=event, heading='edit_event')

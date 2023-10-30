@@ -83,6 +83,7 @@ class EventCreationForm(FlaskForm):
             
 class EventEditForm(EventCreationForm):
     images =MultipleFileField("Images")
+    submit = SubmitField("Confirm Edit to Event")
     
     def validate_image(form, field):
         if field.data:
