@@ -17,8 +17,7 @@ def index():
     else:
     # If no specific game system is chosen (i.e., "All" option was selected or no filter is applied),
     # fetch all the events regardless of their game_system_id.
-        events = db.session.scalars(db.select(Event)).all()
-
+        events = db.session.scalars(db.select(Event)).fetchmany(4)
     # Fetch a list of all the available game systems for populating the dropdown.
     game_systems = db.session.scalars(db.select(GameSystem)).all()
 

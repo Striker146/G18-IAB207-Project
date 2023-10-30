@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% set active_page = 'events/list' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+<div class="padding"></div>
+<div class="container">
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ search_form.hidden_tag() }}
+        <div class="row text-center text-center d-flex justify-content-center bottom_padding">
+            <div class="col-12">
+                Search<div class="input-group">
+                    <span class="input-group-text" id="basic-addon3"><i class="bi bi-fonts"></i></span>
+                    {{ search_form.search(class_ = 'form-control') }}
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                Game System<div class="input-group mb-3">
+                    <span class="input-group-text"><i class="bi bi-gear-fill"></i></span>
+                    {{ search_form.game_system(class_ = 'form-control') }}
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                Cost<div class="input-group">
+                    <span class="input-group-text" id="basic-addon3">$</span>
+                    {{ search_form.status(class_ = 'form-control') }}
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="top_padding">
+                    <button type="button" class="btn button-theme" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Purchase Ticket's
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="input-group">
+                    {{ search_form.submit(class_ = 'form-control') }}
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        
+                    </div>
+                    <div class="modal-body">
+                        <div class="row text-center text-center d-flex justify-content-center bottom_padding">
+                            <div class="col-12">
+                                Search<div class="input-group">
+                                    <span class="input-group-text" id="basic-addon3"><i class="bi bi-fonts"></i></span>
+                                    {{ search_form.search(class_ = 'form-control') }}
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                Game System<div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="bi bi-gear-fill"></i></span>
+                                    {{ search_form.game_system(class_ = 'form-control') }}
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                Status<div class="input-group">
+                                    <span class="input-group-text" id="basic-addon3">$</span>
+                                    {{ search_form.status(class_ = 'form-control') }}
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="top_padding">
+                                    <button type="button" class="btn button-theme" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
+                                        Purchase Ticket's
+                                    </button>
+                                </div>
+                            </div>
+                
+                            <div class="col-12">
+                                <div class="input-group">
+                                    {{ search_form.submit(class_ = 'form-control') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<div class="container text-center">
+    <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        {%for event in events%}
+        <div class="col">
+            <div class="card h-100">
+
+                <span class="badge badge-theme">Open</span>
+                <img src={{ url_for('static', filename=event.images[0].filepath) }} class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{event.title}}</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h3>A${{event.cost|float|round(2)}}</h3>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-calendar-date"></i> {{event.date}}
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-clock"></i> {{event.start_time}}
+                        </li>
+                        <li class="list-group-item"><i class="bi bi-person-fill"></i> {{event.remaining_tickets}} of
+                            {{event.total_tickets}} seats remaining </li>
+                        <li class="list-group-item"><i class="bi-globe"> </i>{{event.location}}</li>
+                        <li class="list-group-item">
+                            <p class="card-text">
+                                {{event.description}} </p>
+                        </li>
+
+                        <li class="list-group-item">
+                            <p class="card-text">
+                                <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
+                                    Focused</span> <span class="badge badge-theme">Amateur - Veteran Players</span>
+                                <span class="badge badge-theme">One Shot</span> <span class="badge badge-theme">From
+                                    Session
+                                    Zero</span> <span class="badge badge-theme">Homebrew Rules</span> <span
+                                    class="badge badge-theme">Open World</span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('events.showevent', id=event.id) }}"
+                        class="btn button-theme stretched-link">View Game Details</a>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+    <div class="padding"></div>
+</div>
+{% endblock %}
