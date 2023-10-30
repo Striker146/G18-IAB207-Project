@@ -63,104 +63,26 @@
 
 
       <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <div class="col">
-          <div class="card h-100">
-            <span class="badge badge-theme">Active</span>
-            <img src="img/image_1.jpg" class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">Dragon's Hoard: The Quest for Riches</h5>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <h3>$9.99</h3>
-                </li>
-                <li class="list-group-item">
-                  <i class="bi bi-calendar-date"></i> 15/07/2023
-                </li>
-                <li class="list-group-item">
-                  <i class="bi bi-clock"></i> 6:00pm - 10:00pm
-                </li>
-                <li class="list-group-item"><i class="bi bi-person-fill"></i> 1 of 4 seats remaining </li>
-                <li class="list-group-item"><i class="bi-globe"> Brisbane, QLD </i></li>
-                <li class="list-group-item">
-                  <p class="card-text">
-                    A short description of the event </p>
-                </li>
-
-                <li class="list-group-item">
-                  <p class="card-text">
-                    <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
-                      Focused</span> <span class="badge badge-theme">Amateur - Veteran Players</span>
-                    <span class="badge badge-theme">One Shot</span> <span class="badge badge-theme">From Session
-                      Zero</span> <span class="badge badge-theme">Homebrew Rules</span> <span
-                      class="badge badge-theme">Open World</span>
-                  </p>
-                </li>
-              </ul>
-            </div>
-            <div class="card-footer">
-              <a href="view_event.html" class="btn button-theme stretched-link">View Game Details</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <span class="badge badge-theme">Active</span>
-            <img src="img/image_1.jpg" class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">Haha</h5>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <h3>$9.99</h3>
-                </li>
-                <li class="list-group-item">
-                  <i class="bi bi-calendar-date"></i> 15/07/2023
-                </li>
-                <li class="list-group-item">
-                  <i class="bi bi-clock"></i> 6:00pm - 10:00pm
-                </li>
-                <li class="list-group-item"><i class="bi bi-person-fill"></i> 1 of 4 seats remaining </li>
-                <li class="list-group-item"><i class="bi-globe"> Brisbane, QLD </i></li>
-                <li class="list-group-item">
-                  <p class="card-text">
-                    A short description of the event </p>
-                </li>
-
-                <li class="list-group-item">
-                  <p class="card-text">
-                    <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
-                      Focused</span> <span class="badge badge-theme">Amateur - Veteran Players</span>
-                    <span class="badge badge-theme">One Shot</span> <span class="badge badge-theme">From Session
-                      Zero</span> <span class="badge badge-theme">Homebrew Rules</span> <span
-                      class="badge badge-theme">Open World</span>
-                  </p>
-                </li>
-              </ul>
-            </div>
-            <div class="card-footer">
-              <a href="view_event.html" class="btn button-theme stretched-link">View Game Details</a>
-            </div>
-          </div>
-        </div>
         {%for event in events%}
         <div class="col">
           <div class="card h-100">
 
-            <span class="badge text-bg-secondary">Cancelled</span>
+            <span class="badge badge-theme">Open</span>
             <img src={{ url_for('static', filename=event.images[0].filepath) }} class="card-img-top">
             <div class="card-body">
               <h5 class="card-title">{{event.title}}</h5>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                  <h3>{{event.cost}}</h3>
+                  <h3>A${{event.cost|float|round(2)}}</h3>
                 </li>
                 <li class="list-group-item">
                   <i class="bi bi-calendar-date"></i> {{event.date}}
                 </li>
                 <li class="list-group-item">
-                  <i class="bi bi-clock"></i> {{event.time}}
+                  <i class="bi bi-clock"></i> {{event.start_time}}
                 </li>
-                <li class="list-group-item"><i class="bi bi-person-fill"></i> 1 of 4 seats remaining </li>
-                <li class="list-group-item"><i class="bi-globe"> {{event.location}} </i></li>
+                <li class="list-group-item"><i class="bi bi-person-fill"></i> {{event.remaining_tickets}} of {{event.total_tickets}} seats remaining </li>
+                <li class="list-group-item"><i class="bi-globe">  </i>{{event.location}}</li>
                 <li class="list-group-item">
                   <p class="card-text">
                     {{event.description}} </p>
@@ -178,7 +100,7 @@
               </ul>
             </div>
             <div class="card-footer">
-              <a href="view_event.html" class="btn button-theme stretched-link">View Game Details</a>
+              <a href="{{ url_for('events.showevent', id=event.id) }}"  class="btn button-theme stretched-link">View Game Details</a>
             </div>
           </div>
         </div>

@@ -40,7 +40,4 @@ def search():
     else:
         return redirect(url_for('main.index'))
 
-@bp.route('/my_events')
-def my_events():
-    return render_template('my_events.html')
 

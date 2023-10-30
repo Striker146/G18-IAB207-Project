@@ -22,13 +22,25 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 10px; /* Adjust the margin to control spacing */
 }
 
+
+.button-theme {
+  background-color: red;
+  color: white;
+}
+
 .badge-theme {
   background-color: red;
   color: white;
 }
 
-.button-theme {
+[type="submit"] {
   background-color: red;
+  color: white;
+}
+
+
+.button-theme-disabled {
+  background-color: #2e2e2e;
   color: white;
 }
 
@@ -38,11 +50,21 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #2e2e2e;
 }
 
+
+
 .container-padding{
   padding-left: 25%;
   padding-right: 25%;
 }
 
-.status-open{
-  
+
+#flash-messages {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+.alert {
+  margin-bottom: 10px;
 }

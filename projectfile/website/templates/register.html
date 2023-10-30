@@ -3,14 +3,18 @@
 {% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="page-header">
-        <h4>{{ heading }}</h4>
+<div class="container mt-3">
+    <div class="row text-center">
+      <div class="col-12">
+        <div class="page-header">
+          <h4>{{ heading }}</h4>
+      </div>
+        {{ render_form(form) }}
+      </div>
     </div>
     
+    
     <!-- Form rendering is simple and easy if using bootstrap -->
-    <div class="col-md-6 ml-5">
-      {{ render_form(form) }}
-    </div>
-
+    
+  </div>
 {% endblock %}
