@@ -33,9 +33,10 @@ def showevent(id):
             event_id = id
             unique_identifier = Booking.generate_uid()
             tickets = booking_form.amount.data
+            total_cost = event.cost * tickets
             purchase_date =  datetime.now()
             new_booking = Booking(user_id = user_id, event_id = event_id, unique_identifier = unique_identifier,
-                            tickets = tickets, purchase_date = purchase_date)
+                            tickets = tickets, purchase_date = purchase_date, total_cost = total_cost)
             
             db.session.add(new_booking)
             db.session.flush()
@@ -52,6 +53,8 @@ def showevent(id):
 @bp.route('/event/creation', methods=['GET', 'POST'])
 @login_required
 def creation():
+    #Put your code that will run it here
+    #Event.compare_dates()
     create_event_form = EventCreationForm()
     create_event_form.get_choices()
 
