@@ -72,3 +72,13 @@ h1, h2, h3, h4, h5, h6 {
 .alert {
   margin-bottom: 10px;
 }
+
+.invisible-dropdown {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}

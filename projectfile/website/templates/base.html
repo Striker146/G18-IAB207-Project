@@ -38,20 +38,31 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link {% if active_page == 'create_session' %}active{% endif %}"
+              <a class="nav-link {% if active_page == 'event_creation' %}active{% endif %}"
                 href="{{ url_for('events.creation') }}">Create Session</a>
             </li>
             <li class="nav-item">
               <a class="nav-link {% if active_page == 'my_sessions' %}active{% endif %}"
                 href="{{ url_for('events.my_events') }}">My Sessions</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link {% if active_page == 'my_bookings' %}active{% endif %}"
+                href="{{ url_for('events.my_bookings') }}">My Bookings</a>
+            </li>
             {% if current_user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-item nav-link disabled text-muted" href="#">{{current_user.username}}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-item nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
-            </li>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle bg-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-user"></i>
+              </button>
+              <ul class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton1">
+                <li class="nav-item dropdown-item">
+                  <a class="nav-link " href="#">{{current_user.username}}</a>
+                </li>
+                <li class="nav-item dropdown-item">
+                  <a class="nav-link " href="{{ url_for('auth.logout') }}">Log Out</a>
+                </li>
+              </ul>
+            </div>
             {% else %}
             <li class="nav-item">
               <a class="nav-link {% if active_page == 'login' %}active{% endif %}" href="/login">Login</a>
@@ -118,14 +129,14 @@
           </div>
         </div>
         <hr>
-        <div class="text-center">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias quam laboriosam ex necessitatibus
-          inventore
-          distinctio sapiente totam pariatur recusandae porro rem in, maiores laudantium eligendi, rerum reiciendis,
-          cupiditate vel asperiores. Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt perferendis
-          nihil
-          dignissimos unde eos cumque consectetur! Dolores, nulla recusandae! Consequatur pariatur mollitia veniam
-          explicabo, fugiat exercitationem adipisci id nisi itaque.
+        <div class="row">
+          </div>
+          <div class="col">
+            <b>About TTRPG Group Finder:</b>
+
+            Welcome to TTRPG Group Finder, Australia's premier platform for connecting tabletop role-playing game enthusiasts across the country. Whether you're in Sydney, Melbourne, Brisbane, or anywhere in between, we're here to help you find the perfect group for your next adventure. Our community is dedicated to providing a safe, inclusive, and welcoming space for players and game masters at every level of experience.
+          </div>
+
         </div>
         <div class="text-center text-muted padding">
           Copyright © 2023 RollTables Pty Ltd
