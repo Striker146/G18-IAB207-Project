@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from .models import User, Event, GameSystem, EventImage, Comment, AgeGroup, CampaignFocus, PlayerSkillLevel, EventStatus, EventTag, Booking, EventImage
 from flask_login import login_user, login_required,logout_user, current_user
 from . import db
-from .forms import EventCreationForm, CommentForm, BookingForm, EventEditForm
+from .forms import EventCreationForm, CommentForm, BookingForm, EventEditForm, SearchForm
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
@@ -133,6 +133,16 @@ def get_events_by_username(username):
     
     events_by_user = Event.query.filter_by(owner_id=user.id).all()
     return events_by_user
+
+@bp.route('/events/list')
+def list():
+    search_form = SearchForm()
+    search_form.set_select_fields()
+    events = db.session.scalars(db.select(Event)).all()
+    print(len(events))
+    return render_template('events/list.html', events=events,search_form=search_form)
+
+
 
 @bp.route('/event/<id>/edit', methods=['GET', 'POST'])
 @login_required
