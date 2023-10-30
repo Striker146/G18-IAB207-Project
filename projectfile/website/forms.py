@@ -80,5 +80,10 @@ class SearchForm(FlaskForm):
         for system_set in system_lists:
             type_list = system_set[1].query.all()
             result = [(element_type.id, element_type.name) for element_type in type_list]
+            all_select = [0,"All"]
+            result.reverse()
+            result.append(all_select)
+            result.reverse()
+
             system_set[0].choices = result
     
