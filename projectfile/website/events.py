@@ -33,9 +33,10 @@ def showevent(id):
             event_id = id
             unique_identifier = Booking.generate_uid()
             tickets = booking_form.amount.data
+            total_cost = event.cost * tickets
             purchase_date =  datetime.now()
             new_booking = Booking(user_id = user_id, event_id = event_id, unique_identifier = unique_identifier,
-                            tickets = tickets, purchase_date = purchase_date)
+                            tickets = tickets, purchase_date = purchase_date, total_cost = total_cost)
             
             db.session.add(new_booking)
             db.session.flush()
@@ -52,6 +53,8 @@ def showevent(id):
 @bp.route('/event/creation', methods=['GET', 'POST'])
 @login_required
 def creation():
+    #Put your code that will run it here
+    #Event.compare_dates()
     create_event_form = EventCreationForm()
     create_event_form.get_choices()
 
@@ -201,3 +204,20 @@ def edit(id):
             edit_event_form.open_world.data = event_tags.open_world
 
     return render_template('events/creation.html', form=edit_event_form, event=event, heading='edit_event')
+
+@bp.route('/events/cancel/<id>', methods=['GET', 'POST'])
+def cancel_event(id):
+    event = db.session.scalar(db.select(Event).where(Event.id==id))
+    event.status_id = 4
+    db.session.commit()
+    flash("Event Cancelled Successfully")
+    return redirect(url_for('events.my_events', id=id))
+
+@bp.route('/events/my_bookings', methods=['GET', 'POST'])
+
+
+@bp.route('/my_bookings')
+@login_required
+def my_bookings():  
+    return render_template('events/my_bookings.html', bookings=current_user.bookings, heading="my_bookings")
+

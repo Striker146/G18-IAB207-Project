@@ -2,7 +2,7 @@ from flask_login import UserMixin
 from datetime import datetime
 from sqlalchemy import desc
 from . import db
-from uuid import uuid4
+from uuid import uuid1
 import os
 from werkzeug.utils import secure_filename
 from sqlalchemy import delete
@@ -24,7 +24,7 @@ class EventStatus(db.Model):
     __tablename__ = 'event_statuses'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String(100), unique=True)
-    events = db.relationship("Event",backref='event_status')
+    events = db.relationship("Event",backref='status')
     
 
 class GameSystem(db.Model):
@@ -94,6 +94,7 @@ class EventTag(db.Model):
     session_zero = db.Column(db.Boolean, default=False)
     homebrew = db.Column(db.Boolean, default=False)
     open_world = db.Column(db.Boolean, default=False)
+    
     event = db.relationship("Event", backref="tags", uselist=False)
     lower_player_skill_level = db.relationship("PlayerSkillLevel", foreign_keys=[lower_player_skill_level_id],uselist=False)
     higher_player_skill_level = db.relationship("PlayerSkillLevel", foreign_keys=[higher_player_skill_level_id],uselist=False)
@@ -157,6 +158,7 @@ class Booking(db.Model):
     unique_identifier = db.Column(db.String(100), index=True, nullable=False)
     tickets = db.Column(db.Integer, nullable=False)
     purchase_date =  db.Column(db.DateTime, nullable=False)
+    total_cost = db.Column(db.Float(100), index=True, nullable=False)
     
     def format_datetime(self):
         str = self.purchase_date.strftime("%d/%m/%Y, %H:%M:%S")
@@ -164,7 +166,7 @@ class Booking(db.Model):
     
     @staticmethod
     def generate_uid():
-        unique_id = str(uuid4())
+        unique_id = str(uuid1())
         return unique_id
 
     
