@@ -34,7 +34,7 @@ class EventCreationForm(FlaskForm):
     date  = DateField('Date')
     start_time = TimeField('End Time')
     end_time = TimeField("Start Time")
-    images =MultipleFileField("Images",validators=[InputRequired()])
+    images =MultipleFileField("Images", validators=[InputRequired()])
     total_tickets = IntegerField("Total Tickets", validators=[InputRequired()])
     age_group = SelectField("Age Group")
     campaign_focus = SelectField("Campaign Focus")
@@ -52,6 +52,45 @@ class EventCreationForm(FlaskForm):
     def validate_image(form, field):
         if field.data:
             field.data = re.sub(r'[^a-z0-9_.-]', '_', field.data)
+            
+    def get_choices(self):
+        from .models import GameSystem, AgeGroup, CampaignFocus, PlayerSkillLevel
+        game_system_list = GameSystem.query.all()
+        result = [(game_system.id, game_system.name) for game_system in game_system_list]
+        self.game_system.choices = result
+        
+        age_group_list = AgeGroup.query.all()
+        result = [(age_group.id, age_group.name) for age_group in age_group_list]
+        self.age_group.choices = result
+        
+        campaign_focus_list = CampaignFocus.query.all()
+        result = [(cf.id, cf.name) for cf in campaign_focus_list]
+        self.campaign_focus.choices = result
+        
+        player_skill_level_list = PlayerSkillLevel.query.all()
+        result = [(psl.id, psl.name) for psl in player_skill_level_list]
+        print(result)
+        self.player_lower_skill_level.choices = result
+        self.player_higher_skill_level.choices = result
+        
+        
+        self.game_system.default = 1
+        self.age_group.default = 1
+        self.campaign_focus.default = 1
+        
+        self.player_higher_skill_level.default = 3
+        self.player_lower_skill_level.default = 1
+            
+class EventEditForm(EventCreationForm):
+    images =MultipleFileField("Images")
+    submit = SubmitField("Confirm Edit to Event")
+    
+    def validate_image(form, field):
+        if field.data:
+            field.data = re.sub(r'[^a-z0-9_.-]', '_', field.data)
+    
+    
+    
 
 class CommentForm(FlaskForm):
     message = TextAreaField("Comment", validators=[InputRequired()])

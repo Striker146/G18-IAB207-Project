@@ -3,6 +3,9 @@ from datetime import datetime
 from sqlalchemy import desc
 from . import db
 from uuid import uuid4
+import os
+from werkzeug.utils import secure_filename
+from sqlalchemy import delete
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -126,6 +129,25 @@ class EventImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     filepath = db.Column(db.String(400))
+    
+    @staticmethod
+    def save_event_images(images :list, event):
+        BASE_PATH = os.path.dirname(__file__)
+        if images.count == 0:
+            return
+        for image in images:
+            print(image)
+            filename = image.filename
+            upload_path = os.path.join(BASE_PATH, 'static//uploads', secure_filename(filename))
+            db_upload_path = 'uploads/' + secure_filename(filename)
+            image.save(upload_path)
+            event_image = EventImage(event_id=event.id,filepath=db_upload_path)
+            db.session.add(event_image)
+    
+    @staticmethod
+    def delete_event_images(event):
+        for old_image in event.images:
+            db.session.delete(old_image)
     
 
 class Booking(db.Model):
