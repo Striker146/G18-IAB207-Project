@@ -1,9 +1,9 @@
 from flask import Blueprint, flash, render_template, request, url_for, redirect, current_app
 from werkzeug.security import generate_password_hash,check_password_hash
-from .models import User, Event, GameSystem, EventImage, Comment, AgeGroup, CampaignFocus, PlayerSkillLevel, EventStatus, EventTag, Booking
+from .models import User, Event, GameSystem, EventImage, Comment, AgeGroup, CampaignFocus, PlayerSkillLevel, EventStatus, EventTag, Booking, EventImage
 from flask_login import login_user, login_required,logout_user, current_user
 from . import db
-from .forms import EventCreationForm, CommentForm, BookingForm
+from .forms import EventCreationForm, CommentForm, BookingForm, EventEditForm
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
@@ -52,18 +52,6 @@ def showevent(id):
 @bp.route('/event/creation', methods=['GET', 'POST'])
 @login_required
 def creation():
-    def save_event_images(images :list, event_title):
-        BASE_PATH = os.path.dirname(__file__)
-        if images.count == 0:
-            return
-        for image in images:
-            print(image)
-            filename = image.filename
-            upload_path = os.path.join(BASE_PATH, 'static//uploads', secure_filename(filename))
-            db_upload_path = 'uploads/' + secure_filename(filename)
-            image.save(upload_path)
-            event_image = EventImage(event_id=new_event.id,filepath=db_upload_path)
-            db.session.add(event_image)    
     create_event_form = EventCreationForm()
     create_event_form.get_choices()
 
@@ -95,8 +83,6 @@ def creation():
             new_event = Event(status_id=1, owner_id=owner_id, game_system_id=game_system_id, 
                               title=title, description=description, cost=cost, location=location, 
                               start_time=start_time, end_time=end_time, date=date,total_tickets=total_tickets, remaining_tickets=total_tickets )
-            
-            
             db.session.add(new_event)
             db.session.flush()
             new_event_tag = EventTag(event_id = new_event.id, age_group_id = age_group_id, campaign_focus_id = campaign_focus_id,
@@ -104,9 +90,10 @@ def creation():
                                      higher_player_skill_level_id = higher_player_skill_level_id,
                                      one_shot = one_shot, session_zero = session_zero,
                                      homebrew= homebrew, open_world = open_world)
+            
             db.session.add(new_event_tag)
             
-            save_event_images(create_event_form.images.data, title)
+            EventImage.save_event_images(create_event_form.images.data,event=new_event)
             db.session.commit()
             #commit to the database and redirect to HTML page
             return redirect(url_for('main.index'))
@@ -149,48 +136,58 @@ def get_events_by_username(username):
 
 @bp.route('/event/<id>/edit', methods=['GET', 'POST'])
 @login_required
-def edit_event(id):
+def edit(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
-    edit_event_form = EventCreationForm()
+    edit_event_form = EventEditForm()
     edit_event_form.get_choices()
     if event.owner_id == current_user.id:
         if (edit_event_form.validate_on_submit()==True):
+            event_tags = event.tags[0]
             event.title = edit_event_form.title.data
             event.description = edit_event_form.description.data
             event.game_system_id = edit_event_form.game_system.data[0]
-            event.tag.age_group_id = edit_event_form.age_group.data[0]
-            event.tag.campaign_focus_id = edit_event_form.campaign_focus.data[0]
-            event.tag.lower_player_skill_level_id = edit_event_form.player_lower_skill_level.data[0]
-            event.tag.higher_player_skill_level_id = edit_event_form.player_higher_skill_level.data[0]
+            event_tags.age_group_id = edit_event_form.age_group.data[0]
+            event_tags.campaign_focus_id = edit_event_form.campaign_focus.data[0]
+            event_tags.lower_player_skill_level_id = edit_event_form.player_lower_skill_level.data[0]
+            event_tags.higher_player_skill_level_id = edit_event_form.player_higher_skill_level.data[0]
             event.cost = edit_event_form.cost.data
             event.location = edit_event_form.location.data
             event.date = edit_event_form.date.data
             event.start_time = edit_event_form.start_time.data
             event.end_time = edit_event_form.end_time.data
             event.total_tickets = edit_event_form.total_tickets.data
-            event.tag.one_shot = edit_event_form.one_shot.data
-            event.tag.session_zero = edit_event_form.session_zero.data
-            event.tag.homebrew = edit_event_form.homebrew.data
-            event.tag.open_world = edit_event_form.open_world.data
+            event_tags.one_shot = edit_event_form.one_shot.data
+            event_tags.session_zero = edit_event_form.session_zero.data
+            event_tags.homebrew = edit_event_form.homebrew.data
+            event_tags.open_world = edit_event_form.open_world.data
+            print(edit_event_form.images.data[0].filename)
+            if edit_event_form.images.data[0].filename == "":
+                print("No new Images")
+            else:
+                EventImage.delete_event_images(event=event)
+                EventImage.save_event_images(images=edit_event_form.images.data, event=event)
             db.session.commit()
             flash('Event updated successfully', 'success')
+            return redirect(url_for('events.my_events'))
         else:
+            event_tags = event.tags[0]
             edit_event_form.title.data = event.title
             edit_event_form.description.data = event.description
             edit_event_form.game_system.data = [event.game_system_id]
-            edit_event_form.age_group.data = [event.tag.age_group_id]
-            edit_event_form.campaign_focus.data = [event.tag.campaign_focus_id]
-            edit_event_form.player_lower_skill_level.data = [event.tag.lower_player_skill_level_id]
-            edit_event_form.player_higher_skill_level.data = [event.tag.higher_player_skill_level_id]
+            edit_event_form.age_group.data = [event_tags.age_group_id]
+            edit_event_form.campaign_focus.data = [event_tags.campaign_focus_id]
+            edit_event_form.player_lower_skill_level.data = [event_tags.lower_player_skill_level_id]
+            edit_event_form.player_higher_skill_level.data = [event_tags.higher_player_skill_level_id]
             edit_event_form.cost.data = event.cost
+            edit_event_form.images.data = event.images
             edit_event_form.location.data = event.location
             edit_event_form.date.data = event.date
             edit_event_form.start_time.data = event.start_time
             edit_event_form.end_time.data = event.end_time
             edit_event_form.total_tickets.data = event.total_tickets
-            edit_event_form.one_shot.data = event.tag.one_shot
-            edit_event_form.session_zero.data = event.tag.session_zero
-            edit_event_form.homebrew.data = event.tag.homebrew
-            edit_event_form.open_world.data = event.tag.open_world
+            edit_event_form.one_shot.data = event_tags.one_shot
+            edit_event_form.session_zero.data = event_tags.session_zero
+            edit_event_form.homebrew.data = event_tags.homebrew
+            edit_event_form.open_world.data = event_tags.open_world
 
     return render_template('events/edit_event.html', form=edit_event_form, event=event, heading='Edit Event')

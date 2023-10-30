@@ -34,7 +34,7 @@ class EventCreationForm(FlaskForm):
     date  = DateField('Date')
     start_time = TimeField('End Time')
     end_time = TimeField("Start Time")
-    images =MultipleFileField("Images",validators=[InputRequired()])
+    images =MultipleFileField("Images", validators=[InputRequired()])
     total_tickets = IntegerField("Total Tickets", validators=[InputRequired()])
     age_group = SelectField("Age Group")
     campaign_focus = SelectField("Campaign Focus")
@@ -52,7 +52,7 @@ class EventCreationForm(FlaskForm):
     def validate_image(form, field):
         if field.data:
             field.data = re.sub(r'[^a-z0-9_.-]', '_', field.data)
-    
+            
     def get_choices(self):
         from .models import GameSystem, AgeGroup, CampaignFocus, PlayerSkillLevel
         game_system_list = GameSystem.query.all()
@@ -80,6 +80,16 @@ class EventCreationForm(FlaskForm):
         
         self.player_higher_skill_level.default = 3
         self.player_lower_skill_level.default = 1
+            
+class EventEditForm(EventCreationForm):
+    images =MultipleFileField("Images")
+    
+    def validate_image(form, field):
+        if field.data:
+            field.data = re.sub(r'[^a-z0-9_.-]', '_', field.data)
+    
+    
+    
 
 class CommentForm(FlaskForm):
     message = TextAreaField("Comment", validators=[InputRequired()])
