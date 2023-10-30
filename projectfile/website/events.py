@@ -175,4 +175,12 @@ def get_events_by_username(username):
     
     events_by_user = Event.query.filter_by(owner_id=user.id).all()
     return events_by_user
-    
+
+@bp.route('/my_events/<id>')
+def cancel_event(id):
+    event = db.session.scalar(db.select(Event).where(Event.id==id))
+    event.status_id = 4
+    db.session.commit()
+    flash("Event Cancelled Successfully")
+    return redirect(url_for('events.showevent', id=id))
+        
