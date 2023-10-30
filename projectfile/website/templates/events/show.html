@@ -80,6 +80,11 @@
                   Purchase Ticket's
                 </button>
               </div>
+              <div class="d-flex justify-content-center padding">
+                <div class="col p-3">
+                  <a href="{{url_for('events.delete_event', id=event_id)}}" class="btn button-theme" role="button">Delete Page</a>
+                </div>
+              </div>
               {% else %}
               <div class="d-flex justify-content-center padding">
                 <div class="col p-3">

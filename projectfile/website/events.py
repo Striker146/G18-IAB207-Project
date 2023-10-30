@@ -175,4 +175,51 @@ def get_events_by_username(username):
     
     events_by_user = Event.query.filter_by(owner_id=user.id).all()
     return events_by_user
-    
+
+@bp.route('/event/<id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_event(id):
+    event = db.session.scalar(db.select(Event).where(Event.id==id))
+    edit_event_form = EventCreationForm()
+    if event.owner_id == current_user.id:
+        if (edit_event_form.validate_on_submit()==True):
+            event.title = edit_event_form.title.data
+            event.description = edit_event_form.description.data
+            event.game_system_id = edit_event_form.game_system.data[0]
+            event.tag.age_group_id = edit_event_form.age_group.data[0]
+            event.tag.campaign_focus_id = edit_event_form.campaign_focus.data[0]
+            event.tag.lower_player_skill_level_id = edit_event_form.player_lower_skill_level.data[0]
+            event.tag.higher_player_skill_level_id = edit_event_form.player_higher_skill_level.data[0]
+            event.cost = edit_event_form.cost.data
+            event.location = edit_event_form.location.data
+            event.date = edit_event_form.date.data
+            event.start_time = edit_event_form.start_time.data
+            event.end_time = edit_event_form.end_time.data
+            event.total_tickets = edit_event_form.total_tickets.data
+            event.tag.one_shot = edit_event_form.one_shot.data
+            event.tag.session_zero = edit_event_form.session_zero.data
+            event.tag.homebrew = edit_event_form.homebrew.data
+            event.tag.open_world = edit_event_form.open_world.data
+            db.session.commit()
+            flash('Event updated successfully', 'success')
+            return redirect(url_for('events.my_events'))
+        else:
+            edit_event_form.title.data = event.title
+            edit_event_form.description.data = event.description
+            edit_event_form.game_system.data = [event.game_system_id]
+            edit_event_form.age_group.data = [event.tag.age_group_id]
+            edit_event_form.campaign_focus.data = [event.tag.campaign_focus_id]
+            edit_event_form.player_lower_skill_level.data = [event.tag.lower_player_skill_level_id]
+            edit_event_form.player_higher_skill_level.data = [event.tag.higher_player_skill_level_id]
+            edit_event_form.cost.data = event.cost
+            edit_event_form.location.data = event.location
+            edit_event_form.date.data = event.date
+            edit_event_form.start_time.data = event.start_time
+            edit_event_form.end_time.data = event.end_time
+            edit_event_form.total_tickets.data = event.total_tickets
+            edit_event_form.one_shot.data = event.tag.one_shot
+            edit_event_form.session_zero.data = event.tag.session_zero
+            edit_event_form.homebrew.data = event.tag.homebrew
+            edit_event_form.open_world.data = event.tag.open_world
+
+    return render_template('events.my_events', form=edit_event_form, event=event, heading='Edit Event')
