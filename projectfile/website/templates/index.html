@@ -33,23 +33,35 @@
     <!-- Upcoming Games Container -->
     <h2 class="text-center">Upcoming Games</h2>
 
-    <!-- A dropdown select element with an ID 'gameSystemFilter'. When its value is changed, it triggers the JavaScript function 'filterByGameSystem()'. -->
-    <select id="gameSystemFilter" onchange="filterByGameSystem()">
-      <!-- The 'All' option in the dropdown. If there's no current selected game system (i.e., 'current_game_system' is not defined), this option will be selected by default. -->
-      <option value="" {% if not current_game_system %}selected{% endif %}>All</option>
-  
-        <!-- Loop through all the game systems fetched from the database. -->
-        {% for game_system in game_systems %}
-        <!-- For each game system, create an option with its ID as the value. -->
-          <option value="{{ game_system.id }}" 
-              {% if game_system.id == current_game_system|default(0)|int %}selected{% endif %}>
-          <!-- Display the game system's name as the option text. -->
-            {{ game_system.name }}
-          </option>
-        {% endfor %}
-    </select>
+    
     
     <div class="container text-center">
+      <div class="row">
+        <div class="col-md-3 pl-0">
+          <!-- A dropdown select element with an ID 'gameSystemFilter'. When its value is changed, it triggers the JavaScript function 'filterByGameSystem()'. -->
+          <select id="gameSystemFilter" onchange="filterByGameSystem()" class="w-100">
+            <!-- The 'All' option in the dropdown. If there's no current selected game system (i.e., 'current_game_system' is not defined), this option will be selected by default. -->
+            <option value="" {% if not current_game_system %}selected{% endif %}>All</option>
+        
+              <!-- Loop through all the game systems fetched from the database. -->
+              {% for game_system in game_systems %}
+              <!-- For each game system, create an option with its ID as the value. -->
+                <option value="{{ game_system.id }}" 
+                    {% if game_system.id == current_game_system|default(0)|int %}selected{% endif %}>
+                <!-- Display the game system's name as the option text. -->
+                  {{ game_system.name }}
+                </option>
+              {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-8">
+
+        </div>
+      </div>
+      
+      
+
+
       <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <div class="col">
           <div class="card h-100">
@@ -201,3 +213,4 @@
     }
     </script>
         {% endblock %}
+
