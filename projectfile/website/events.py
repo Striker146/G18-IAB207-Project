@@ -190,3 +190,11 @@ def edit(id):
             edit_event_form.open_world.data = event_tags.open_world
 
     return render_template('events/creation.html', form=edit_event_form, event=event, heading='edit_event')
+
+@bp.route('/events/cancel/<id>', methods=['GET', 'POST'])
+def cancel_event(id):
+    event = db.session.scalar(db.select(Event).where(Event.id==id))
+    event.status_id = 4
+    db.session.commit()
+    flash("Event Cancelled Successfully")
+    return redirect(url_for('events.my_events', id=id))

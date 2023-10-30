@@ -39,13 +39,10 @@
                                     Details</a></li>
                             <li><a class="dropdown-item" href={{ url_for('events.edit', id=event.id) }}>Edit
                                     Event</a></li>
-                            <li><a class="dropdown-item" href=#>Cancel
+                            <li><a class="dropdown-item" href={{ url_for('events.cancel_event', id=event.id) }}>Cancel
                                     Event</a></li>
                         </ul>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <a href={{ url_for('events.cancel_event', id=event.id) }} class="btn button-theme stretched-link">Cancel Event</a>
                 </div>
             </div>
         </div>
