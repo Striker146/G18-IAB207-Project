@@ -80,6 +80,11 @@
                   Purchase Ticket's
                 </button>
               </div>
+              <div class="d-flex justify-content-center padding">
+                <div class="col p-3">
+                  <a href="{{url_for('event.edit_event', id=event.id)}}" class="btn button-theme" role="button">edit Page</a>
+                </div>
+              </div>
               {% else %}
               <div class="d-flex justify-content-center padding">
                 <div class="col p-3">
