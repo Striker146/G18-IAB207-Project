@@ -66,12 +66,17 @@ class Event(db.Model):
         if self.remaining_tickets <=0:
             self.remaining_tickets = 0
             self.status_id = 3
-            
-    def compare_dates(self):
-        current_datetime = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
-        combined_datetime = datetime.combine(self.date, self.start_time).strftime("%d/%m/%Y, %H:%M:%S")
-        if current_datetime > combined_datetime:
-            self.status_id = 2
+    @staticmethod  
+    def compare_dates():
+        open_status_id = 1
+        open_status = db.session.scalar(db.select(EventStatus).where(EventStatus.id==open_status_id ))
+        for event in open_status.events:
+            current_datetime = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+            combined_datetime = datetime.combine(event.date, event.start_time).strftime("%d/%m/%Y, %H:%M:%S")
+            if current_datetime > combined_datetime:
+                event.status_id = 2
+        db.session.commit()
+    
         
     def update_purchased_tickets(self):
         bookings = Booking.query.filter(Booking.event_id == self.id).all()
@@ -81,7 +86,6 @@ class Event(db.Model):
         print(new_remaining_tickets)
         self.purchased_tickets = new_purchased_tickets
         self.remaining_tickets = new_remaining_tickets
-        self.compare_dates()
         self.update_status()
         
     
