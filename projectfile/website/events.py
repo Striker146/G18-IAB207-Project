@@ -152,6 +152,7 @@ def get_events_by_username(username):
 def edit_event(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
     edit_event_form = EventCreationForm()
+    edit_event_form.get_choices()
     if event.owner_id == current_user.id:
         if (edit_event_form.validate_on_submit()==True):
             event.title = edit_event_form.title.data
@@ -173,7 +174,6 @@ def edit_event(id):
             event.tag.open_world = edit_event_form.open_world.data
             db.session.commit()
             flash('Event updated successfully', 'success')
-            return redirect(url_for('events.my_events'))
         else:
             edit_event_form.title.data = event.title
             edit_event_form.description.data = event.description
@@ -193,4 +193,4 @@ def edit_event(id):
             edit_event_form.homebrew.data = event.tag.homebrew
             edit_event_form.open_world.data = event.tag.open_world
 
-    return render_template('events.my_events', form=edit_event_form, event=event, heading='Edit Event')
+    return render_template('events/edit_event.html', form=edit_event_form, event=event, heading='Edit Event')
