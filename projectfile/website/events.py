@@ -149,13 +149,23 @@ def list():
     
     # If the form is submitted
     if request.method == 'POST':
+        game_system_id = search_form.game_system.data
+        status_id = search_form.status.data
+
+        
         search_term = search_form.search.data
         if search_term:
             events_query = events_query.filter(Event.description.like(f"%{search_term}%"))
 
-        if search_form.game_system.data:
-            events_query = events_query.filter_by(game_system_id=search_form.game_system.data)
-        if search_form.status.data:
+        
+        if not game_system_id == "0":
+            print("Searching Game System")
+            print(game_system_id) 
+            events_query = events_query.filter_by(game_system_id=game_system_id)
+        
+        if not status_id == "0":
+            print("Searching status")
+            print(status_id)
             events_query = events_query.filter_by(status_id=search_form.status.data)
         # Add more filters as needed...
 
