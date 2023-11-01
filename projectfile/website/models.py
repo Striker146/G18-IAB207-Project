@@ -217,7 +217,7 @@ class Booking(db.Model):
     @staticmethod
     def is_valid_booking(event,tickets_purchased):
         valid_booking = [True,'']
-        if event.status.id == 2 or event.status.id == 3 or event.status.id == 4:
+        if not event.status.id == 1:
             valid_booking[1] =  """Error: This event is no longer available for purchase"""
             valid_booking[0] = False
             return valid_booking
