@@ -74,22 +74,27 @@
                 </div>
               </div>
               </ul>
-              {% if current_user.is_authenticated %}
-              <div class="d-flex justify-content-center padding">
-                <button type="button" class="btn button-theme" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Purchase Ticket's
-                </button>
-              </div>
-              <div class="d-flex justify-content-center padding">
-              </div>
-              {% else %}
+              {% if not current_user.is_authenticated %}
               <div class="d-flex justify-content-center padding">
                 <div class="col p-3">
                   <a href="{{url_for('auth.login')}}" class="btn button-theme" role="button">Go to Login Page to buy a
                     ticket</a>
                 </div>
               </div>
+              {% elif not event.status.id == 1 %}
+              <div class="d-flex justify-content-center padding">
+                <button type="button" class="btn button-theme" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
+                  Session is No Longer Available for Purchase
+                </button>
+              </div>
+              {% else %}
+              <div class="d-flex justify-content-center padding">
+                <button type="button" class="btn button-theme" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Purchase Ticket's
+                </button>
+              </div>
               {% endif %}
+              
 
 
 

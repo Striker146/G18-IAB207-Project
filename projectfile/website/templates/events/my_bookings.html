@@ -4,24 +4,38 @@
 {% block content %}
 
 <div class="container padding">
-    <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+    <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-3">
         {% for booking in bookings %}
         <div class="col p-2">
             <div class="card h-100">
                 <span class="badge badge-theme">{{booking.event.status.name}}</span>
-                <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img-top">
+                <div class="ratio ratio-1x1">
+                    <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img-fit">
+                </div>
+                <div class="card-img-overlay">
+                    <div class="position-absolute top-0 end-0 m-4">
+                        <span class="badge theme">Purchased on {{booking.purchase_date.strftime("%d/%m/%Y" " @ " "%I:%M%p")}}</span>
+                    </div>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ booking.event.title }}</h5>
                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h3 class="card-title">{{ booking.event.title }}</h3>
+                        </li>
                         <li class="list-group-item">
                             <h3>${{ booking.total_cost }}</h3>
                             <i class="text-secondary">Total Cost</i>
                         </li>
                         <li class="list-group-item">
-                            <i class="bi bi-upc-scan"></i> <p class="text-danger">{{booking.unique_identifier}}</h3>
+                            <i class="bi bi-upc-scan"></i>
+                            <span class="text-danger fs-3"> {{booking.unique_identifier}}</span>
+                            <div class="text-secondary">Ticket ID</div>
                         </li>
                         <li class="list-group-item">
-                            <i class="bi bi-people-fill"></i></i>   <b>{{ booking.tickets }}</b> Tickets Purchased
+                            <i class="bi bi-people-fill"></i></i> <b>{{ booking.tickets }}</b> Tickets Purchased
+                        </li>
+                        <li class="list-group-item">
+                            <h3>Event Info</h3>
                         </li>
                         <li class="list-group-item">
                             <i class="bi bi-calendar-date"></i> {{ booking.event.date.strftime("%d/%m/%Y") }}

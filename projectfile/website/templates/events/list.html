@@ -45,7 +45,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        
+
                     </div>
                     <div class="modal-body">
                         <div class="row text-center text-center d-flex justify-content-center bottom_padding">
@@ -75,7 +75,7 @@
                                     </button>
                                 </div>
                             </div>
-                
+
                             <div class="col-12">
                                 <div class="input-group">
                                     {{ search_form.submit(class_ = 'form-control') }}
@@ -102,7 +102,9 @@
             <div class="card h-100">
 
                 <span class="badge badge-theme">Open</span>
-                <img src={{ url_for('static', filename=event.images[0].filepath) }} class="card-img-top">
+                <div class="ratio ratio-1x1">
+                    <img src={{ url_for('static', filename=event.images[0].filepath) }} class="card-img-fit">
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{event.title}}</h5>
                     <ul class="list-group list-group-flush">

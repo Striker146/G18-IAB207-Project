@@ -167,7 +167,22 @@ class Booking(db.Model):
     @staticmethod
     def generate_uid():
         unique_id = str(uuid1())
+        unique_id = unique_id[0:8]
         return unique_id
+    
+    @staticmethod
+    def is_valid_booking(event,tickets_purchased):
+        valid_booking = [True,'']
+        if event.status.id == 2 or event.status.id == 3 or event.status.id == 4:
+            valid_booking[1] =  """Error: This event is no longer available for purchase"""
+            valid_booking[0] = False
+            return valid_booking
+        if event.remaining_tickets < tickets_purchased:
+            valid_booking[1] = """Error: Insufficient Tickets Available. You have requested more tickets than are currently available for purchase. Please update the quantity and try again."""
+            valid_booking[0] = False
+            return valid_booking
+        else:
+            return valid_booking
 
     
     
