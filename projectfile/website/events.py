@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, render_template, request, url_for, redirect, current_app
 from werkzeug.security import generate_password_hash,check_password_hash
-from .models import User, Event, GameSystem, EventImage, Comment, AgeGroup, CampaignFocus, PlayerSkillLevel, EventStatus, EventTag, Booking, EventImage
+from .models import User, Event, GameSystem, EventImage, Comment, AgeGroup, CampaignFocus, PlayerSkillLevel, EventStatus, EventTag, Booking, EventImage, generate_comments
 from flask_login import login_user, login_required,logout_user, current_user
 from . import db
 from .forms import EventCreationForm, CommentForm, BookingForm, EventEditForm, SearchForm
@@ -62,6 +62,7 @@ def creation():
     #Event.compare_dates()
     create_event_form = EventCreationForm()
     create_event_form.get_choices()
+
     
     if (create_event_form.validate_on_submit()==True):
             title = create_event_form.title.data
