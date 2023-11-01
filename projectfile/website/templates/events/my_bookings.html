@@ -11,21 +11,23 @@
                 <span class="badge badge-theme">{{booking.event.status.name}}</span>
                 <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img">
                 <div class="card-img-overlay">
-                    <div class="position-absolute bottom-0 end-0">
-                        <span class="badge bg-secondary">Test</span>
+                    <div class="position-absolute top-0 end-0 m-4">
+                        <span class="badge theme">Purchased on {{booking.purchase_date.strftime("%d/%m/%Y" " @ " "%I:%M %p")}}</span>
                     </div>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ booking.event.title }}</h5>
                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h3 class="card-title">{{ booking.event.title }}</h3>
+                        </li>
                         <li class="list-group-item">
                             <h3>${{ booking.total_cost }}</h3>
                             <i class="text-secondary">Total Cost</i>
                         </li>
                         <li class="list-group-item">
                             <i class="bi bi-upc-scan"></i>
-                            <h3 class="text-danger">{{booking.unique_identifier}}</h3>
-                            <i class="bi bi-calendar-check"></i> Purchased <b>{{booking.purchase_date.strftime("%d/%m/%Y")}}</b>
+                            <span class="text-danger fs-3">  {{booking.unique_identifier}}</span>
+                            <div class="text-secondary">Ticket ID</div>
                         </li>
                         <li class="list-group-item">
                             <i class="bi bi-people-fill"></i></i> <b>{{ booking.tickets }}</b> Tickets Purchased
