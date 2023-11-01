@@ -46,7 +46,7 @@ class Event(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     game_system_id = db.Column(db.Integer, db.ForeignKey('game_systems.id'))
     title = db.Column(db.String(100), index=True, nullable=False)
-    description = db.Column(db.String(100), index=True, nullable=False)
+    description = db.Column(db.String(1000), index=True, nullable=False)
     cost = db.Column(db.Float(100), index=True, nullable=False)
     location = db.Column(db.String(100), index=True, nullable=False)
     start_time = db.Column(db.Time, nullable=False)

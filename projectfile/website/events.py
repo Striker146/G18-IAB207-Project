@@ -67,11 +67,11 @@ def creation():
             title = create_event_form.title.data
             description = create_event_form.description.data
             owner_id = current_user.id
-            game_system_id = create_event_form.game_system.data[0]
-            age_group_id = create_event_form.age_group.data[0]
-            campaign_focus_id = create_event_form.campaign_focus.data[0]
-            lower_player_skill_level_id = create_event_form.player_lower_skill_level.data[0]
-            higher_player_skill_level_id = create_event_form.player_higher_skill_level.data[0]
+            game_system_id = create_event_form.game_system.data
+            age_group_id = create_event_form.age_group.data
+            campaign_focus_id = create_event_form.campaign_focus.data
+            lower_player_skill_level_id = create_event_form.player_lower_skill_level.data
+            higher_player_skill_level_id = create_event_form.player_higher_skill_level.data
             cost = create_event_form.cost.data
             location = create_event_form.location.data
             date = create_event_form.date.data
@@ -82,7 +82,6 @@ def creation():
             session_zero = create_event_form.session_zero.data
             homebrew = create_event_form.homebrew.data
             open_world = create_event_form.open_world.data
-            
             event = db.session.scalar(db.select(Event).where(Event.title==title and User.id == owner_id))
             #if event:
             #    flash("You've already made an event with this title, please try another")
@@ -91,8 +90,10 @@ def creation():
             new_event = Event(status_id=1, owner_id=owner_id, game_system_id=game_system_id, 
                               title=title, description=description, cost=cost, location=location, 
                               start_time=start_time, end_time=end_time, date=date,total_tickets=total_tickets, remaining_tickets=total_tickets )
+            
             db.session.add(new_event)
             db.session.flush()
+            print(f"New Game System is: {new_event.game_system.name}")
             new_event_tag = EventTag(event_id = new_event.id, age_group_id = age_group_id, campaign_focus_id = campaign_focus_id,
                                      lower_player_skill_level_id = lower_player_skill_level_id,
                                      higher_player_skill_level_id = higher_player_skill_level_id,
@@ -186,11 +187,11 @@ def edit(id):
             event_tags = event.tags[0]
             event.title = edit_event_form.title.data
             event.description = edit_event_form.description.data
-            event.game_system_id = edit_event_form.game_system.data[0]
-            event_tags.age_group_id = edit_event_form.age_group.data[0]
-            event_tags.campaign_focus_id = edit_event_form.campaign_focus.data[0]
-            event_tags.lower_player_skill_level_id = edit_event_form.player_lower_skill_level.data[0]
-            event_tags.higher_player_skill_level_id = edit_event_form.player_higher_skill_level.data[0]
+            event.game_system_id = edit_event_form.game_system.data
+            event_tags.age_group_id = edit_event_form.age_group.data
+            event_tags.campaign_focus_id = edit_event_form.campaign_focus.data
+            event_tags.lower_player_skill_level_id = edit_event_form.player_lower_skill_level.data
+            event_tags.higher_player_skill_level_id = edit_event_form.player_higher_skill_level.data
             event.cost = edit_event_form.cost.data
             event.location = edit_event_form.location.data
             event.date = edit_event_form.date.data
@@ -211,14 +212,26 @@ def edit(id):
             flash('Event updated successfully', 'success')
             return redirect(url_for('events.my_events'))
         else:
+
+            
             event_tags = event.tags[0]
+            edit_event_form.game_system.data = event.game_system_id
+            edit_event_form.age_group.data = event_tags.age_group_id
+            edit_event_form.campaign_focus.data = event_tags.campaign_focus_id
+            edit_event_form.player_lower_skill_level.data = event_tags.lower_player_skill_level_id
+            edit_event_form.player_higher_skill_level.data = event_tags.higher_player_skill_level_id
+            
+            edit_event_form.game_system.default = event.game_system_id
+            edit_event_form.age_group.default = event_tags.age_group_id
+            edit_event_form.campaign_focus.default = event_tags.campaign_focus_id
+            edit_event_form.player_lower_skill_level.default = event_tags.lower_player_skill_level_id
+            edit_event_form.player_higher_skill_level.default = event_tags.higher_player_skill_level_id
+            edit_event_form.process()
             edit_event_form.title.data = event.title
             edit_event_form.description.data = event.description
-            edit_event_form.game_system.data = [event.game_system_id]
-            edit_event_form.age_group.data = [event_tags.age_group_id]
-            edit_event_form.campaign_focus.data = [event_tags.campaign_focus_id]
-            edit_event_form.player_lower_skill_level.data = [event_tags.lower_player_skill_level_id]
-            edit_event_form.player_higher_skill_level.data = [event_tags.higher_player_skill_level_id]
+            
+
+            
             edit_event_form.cost.data = event.cost
             edit_event_form.images.data = event.images
             edit_event_form.location.data = event.location
@@ -230,8 +243,9 @@ def edit(id):
             edit_event_form.session_zero.data = event_tags.session_zero
             edit_event_form.homebrew.data = event_tags.homebrew
             edit_event_form.open_world.data = event_tags.open_world
+            return render_template('events/creation.html', form=edit_event_form, event=event, heading='edit_event')
 
-    return render_template('events/creation.html', form=edit_event_form, event=event, heading='edit_event')
+    
 
 @bp.route('/events/cancel/<id>', methods=['GET', 'POST'])
 def cancel_event(id):
