@@ -35,15 +35,20 @@ def showevent(id):
             tickets = booking_form.amount.data
             total_cost = event.cost * tickets
             purchase_date =  datetime.now()
-            new_booking = Booking(user_id = user_id, event_id = event_id, unique_identifier = unique_identifier,
-                            tickets = tickets, purchase_date = purchase_date, total_cost = total_cost)
-            
-            db.session.add(new_booking)
-            db.session.flush()
-            event.update_purchased_tickets()
-            db.session.commit()
-            return redirect(url_for('events.showevent', id=id))
-            flash("Tickets Purchased Sucessfully")
+            booking_valid = Booking.is_valid_booking(event,tickets)
+            if booking_valid[0]:
+                new_booking = Booking(user_id = user_id, event_id = event_id, unique_identifier = unique_identifier,
+                                tickets = tickets, purchase_date = purchase_date, total_cost = total_cost)
+                db.session.add(new_booking)
+                db.session.flush()
+                event.update_purchased_tickets()
+                db.session.commit()
+                flash("Tickets Purchased Sucessfully")
+                return redirect(url_for('events.showevent', id=id))
+               
+            else:
+                flash(booking_valid[1])
+                return redirect(url_for('events.showevent', id=id))
             
         
 

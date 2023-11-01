@@ -4,12 +4,17 @@
 {% block content %}
 
 <div class="container padding">
-    <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+    <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-3">
         {% for booking in bookings %}
         <div class="col p-2">
             <div class="card h-100">
                 <span class="badge badge-theme">{{booking.event.status.name}}</span>
-                <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img-top">
+                <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img">
+                <div class="card-img-overlay">
+                    <div class="position-absolute bottom-0 end-0">
+                        <span class="badge bg-secondary">Test</span>
+                    </div>
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ booking.event.title }}</h5>
                     <ul class="list-group list-group-flush">
@@ -18,10 +23,15 @@
                             <i class="text-secondary">Total Cost</i>
                         </li>
                         <li class="list-group-item">
-                            <i class="bi bi-upc-scan"></i> <p class="text-danger">{{booking.unique_identifier}}</h3>
+                            <i class="bi bi-upc-scan"></i>
+                            <h3 class="text-danger">{{booking.unique_identifier}}</h3>
+                            <i class="bi bi-calendar-check"></i> Purchased <b>{{booking.purchase_date.strftime("%d/%m/%Y")}}</b>
                         </li>
                         <li class="list-group-item">
-                            <i class="bi bi-people-fill"></i></i>   <b>{{ booking.tickets }}</b> Tickets Purchased
+                            <i class="bi bi-people-fill"></i></i> <b>{{ booking.tickets }}</b> Tickets Purchased
+                        </li>
+                        <li class="list-group-item">
+                            <h3>Event Info</h3>
                         </li>
                         <li class="list-group-item">
                             <i class="bi bi-calendar-date"></i> {{ booking.event.date.strftime("%d/%m/%Y") }}
