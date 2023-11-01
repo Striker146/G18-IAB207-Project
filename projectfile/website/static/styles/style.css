@@ -97,3 +97,7 @@ h1, h2, h3, h4, h5, h6 {
 .card-img-fit {
   object-fit: cover;
 }
+
+.tag-margin {
+  margin: 0.05rem;
+}
