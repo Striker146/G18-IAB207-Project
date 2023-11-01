@@ -12,7 +12,10 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     username = db.Column(db.String(100), index=True, nullable=False)
     email = db.Column(db.String(100), index=True, nullable=False)
+    address = db.Column(db.String(100), index=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
+    
+    
     events = db.relationship('Event', backref='owner')
     comments = db.relationship('Comment', backref='user')
     bookings = db.relationship('Booking', backref='user', order_by='Booking.id.desc()')
