@@ -26,6 +26,9 @@
                             <i class="bi bi-clock"></i> {{ event.start_time.strftime("%I:%M %p") }} - {{
                             event.end_time.strftime("%I:%M %p") }}
                         </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-gear-fill"></i></i> {{event.game_system.name}}
+                          </li>
                         <li class="list-group-item"><i class="bi-globe"> {{ event.location }} </i></li>
                     </ul>
                 </div>
