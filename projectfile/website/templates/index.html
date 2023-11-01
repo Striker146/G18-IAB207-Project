@@ -2,89 +2,88 @@
 {% set active_page = 'home' %}
 
 {% block header %}
-  <!--Jumbotron-->
-  <div class="p-5 mb-4 bg-light rounded-3">
+<!--Jumbotron-->
+<div class="p-5 mb-4 bg-light rounded-3">
 
-    <div class="container">
+  <div class="container">
 
 
 
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <div class="text-center">
-            <img src="{{ url_for('static', filename='img/logo.png') }}" class="img-fluid mx-auto" alt="...">
-          </div>
+    <div class="row">
+      <div class="col-12 col-lg-4">
+        <div class="text-center">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" class="img-fluid mx-auto" alt="...">
         </div>
+      </div>
 
-        <div class="col-12 col-md-8 fs-2">
-          <h1 class="display-5 fw-bold">Yours Quest for the Perfect TTRPG Table Ends Here!</h1>
-          RollTables is your ultimate gateway to the world of tabletop roleplaying adventures. Whether you're a Dungeon
-          Master in search of eager adventurers or a player seeking the perfect TTRPG group, our platform brings gamers
-          together. Explore a realm of endless possibilities, forge unforgettable friendships, and embark on epic
-          quests.
-        </div>
+      <div class="col-12 col-lg-8 fs-2">
+        <h1 class="display-5 fw-bold">Yours Quest for the Perfect TTRPG Table Ends Here!</h1>
+        RollTables is your ultimate gateway to the world of tabletop roleplaying adventures. Whether you're a Dungeon
+        Master in search of eager adventurers or a player seeking the perfect TTRPG group, our platform brings gamers
+        together. Explore a realm of endless possibilities, forge unforgettable friendships, and embark on epic
+        quests.
       </div>
     </div>
   </div>
+</div>
 {% endblock %}
 
-{% block content %}   
-  <main>
-    <!-- Upcoming Games Container -->
-    <h2 class="text-center">Upcoming Games</h2>
+{% block content %}
+<main>
+  <!-- Upcoming Games Container -->
+  <h2 class="text-center">Upcoming Games</h2>
 
-    
-    
-    <div class="container text-center">
-      <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        {%for event in events%}
-        <div class="col">
-          <div class="card h-100">
-            <span class="badge badge-theme">{{event.status.name}}</span>
-            <img src={{ url_for('static', filename=event.images[0].filepath) }} class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">{{event.title}}</h5>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <h3>A${{event.cost|float|round(2)}}</h3>
-                </li>
-                <li class="list-group-item">
-                  <i class="bi bi-calendar-date"></i> {{event.date}}
-                </li>
-                <li class="list-group-item">
-                  <i class="bi bi-clock"></i> {{event.start_time}}
-                </li>
-                <li class="list-group-item"><i class="bi bi-person-fill"></i> {{event.remaining_tickets}} of {{event.total_tickets}} seats remaining </li>
-                <li class="list-group-item"><i class="bi-globe">  </i>{{event.location}}</li>
-                <li class="list-group-item">
-                  <p class="card-text">
-                    {{event.description}} </p>
-                </li>
-        
-                <li class="list-group-item">
-                  <p class="card-text">
-                    <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
-                      Focused</span> <span class="badge badge-theme">Amateur - Veteran Players</span>
-                    <span class="badge badge-theme">One Shot</span> <span class="badge badge-theme">From Session
-                      Zero</span> <span class="badge badge-theme">Homebrew Rules</span> <span
-                      class="badge badge-theme">Open World</span>
-                  </p>
-                </li>
-              </ul>
-            </div>
-            <div class="card-footer">
-              <a href="{{ url_for('events.showevent', id=event.id) }}"  class="btn button-theme stretched-link">View Game Details</a>
-            </div>
+
+
+  <div class="container text-center">
+    <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-4">
+      {%for event in events%}
+      <div class="col">
+        <div class="card h-100">
+          <span class="badge badge-theme">{{event.status.name}}</span>
+          
+          <div class="ratio ratio-1x1">
+            <img src={{ url_for('static', filename=event.images[0].filepath) }} class="card-img-fit">
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title">{{event.title}}</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <h3>A${{event.cost|float|round(2)}}</h3>
+              </li>
+              <li class="list-group-item">
+                <i class="bi bi-calendar-date"></i> {{event.date}}
+              </li>
+              <li class="list-group-item">
+                <i class="bi bi-clock"></i> {{event.start_time}}
+              </li>
+              <li class="list-group-item"><i class="bi bi-person-fill"></i> {{event.remaining_tickets}} of
+                {{event.total_tickets}} seats remaining </li>
+              <li class="list-group-item"><i class="bi-globe"> </i>{{event.location}}</li>
+              <li class="list-group-item">
+                <p class="card-text">
+                  {% for tag in event.tags[0].get_tag_messages() %}
+                  <span class="badge rounded-pill badge-theme tag-margin"> <span>{{tag}}</span></span>
+                    {% endfor %}
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a href="{{ url_for('events.showevent', id=event.id) }}" class="btn button-theme stretched-link">View Game
+              Details</a>
           </div>
         </div>
+      </div>
       {%endfor%}
     </div>
-      <div class="mb-3"></div>
+    <div class="mb-3"></div>
 
-      <div class="d-grid gap-2 ml-3 padding">
-        <a href="{{ url_for('events.list')}}" class="btn button-theme"  type="button">View More Events</a>
-      </div>
+    <div class="d-grid gap-2 ml-3 padding">
+      <a href="{{ url_for('events.list')}}" class="btn button-theme" type="button">View More Events</a>
     </div>
+  </div>
   </div>
         {% endblock %}
 

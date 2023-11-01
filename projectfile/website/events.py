@@ -35,15 +35,20 @@ def showevent(id):
             tickets = booking_form.amount.data
             total_cost = event.cost * tickets
             purchase_date =  datetime.now()
-            new_booking = Booking(user_id = user_id, event_id = event_id, unique_identifier = unique_identifier,
-                            tickets = tickets, purchase_date = purchase_date, total_cost = total_cost)
-            
-            db.session.add(new_booking)
-            db.session.flush()
-            event.update_purchased_tickets()
-            db.session.commit()
-            return redirect(url_for('events.showevent', id=id))
-            flash("Tickets Purchased Sucessfully")
+            booking_valid = Booking.is_valid_booking(event,tickets)
+            if booking_valid[0]:
+                new_booking = Booking(user_id = user_id, event_id = event_id, unique_identifier = unique_identifier,
+                                tickets = tickets, purchase_date = purchase_date, total_cost = total_cost)
+                db.session.add(new_booking)
+                db.session.flush()
+                event.update_purchased_tickets()
+                db.session.commit()
+                flash("Tickets Purchased Sucessfully")
+                return redirect(url_for('events.showevent', id=id))
+               
+            else:
+                flash(booking_valid[1])
+                return redirect(url_for('events.showevent', id=id))
             
         
 
@@ -143,27 +148,23 @@ def list():
     search_form = SearchForm()
     search_form.set_select_fields()
     events_query = db.session.query(Event)
-
-    if request.method == 'POST':
-        print("Form submitted")
-
     
     # If the form is submitted
     if request.method == 'POST':
         game_system_id = search_form.game_system.data
         status_id = search_form.status.data
 
-        
+
         search_term = search_form.search.data
         if search_term:
             events_query = events_query.filter(Event.description.like(f"%{search_term}%"))
 
-        
+
         if not game_system_id == "0":
             print("Searching Game System")
             print(game_system_id) 
             events_query = events_query.filter_by(game_system_id=game_system_id)
-        
+
         if not status_id == "0":
             print("Searching status")
             print(status_id)
