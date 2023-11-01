@@ -99,11 +99,38 @@ class EventTag(db.Model):
     lower_player_skill_level = db.relationship("PlayerSkillLevel", foreign_keys=[lower_player_skill_level_id],uselist=False)
     higher_player_skill_level = db.relationship("PlayerSkillLevel", foreign_keys=[higher_player_skill_level_id],uselist=False)
     
+    def get_tag_messages(self):
+        tags = [self.age_group.get_tag_message(),
+                self.campaign_focus.get_tag_message(),
+                PlayerSkillLevel.get_tag_message(self.lower_player_skill_level,self.higher_player_skill_level)]
+        if self.one_shot:
+            tags.append("One Shot")
+        if self.session_zero:
+            tags.append("Session Zero")
+        if self.homebrew:
+            tags.append("Homebrew")
+        if self.open_world:
+            tags.append("Open World")
+        
+        return tags
+        
+
+    
 class AgeGroup(db.Model):
     __tablename__ = 'event_age_groups'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), index=True, nullable=False, unique=True)
     event_tags = db.relationship('EventTag', backref='age_group')
+    def get_tag_message(self):
+        match self.id:
+            case 1:
+                return "All Ages"
+            case 2:
+                return "18+ Only"
+            case 3:
+                return "Under 18 Only"
+                
+            
         
 class CampaignFocus(db.Model):
     __tablename__ = 'event_campaign_focuses'
@@ -111,6 +138,15 @@ class CampaignFocus(db.Model):
     name = db.Column(db.String(100), index=True, nullable=False, unique=True)
     event_tags = db.relationship('EventTag', backref='campaign_focus')
     
+    def get_tag_message(self):
+        match self.id:
+            case 1:
+                return "Roleplay and Combat Focused"
+            case 2:
+                return "Combat Focused"
+            case 3:
+                return "Roleplay Focused"
+
 class PlayerSkillLevel(db.Model):
     __tablename__ = 'event_player_skill_levels'
     id = db.Column(db.Integer, primary_key=True)
@@ -118,6 +154,14 @@ class PlayerSkillLevel(db.Model):
     
     def get_event_tags(self):
         db.session.scalar(db.select(EventTag).where(EventTag.lower_player_skill_level_id <= self.id and EventTag.lower_player_skill_level_id >= self.id))
+    
+    @staticmethod
+    def get_tag_message(lower_level, higher_level):
+        if lower_level.id == higher_level.id:
+            return f"{lower_level.name} Player's Only"
+        else:
+            return f"For {lower_level.name} - {higher_level.name} Players"
+        
     
     
 

@@ -10,13 +10,13 @@
 
 
     <div class="row">
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-lg-4">
         <div class="text-center">
           <img src="{{ url_for('static', filename='img/logo.png') }}" class="img-fluid mx-auto" alt="...">
         </div>
       </div>
 
-      <div class="col-12 col-md-8 fs-2">
+      <div class="col-12 col-lg-8 fs-2">
         <h1 class="display-5 fw-bold">Yours Quest for the Perfect TTRPG Table Ends Here!</h1>
         RollTables is your ultimate gateway to the world of tabletop roleplaying adventures. Whether you're a Dungeon
         Master in search of eager adventurers or a player seeking the perfect TTRPG group, our platform brings gamers
@@ -89,16 +89,9 @@
               <li class="list-group-item"><i class="bi-globe"> </i>{{event.location}}</li>
               <li class="list-group-item">
                 <p class="card-text">
-                  {{event.description}} </p>
-              </li>
-
-              <li class="list-group-item">
-                <p class="card-text">
-                  <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
-                    Focused</span> <span class="badge badge-theme">Amateur - Veteran Players</span>
-                  <span class="badge badge-theme">One Shot</span> <span class="badge badge-theme">From Session
-                    Zero</span> <span class="badge badge-theme">Homebrew Rules</span> <span
-                    class="badge badge-theme">Open World</span>
+                  {% for tag in event.tags[0].get_tag_messages() %}
+                  <span class="badge rounded-pill badge-theme tag-margin"> <span>{{tag}}</span></span>
+                    {% endfor %}
                 </p>
               </li>
             </ul>
