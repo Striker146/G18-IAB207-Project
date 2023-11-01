@@ -5,6 +5,7 @@
 {% block content %}
   <div class="container">
     <form action="" method="post" enctype="multipart/form-data">
+      {{ form.csrf_token }}
       {{ form.hidden_tag() }}
       <div class="row text-center">
         <h2>Title</h2>
@@ -123,4 +124,26 @@
       </div>
     </form>
 
+<script>
+  document.querySelector('form').addEventListener('submit', function (e) {
+      const fileInput = document.querySelector('input[type="file"]');
+      const errorElement = document.getElementById('error-message');
+      errorElement.innerHTML = '';  // Clear previous error message
+
+      const allowedExtensions = ['.jpg', '.png', '.jpeg', '.tif'];
+      const files = fileInput.files;
+
+      for (let i = 0; i < files.length; i++) {
+          const fileName = files[i].name;
+          const fileExtension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
+
+          if (!allowedExtensions.includes('.' + fileExtension.toLowerCase())) {
+              errorElement.innerHTML = 'File does not have an approved extension: ' + allowedExtensions.join(', ');
+              e.preventDefault();  // Prevent form submission
+              break;
+          }
+      }
+  });
+</script>
+  
 {% endblock %}

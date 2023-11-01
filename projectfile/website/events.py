@@ -57,7 +57,7 @@ def creation():
     #Event.compare_dates()
     create_event_form = EventCreationForm()
     create_event_form.get_choices()
-
+    
     if (create_event_form.validate_on_submit()==True):
             title = create_event_form.title.data
             description = create_event_form.description.data
@@ -100,9 +100,10 @@ def creation():
             db.session.commit()
             #commit to the database and redirect to HTML page
             return redirect(url_for('main.index'))
-    
+        
     #the else is called when the HTTP request calling this page is a GET
     else:
+        print(create_event_form.errors)
         return render_template('events/creation.html', form=create_event_form, heading='event_creation')
 
 
