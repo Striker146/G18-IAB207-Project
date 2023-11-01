@@ -62,7 +62,7 @@ def creation():
     #Event.compare_dates()
     create_event_form = EventCreationForm()
     create_event_form.get_choices()
-
+    
     if (create_event_form.validate_on_submit()==True):
             title = create_event_form.title.data
             description = create_event_form.description.data
@@ -105,9 +105,10 @@ def creation():
             db.session.commit()
             #commit to the database and redirect to HTML page
             return redirect(url_for('main.index'))
-    
+        
     #the else is called when the HTTP request calling this page is a GET
     else:
+        print(create_event_form.errors)
         return render_template('events/creation.html', form=create_event_form, heading='event_creation')
 
 
@@ -153,9 +154,11 @@ def list():
         game_system_id = search_form.game_system.data
         status_id = search_form.status.data
 
+
         search_term = search_form.search.data
         if search_term:
             events_query = events_query.filter(Event.description.like(f"%{search_term}%"))
+
 
         if not game_system_id == "0":
             print("Searching Game System")
