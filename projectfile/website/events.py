@@ -142,14 +142,30 @@ def get_events_by_username(username):
     events_by_user = Event.query.filter_by(owner_id=user.id).all()
     return events_by_user
 
-@bp.route('/events/list')
+@bp.route('/events/list', methods=['GET', 'POST'])
 def list():
     search_form = SearchForm()
     search_form.set_select_fields()
-    events = db.session.scalars(db.select(Event)).all()
-    print(len(events))
-    return render_template('events/list.html', events=events,search_form=search_form)
+    events_query = db.session.query(Event)
 
+    if request.method == 'POST':
+        print("Form submitted")
+
+    
+    # If the form is submitted
+    if request.method == 'POST':
+        search_term = search_form.search.data
+        if search_term:
+            events_query = events_query.filter(Event.description.like(f"%{search_term}%"))
+
+        if search_form.game_system.data:
+            events_query = events_query.filter_by(game_system_id=search_form.game_system.data)
+        if search_form.status.data:
+            events_query = events_query.filter_by(status_id=search_form.status.data)
+        # Add more filters as needed...
+
+    events = events_query.all()
+    return render_template('events/list.html', events=events,search_form=search_form)
 
 
 @bp.route('/event/<id>/edit', methods=['GET', 'POST'])
@@ -225,4 +241,3 @@ def cancel_event(id):
 @login_required
 def my_bookings():  
     return render_template('events/my_bookings.html', bookings=current_user.bookings, heading="my_bookings")
-

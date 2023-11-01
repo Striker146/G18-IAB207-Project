@@ -123,20 +123,21 @@
 
     // This function is triggered whenever the user changes the selection in the game system dropdown.
     function filterByGameSystem() {
-      // Fetch the currently selected game system's ID from the dropdown.
-      const gameSystemId = document.getElementById('gameSystemFilter').value;
+        // Fetch the currently selected game system's ID from the dropdown.
+        const gameSystemId = document.getElementById('gameSystemFilter').value;
 
-      // Check if a specific game system is chosen (i.e., the value is not empty which corresponds to the "All" option).
-      if (gameSystemId !== "") {
-        // If a specific game system is chosen, redirect the user to the homepage
-        // but with a query parameter indicating the chosen game system.
-        // This will cause the server to filter events based on this game system.
-        window.location.href = `/?game_system_id=${gameSystemId}`;
-      } else {
-        // If the "All" option is selected (or no specific game system is chosen),
-        // redirect the user to the homepage without any filtering query parameter.
-        window.location.href = `/`;
-      }
+        // Check if a specific game system is chosen (i.e., the value is not empty which corresponds to the "All" option).
+        if (gameSystemId !== "") {
+            // If a specific game system is chosen, redirect the user to the homepage
+            // but with a query parameter indicating the chosen game system.
+            // This will cause the server to filter events based on this game system.
+            window.location.href = `/?game_system_id=${gameSystemId}`;
+        } else {
+            // If the "All" option is selected (or no specific game system is chosen),
+            // redirect the user to the homepage without any filtering query parameter.
+            window.location.href = `/`;
+        }
     }
-  </script>
-  {% endblock %}
+    </script>
+        {% endblock %}
+
