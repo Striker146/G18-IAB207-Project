@@ -43,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .button-theme:disabled{
-  background-color: #000000;
+  background-color: #1d1d1d;
   color: white;
 }
 
@@ -92,4 +92,8 @@ h1, h2, h3, h4, h5, h6 {
 .theme-dark{
   background-color: #2e2e2e;
   color: white;
+}
+
+.card-img-fit {
+  object-fit: cover;
 }

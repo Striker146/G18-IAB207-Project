@@ -9,10 +9,12 @@
         <div class="col p-2">
             <div class="card h-100">
                 <span class="badge badge-theme">{{booking.event.status.name}}</span>
-                <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img">
+                <div class="ratio ratio-1x1">
+                    <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img-fit">
+                </div>
                 <div class="card-img-overlay">
                     <div class="position-absolute top-0 end-0 m-4">
-                        <span class="badge theme">Purchased on {{booking.purchase_date.strftime("%d/%m/%Y" " @ " "%I:%M %p")}}</span>
+                        <span class="badge theme">Purchased on {{booking.purchase_date.strftime("%d/%m/%Y" " @ " "%I:%M%p")}}</span>
                     </div>
                 </div>
                 <div class="card-body">
@@ -26,7 +28,7 @@
                         </li>
                         <li class="list-group-item">
                             <i class="bi bi-upc-scan"></i>
-                            <span class="text-danger fs-3">  {{booking.unique_identifier}}</span>
+                            <span class="text-danger fs-3"> {{booking.unique_identifier}}</span>
                             <div class="text-secondary">Ticket ID</div>
                         </li>
                         <li class="list-group-item">
