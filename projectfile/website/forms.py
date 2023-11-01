@@ -48,6 +48,7 @@ class MultiFileAllowed(object):
 class RegisterForm(FlaskForm):
     user_name=StringField("User Name", validators=[InputRequired()])
     email_id = StringField("Email Address", validators=[Email("Please enter a valid email")])
+    address  = StringField("Address", validators=[InputRequired()])
     phone_number = TelField("Phone Number" ,validators=[Regexp('[0-9]', message='Please enter a legitimate phone number with exactly 10 digits.')])
     #linking two fields - password should be equal to data entered in confirm
     password=PasswordField("Password", validators=[InputRequired(),
