@@ -70,6 +70,27 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #2e2e2e;
 }
 
+.btn-profile-dropdown{
+  color: #ffffff;
+  background-color: rgb(230, 0, 23)
+}
+
+
+.btn-profile-dropdown:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #d10000;
+}
+
+.dropdown-profile {
+  color: #fff;
+  background-color: #1d1d1d;
+}
+
+.dropdown-item-profile:hover {
+  background-color: #d10000;
+  color : #fff;
+}
+
 
 
 
