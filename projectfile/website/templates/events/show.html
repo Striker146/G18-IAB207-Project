@@ -6,15 +6,21 @@
 <div class="container bottom_padding">
   <div class="row d-flex justify-content-center">
     <div class="col-12  col-sm-12 col-md-6">
-      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner w-20">
+
+      <div id="carouselExampleAutoplaying" class="carousel slide object-fit-cover" data-bs-ride="carousel">
+        <div class="carousel-inner w-20 object-fit-cover">
           <div class="carousel-item active">
-            <img src="{{ url_for('static', filename=event.images[0].filepath) }}" class="d-block w-100 rounded"
-              alt="...">
+            <div class="ratio ratio-1x1">
+              <img src="{{ url_for('static', filename=event.images[0].filepath) }}"
+                class="d-block w-100 rounded object-fit-cover" alt="...">
+            </div>
           </div>
           {%for image in event.images[1:]%}
           <div class="carousel-item">
-            <img src="{{ url_for('static', filename=image.filepath) }}" class="d-block w-100 rounded" alt="...">
+            <div class="ratio ratio-1x1">
+              <img src="{{ url_for('static', filename=image.filepath) }}" class="d-block w-100 rounded object-fit-cover"
+                alt="...">
+            </div>
           </div>
           {%endfor%}
         </div>
@@ -37,7 +43,7 @@
       <div class="card text-center">
         <div class="card-header">
           <div class="row d-flex justify-content-center">
-            <span class="badge badge-theme-{{event.status_id}}">{{event.status.name}}</span>
+            <span class="badge badge-theme-{{event.status.name}}">{{event.status.name}}</span>
           </div>
         </div>
         <div class="card-body">
@@ -52,17 +58,18 @@
                 <li class="list-group-item"><i class="bi bi-person-fill"></i> {{event.remaining_tickets}} of
                   {{event.total_tickets}} seats remaining </li>
                 <li class="list-group-item"><i class="bi-globe"> {{event.location}} </i></li>
-                <li class="list-group-item"> <i class="bi bi-calendar-date"></i> {{event.date}} {{event.time}} </i>
+                <li class="list-group-item"> <i class="bi bi-calendar-date"></i> {{ event.date.strftime("%d/%m/%Y") }} </i>
+                </li>
+                <li class="list-group-item"> <i class="bi bi-clock"> {{ event.start_time.strftime("%I:%M %p") }} - {{
+                  event.end_time.strftime("%I:%M %p") }} </i>
                 </li>
                 <li class="list-group-item"> <i class="bi bi-gear-fill"></i> {{ event.game_system.name }} </i></li>
 
                 <li class="list-group-item">
                   <p class="card-text">
-                    <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
-                      Focused</span> <span class="badge badge-theme">Amateur - Veteran Players</span>
-                    <span class="badge badge-theme">One Shot</span> <span class="badge badge-theme">From Session
-                      Zero</span> <span class="badge badge-theme">Homebrew Rules</span> <span
-                      class="badge badge-theme">Open World</span>
+                    {% for tag in event.tags[0].get_tag_messages() %}
+                    <span class="badge rounded-pill badge-theme tag-margin"> <span>{{tag}}</span></span>
+                    {% endfor %}
                   </p>
                 </li>
               </ul>
@@ -74,21 +81,28 @@
                 </div>
               </div>
               </ul>
-              {% if current_user.is_authenticated %}
+              {% if not current_user.is_authenticated %}
+              <div class="d-flex justify-content-center padding">
+                <div class="col p-3">
+                  <a href="{{url_for('auth.login')}}" class="btn button-theme" role="button">Go to Login Page to buy a
+                    ticket</a>
+                </div>
+              </div>
+              {% elif not event.status.id == 1 %}
+              <div class="d-flex justify-content-center padding">
+                <button type="button" class="btn button-theme" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  disabled>
+                  Session is No Longer Available for Purchase
+                </button>
+              </div>
+              {% else %}
               <div class="d-flex justify-content-center padding">
                 <button type="button" class="btn button-theme" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Purchase Ticket's
                 </button>
               </div>
-              <div class="d-flex justify-content-center padding">
-              </div>
-              {% else %}
-              <div class="d-flex justify-content-center padding">
-                <div class="col p-3">
-                  <a href="{{url_for('auth.login')}}" class="btn button-theme" role="button">Go to Login Page to buy a ticket</a>
-                </div>
-              </div>
               {% endif %}
+
 
 
 
@@ -146,57 +160,53 @@
     <div class="col-12 col-md-6">
       <div>
         <h1> Comments</h1>
-        
-          <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-            <div class="card-body p-4">
-              {%for comment in event.comments%}
-              <div class="card mb-4">
-                <div class="card-body">
-                  <p>
-                    {{comment.message}}
-                  </p>
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex">
-                      <i class="fa-solid fa-user mt-1" style="color: red;"></i>
-                      <p class="small mb-0 ms-2">{{comment.user.username}}</p>
-                    </div>
-                    <div class="d-flex flex-row align-items-center">
-                      <p class="small text-muted mb-0">{{comment.format_datetime()}}</p>
-                    </div>
+
+        <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+          <div class="card-body p-4">
+            {%for comment in event.comments%}
+            <div class="card mb-4">
+              <div class="card-body">
+                <p>
+                  {{comment.message}}
+                </p>
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex">
+                    <i class="fa-solid fa-user mt-1" style="color: red;"></i>
+                    <p class="small mb-0 ms-2">{{comment.user.username}}</p>
+                  </div>
+                  <div class="d-flex flex-row align-items-center">
+                    <p class="small text-muted mb-0">{{comment.format_datetime()}}</p>
                   </div>
                 </div>
               </div>
-              {% endfor %}
-              {% if current_user.is_authenticated %}
-              <form action="" method="post" enctype="multipart/form-data">
-                {{ comment_form.hidden_tag() }}
-                <div class="form-outline mb-4">
-                  <div class = "col">
-                    {{ comment_form.message(class_ = 'form-control') }}
-                    <div class="col p-3">
-                      {{ comment_form.submit(class_ = 'form-control') }}
-                    </div>
+            </div>
+            {% endfor %}
+            {% if current_user.is_authenticated %}
+            <form action="" method="post" enctype="multipart/form-data">
+              {{ comment_form.hidden_tag() }}
+              <div class="form-outline mb-4">
+                <div class="col">
+                  {{ comment_form.message(class_ = 'form-control') }}
+                  <div class="col p-3">
+                    {{ comment_form.submit(class_ = 'form-control') }}
                   </div>
                 </div>
-              </form>
-              {% else %}
-              <div class="col">
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                  readonly> You must be logged in to create comments</textarea>
-                <div class="col p-3">
-                  <a href="{{url_for('auth.login')}}" class="btn button-theme" role="button">Go to Login Page</a>
-                </div>
-                {% endif %}
+              </div>
+            </form>
+            {% else %}
+            <div class="col">
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                readonly> You must be logged in to create comments</textarea>
+              <div class="col p-3">
+                <a href="{{url_for('auth.login')}}" class="btn button-theme" role="button">Go to Login Page</a>
+              </div>
+              {% endif %}
             </div>
           </div>
-        
-          
+        </div>
       </div>
-      
-      
     </div>
   </div>
-    
 </div>
 
 <script>
@@ -211,7 +221,8 @@
 
   function updateModalText() {
     const amount = parseInt(ticketAmountInput.value, 10) || 0;
-    var eventCost = {{ event.cost| tojson }}
+    var eventCost = {{ event.cost| tojson
+  }}
 
   ticketCountSpan.textContent = amount;
   totalCostSpan.textContent = "$" + (amount * eventCost);
@@ -219,7 +230,7 @@
 
   updateModalText()
 
-  
+
 
 </script>
 

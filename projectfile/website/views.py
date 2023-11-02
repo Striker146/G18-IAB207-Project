@@ -8,24 +8,10 @@ bp = Blueprint('main', __name__)
 @bp.route('/')
 def index():
     Event.compare_dates()
-    # Fetch the value of 'game_system_id' from the URL's query parameters.
-    game_system_id = request.args.get('game_system_id')
-    
-    # Check if a game_system_id exists (i.e., a specific game system was selected by the user).
-    if game_system_id:
-    # If a specific game system is chosen, fetch all the events that match that game_system_id.
-        events = db.session.scalars(db.select(Event).where(Event.game_system_id == game_system_id)).all()
-    else:
-    # If no specific game system is chosen (i.e., "All" option was selected or no filter is applied),
-    # fetch all the events regardless of their game_system_id.
-        events = db.session.scalars(db.select(Event)).all()
-
-    # Fetch a list of all the available game systems for populating the dropdown.
-    game_systems = db.session.scalars(db.select(GameSystem)).all()
-
-    # Render the 'index.html' template with the list of events, list of game systems,
-    # and the current selected game system (if any).
-    return render_template('index.html', events=events, game_systems=game_systems, current_game_system=game_system_id)
+    # Fetch the 4 events
+    events = db.session.scalars(db.select(Event)).fetchmany(4)
+    # Render the 'index.html' template with the list of events
+    return render_template('index.html', events=events)
 
 #@bp.route('/event_creation')
 #def event_creation():
@@ -39,6 +25,6 @@ def search():
         events = db.session.scalars(db.select(Event).where(Event.description.like(query)))
         return render_template('index.html', events= events)
     else:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('events.list'))
 
 
