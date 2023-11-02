@@ -13,6 +13,7 @@ bp = Blueprint('events', __name__)
 
 @bp.route('/event/<id>', methods=['GET', 'POST'])
 def showevent(id):
+    Event.compare_dates()
     event = db.session.scalar(db.select(Event).where(Event.id==id))
     comment_form = CommentForm()
     booking_form = BookingForm()
@@ -58,8 +59,7 @@ def showevent(id):
 @bp.route('/event/creation', methods=['GET', 'POST'])
 @login_required
 def creation():
-    #Put your code that will run it here
-    #Event.compare_dates()
+    Event.compare_dates()
     create_event_form = EventCreationForm()
     create_event_form.get_choices()
 
@@ -132,6 +132,7 @@ def comment(id):
 @bp.route('/my_events')
 @login_required
 def my_events():
+    Event.compare_dates()
     user_events = get_events_by_username(current_user.username)
 
     return render_template('events/my_events.html', events=user_events, heading="my_events")
@@ -175,6 +176,7 @@ def list():
 
     events = events_query.all()
     return render_template('events/list.html', events=events,search_form=search_form)
+
 
 
 @bp.route('/event/<id>/edit', methods=['GET', 'POST'])
@@ -255,6 +257,7 @@ def cancel_event(id):
     db.session.commit()
     flash("Event Cancelled Successfully")
     return redirect(url_for('events.my_events', id=id))
+
 
 @bp.route('/events/my_bookings', methods=['GET', 'POST'])
 

@@ -7,6 +7,7 @@ bp = Blueprint('main', __name__)
 
 @bp.route('/')
 def index():
+    Event.compare_dates()
     # Fetch the 4 events
     events = db.session.scalars(db.select(Event)).fetchmany(4)
     # Render the 'index.html' template with the list of events

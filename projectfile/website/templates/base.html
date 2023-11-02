@@ -51,10 +51,10 @@
             </li>
             {% if current_user.is_authenticated %}
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle bg-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle btn-danger" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-user"></i>
               </button>
-              <ul class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton1">
+              <ul class="dropdown-menu bg-danger" aria-labelledby="dropdownMenuButton1">
                 <li class="nav-item dropdown-item">
                   <a class="nav-link " href="#">{{current_user.username}}</a>
                 </li>
