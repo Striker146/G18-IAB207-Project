@@ -53,6 +53,7 @@
             <div>
               <p class="card-text">
               <p class="fw-bold"> {{ event.title }}</p>
+              <i class="text-secondary">By {{event.owner.username}}</i>
               </p>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"><i class="bi bi-person-fill"></i> {{event.remaining_tickets}} of

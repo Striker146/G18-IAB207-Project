@@ -48,6 +48,7 @@
 
           <div class="card-body">
             <h5 class="card-title">{{event.title}}</h5>
+            <i class="text-secondary">By {{event.owner.username}}</i>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
                 <h3>A${{event.cost|float|round(2)}}</h3>

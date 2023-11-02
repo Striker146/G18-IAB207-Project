@@ -21,6 +21,7 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                             <h3 class="card-title">{{ booking.event.title }}</h3>
+                            <i class="text-secondary">By {{booking.event.owner.username}}</i>
                         </li>
                         <li class="list-group-item">
                             <h3>${{ booking.total_cost }}</h3>
