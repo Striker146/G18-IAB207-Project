@@ -52,7 +52,7 @@ class Event(db.Model):
     total_tickets = db.Column(db.Integer, nullable=False)
     purchased_tickets = db.Column(db.Integer, default=0, nullable=False)
     remaining_tickets = db.Column(db.Integer, default=0, nullable=False)
-    
+
     comments = db.relationship('Comment', backref='event', order_by='Comment.id.desc()')
     images = db.relationship('EventImage',backref="event")
     bookings = db.relationship("Booking",backref="event")
@@ -63,9 +63,22 @@ class Event(db.Model):
         return str
     
     def update_status(self):
-        if self.remaining_tickets ==0:
-            self.status_id == 3
+        if self.remaining_tickets <=0:
+            self.remaining_tickets = 0
+            self.status_id = 3
+    @staticmethod  
+    def compare_dates():
+        open_status_id = 1
+        open_status = db.session.scalar(db.select(EventStatus).where(EventStatus.id==open_status_id ))
+        for event in open_status.events:
+            current_datetime = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+            combined_datetime = datetime.combine(event.date, event.start_time).strftime("%d/%m/%Y, %H:%M:%S")
+            print(combined_datetime)
+            if current_datetime > combined_datetime:
+                event.status_id = 2
+        db.session.commit()
     
+        
     def update_purchased_tickets(self):
         bookings = Booking.query.filter(Booking.event_id == self.id).all()
         new_purchased_tickets = sum(booking.tickets for booking in bookings)
@@ -74,7 +87,6 @@ class Event(db.Model):
         print(new_remaining_tickets)
         self.purchased_tickets = new_purchased_tickets
         self.remaining_tickets = new_remaining_tickets
-
         self.update_status()
         
     

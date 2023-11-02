@@ -8,7 +8,7 @@
         {% for event in events %}
         <div class="col p-2">
             <div class="card h-100">
-                <span class="badge badge-theme">{{event.status_id}}</span>
+                <span class="badge badge-theme-{{event.status_id}}">{{event.status.name}}</span>
                 <img src={{ url_for('static', filename=event.images[0].filepath) }} class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">{{ event.title }}</h5>

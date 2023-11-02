@@ -28,8 +28,20 @@ h1, h2, h3, h4, h5, h6 {
   color: white;
 }
 
-.badge-theme {
+.badge-theme-1{
   background-color: red;
+  color: white;
+}
+.badge-theme-2{
+  background-color: gray;
+  color: white;
+}
+.badge-theme-3{
+  background-color: #eb8634;
+  color: white;
+}
+.badge-theme-4{
+  background-color: gray;
   color: white;
 }
 

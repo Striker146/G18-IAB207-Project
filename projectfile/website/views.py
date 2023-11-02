@@ -7,6 +7,7 @@ bp = Blueprint('main', __name__)
 
 @bp.route('/')
 def index():
+    Event.compare_dates()
     # Fetch the value of 'game_system_id' from the URL's query parameters.
     game_system_id = request.args.get('game_system_id')
     
