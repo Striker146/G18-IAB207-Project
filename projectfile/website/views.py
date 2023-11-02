@@ -19,6 +19,7 @@ def index():
     # If the form is submitted
     if request.method == 'POST':
         game_system_id = search_form.game_system.data
+    
 
     print(type(game_system_id))
     if not game_system_id == '0':
@@ -27,6 +28,9 @@ def index():
             events_query = events_query.filter_by(game_system_id=game_system_id)
             events = events_query.all()
             events = events[:4]
+    
+    if request.method == "GET":
+        events = db.session.scalars(db.select(Event)).fetchmany(4)
             
     # Render the 'index.html' template with the list of events
     return render_template('index.html', events=events,search_form=search_form)
