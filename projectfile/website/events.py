@@ -148,6 +148,7 @@ def get_events_by_username(username):
 
 @bp.route('/events/list', methods=['GET', 'POST'])
 def list():
+    Event.compare_dates()
     search_form = SearchForm()
     search_form.set_select_fields()
     events_query = db.session.query(Event)
@@ -253,9 +254,14 @@ def edit(id):
 @bp.route('/events/cancel/<id>', methods=['GET', 'POST'])
 def cancel_event(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
-    event.status_id = 4
-    db.session.commit()
-    flash("Event Cancelled Successfully")
+    if event.status.id == 2:
+        flash("You can't cancel an event in the past")
+    elif event.status.id == 4:
+        flash("The event is already cancelled")
+    else:
+        event.status_id = 4
+        db.session.commit()
+        flash("Event Cancelled Successfully")
     return redirect(url_for('events.my_events', id=id))
 
 
@@ -265,4 +271,5 @@ def cancel_event(id):
 @bp.route('/my_bookings')
 @login_required
 def my_bookings():  
+    Event.compare_dates()
     return render_template('events/my_bookings.html', bookings=current_user.bookings, heading="my_bookings")
