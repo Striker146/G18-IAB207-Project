@@ -72,14 +72,17 @@ class Event(db.Model):
     @staticmethod  
     def compare_dates():
         open_status_id = 1
-        inactive_status_id = 2
-        open_status = db.session.scalar(db.select(EventStatus).where(EventStatus.id==open_status_id or EventStatus.id==2))
-        for event in open_status.events:
-            current_datetime = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
-            combined_datetime = datetime.combine(event.date, event.start_time).strftime("%d/%m/%Y, %H:%M:%S")
-            print(combined_datetime)
-            if current_datetime > combined_datetime:
-                event.status_id = 2
+        soldout_status_id = 3
+        open_status = db.session.scalar(db.select(EventStatus).where(EventStatus.id==open_status_id))
+        closed_status = db.session.scalar(db.select(EventStatus).where(EventStatus.id==soldout_status_id))
+        checked_statuses = [open_status, closed_status]
+        for status_group in checked_statuses:
+            for event in status_group.events:
+                current_datetime = datetime.now()
+                combined_datetime = datetime.combine(event.date, event.start_time)
+                print(combined_datetime)
+                if current_datetime > combined_datetime:
+                    event.status_id = 2
         db.session.commit()
     
         
