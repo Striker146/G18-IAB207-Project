@@ -6,7 +6,74 @@
 <div class="p-5 mb-4 bg-light rounded-3">
 
   <div class="container">
+    <form action="" method="post" enctype="multipart/form-data">
+      {{ search_form.hidden_tag() }}
+      <div class="row text-center text-center d-flex justify-content-center bottom_padding">
+          <div class="col-12">
+              Search<div class="input-group">
+                  <span class="input-group-text" id="basic-addon3"><i class="bi bi-fonts"></i></span>
+                  {{ search_form.search(class_ = 'form-control') }}
+              </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+              Game System<div class="input-group mb-3">
+                  <span class="input-group-text"><i class="bi bi-gear-fill"></i></span>
+                  {{ search_form.game_system(class_ = 'form-control') }}
+              </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+              Status<div class="input-group">
+                  <span class="input-group-text" id="basic-addon3">$</span>
+                  {{ search_form.status(class_ = 'form-control') }}
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="input-group">
+                  {{ search_form.submit(class_ = 'form-control') }}
+              </div>
+          </div>
+      </div>
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
 
+                  </div>
+                  <div class="modal-body">
+                      <div class="row text-center text-center d-flex justify-content-center bottom_padding">
+                          <div class="col-12">
+                              Search<div class="input-group">
+                                  <span class="input-group-text" id="basic-addon3"><i class="bi bi-fonts"></i></span>
+                                  {{ search_form.search(class_ = 'form-control') }}
+                              </div>
+                          </div>
+                          <div class="col-12 col-md-6 col-lg-4">
+                              Game System<div class="input-group mb-3">
+                                  <span class="input-group-text"><i class="bi bi-gear-fill"></i></span>
+                                  {{ search_form.game_system(class_ = 'form-control') }}
+                              </div>
+                          </div>
+                          <div class="col-12 col-md-6 col-lg-4">
+                              Status<div class="input-group">
+                                  <span class="input-group-text" id="basic-addon3">$</span>
+                                  {{ search_form.status(class_ = 'form-control') }}
+                              </div>
+                          </div>
+                          <div class="col-12">
+                              <div class="input-group">
+                                  {{ search_form.submit(class_ = 'form-control') }}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="modal-footer">
+
+                  </div>
+              </div>
+          </div>
+      </div>
+    </form>
 
 
     <div class="row">
