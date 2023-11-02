@@ -258,13 +258,6 @@ def cancel_event(id):
     flash("Event Cancelled Successfully")
     return redirect(url_for('events.my_events', id=id))
 
-@bp.route('/event/<id>/cancel', methods=['GET', 'POST'])
-@login_required
-def cancel_event(id):
-    event = db.session.scalar(db.select(Event).where(Event.id==id))
-    event.status_id = 4
-    db.session.commit()
-    return redirect(url_for('events.showevent', id=id))
 
 @bp.route('/events/my_bookings', methods=['GET', 'POST'])
 
