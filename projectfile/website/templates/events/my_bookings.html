@@ -8,7 +8,7 @@
         {% for booking in bookings %}
         <div class="col p-2">
             <div class="card h-100">
-                <span class="badge badge-theme">{{booking.event.status.name}}</span>
+                <span class="badge badge-theme-{{booking.event.status.id}}">{{booking.event.status.name}}</span>
                 <div class="ratio ratio-1x1">
                     <img src={{ url_for('static', filename=booking.event.images[0].filepath) }} class="card-img-fit">
                 </div>
@@ -21,6 +21,7 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                             <h3 class="card-title">{{ booking.event.title }}</h3>
+                            <i class="text-secondary">By {{booking.event.owner.username}}</i>
                         </li>
                         <li class="list-group-item">
                             <h3>${{ booking.total_cost }}</h3>
@@ -33,9 +34,6 @@
                         </li>
                         <li class="list-group-item">
                             <i class="bi bi-people-fill"></i></i> <b>{{ booking.tickets }}</b> Tickets Purchased
-                        </li>
-                        <li class="list-group-item">
-                            <h3>Event Info</h3>
                         </li>
                         <li class="list-group-item">
                             <i class="bi bi-calendar-date"></i> {{ booking.event.date.strftime("%d/%m/%Y") }}

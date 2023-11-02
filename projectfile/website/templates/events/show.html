@@ -6,15 +6,21 @@
 <div class="container bottom_padding">
   <div class="row d-flex justify-content-center">
     <div class="col-12  col-sm-12 col-md-6">
-      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner w-20">
+
+      <div id="carouselExampleAutoplaying" class="carousel slide object-fit-cover" data-bs-ride="carousel">
+        <div class="carousel-inner w-20 object-fit-cover">
           <div class="carousel-item active">
-            <img src="{{ url_for('static', filename=event.images[0].filepath) }}" class="d-block w-100 rounded"
-              alt="...">
+            <div class="ratio ratio-1x1">
+              <img src="{{ url_for('static', filename=event.images[0].filepath) }}"
+                class="d-block w-100 rounded object-fit-cover" alt="...">
+            </div>
           </div>
           {%for image in event.images[1:]%}
           <div class="carousel-item">
-            <img src="{{ url_for('static', filename=image.filepath) }}" class="d-block w-100 rounded" alt="...">
+            <div class="ratio ratio-1x1">
+              <img src="{{ url_for('static', filename=image.filepath) }}" class="d-block w-100 rounded object-fit-cover"
+                alt="...">
+            </div>
           </div>
           {%endfor%}
         </div>
@@ -37,7 +43,7 @@
       <div class="card text-center">
         <div class="card-header">
           <div class="row d-flex justify-content-center">
-            <span class="badge badge-theme">{{event.status_id}}</span>
+            <span class="badge badge-theme-{{event.status.id}}">{{event.status.name}}</span>
           </div>
         </div>
         <div class="card-body">
@@ -47,22 +53,24 @@
             <div>
               <p class="card-text">
               <p class="fw-bold"> {{ event.title }}</p>
+              <i class="text-secondary">By {{event.owner.username}}</i>
               </p>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"><i class="bi bi-person-fill"></i> {{event.remaining_tickets}} of
                   {{event.total_tickets}} seats remaining </li>
                 <li class="list-group-item"><i class="bi-globe"> {{event.location}} </i></li>
-                <li class="list-group-item"> <i class="bi bi-calendar-date"></i> {{event.date}} {{event.time}} </i>
+                <li class="list-group-item"> <i class="bi bi-calendar-date"></i> {{ event.date.strftime("%d/%m/%Y") }} </i>
+                </li>
+                <li class="list-group-item"> <i class="bi bi-clock"> {{ event.start_time.strftime("%I:%M %p") }} - {{
+                  event.end_time.strftime("%I:%M %p") }} </i>
                 </li>
                 <li class="list-group-item"> <i class="bi bi-gear-fill"></i> {{ event.game_system.name }} </i></li>
 
                 <li class="list-group-item">
                   <p class="card-text">
-                    <span class="badge badge-theme">All Ages</span> <span class="badge badge-theme">Combat
-                      Focused</span> <span class="badge badge-theme">Amateur - Veteran Players</span>
-                    <span class="badge badge-theme">One Shot</span> <span class="badge badge-theme">From Session
-                      Zero</span> <span class="badge badge-theme">Homebrew Rules</span> <span
-                      class="badge badge-theme">Open World</span>
+                    {% for tag in event.tags[0].get_tag_messages() %}
+                    <span class="badge rounded-pill badge-theme tag-margin"> <span>{{tag}}</span></span>
+                    {% endfor %}
                   </p>
                 </li>
               </ul>
@@ -83,7 +91,8 @@
               </div>
               {% elif not event.status.id == 1 %}
               <div class="d-flex justify-content-center padding">
-                <button type="button" class="btn button-theme" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
+                <button type="button" class="btn button-theme" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  disabled>
                   Session is No Longer Available for Purchase
                 </button>
               </div>
@@ -94,7 +103,7 @@
                 </button>
               </div>
               {% endif %}
-              
+
 
 
 
