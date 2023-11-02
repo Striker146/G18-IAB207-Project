@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
+from flask import flash
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, TelField, SelectField, DecimalField, DateField, TimeField, MultipleFileField, IntegerField, BooleanField
-from wtforms.validators import InputRequired, Length, Email, EqualTo, Regexp, NoneOf, NumberRange, NumberRange, StopValidation
+from wtforms.validators import InputRequired, Length, Email, EqualTo, Regexp, NoneOf, NumberRange, NumberRange, StopValidation, ValidationError
 from werkzeug.datastructures import FileStorage
 from datetime import datetime
 from collections.abc import Iterable
@@ -67,6 +68,7 @@ class EventCreationForm(FlaskForm):
     game_system = SelectField("Game System")
     cost = DecimalField("Cost", validators=[InputRequired(), NumberRange(min=0)])
     location = StringField("Location", validators=[InputRequired()])
+    datetime_time = datetime.now()
     date  = DateField('Date',validators=[InputRequired()])
     start_time = TimeField('End Time', validators=[InputRequired()])
     end_time = TimeField("Start Time", validators=[InputRequired()])
@@ -85,9 +87,14 @@ class EventCreationForm(FlaskForm):
     
     submit = SubmitField("Create Event")
     
-    def validate_image(form, field):
-        if field.data:
-            field.data = re.sub(r'[^a-z0-9_.-]', '_', field.data)
+    def validate_date(form, field):
+        today = datetime.now()
+        start = datetime.combine(date=field.data, time=form.start_time.data)
+        if (today > start):
+            flash("The starting date and time cannot be in the past")
+            raise ValidationError("The starting date cannot be in the past")
+        
+        
             
     def get_choices(self):
         from .models import GameSystem, AgeGroup, CampaignFocus, PlayerSkillLevel

@@ -138,18 +138,9 @@ def comment(id):
 @login_required
 def my_events():
     Event.compare_dates()
-    user_events = get_events_by_username(current_user.username)
-
+    user_events = current_user.events
     return render_template('events/my_events.html', events=user_events, heading="my_events")
 
-def get_events_by_username(username):
-    user = User.query.filter_by(username=username).first()
-
-    if not user:
-        return []
-    
-    events_by_user = Event.query.filter_by(owner_id=user.id).all()
-    return events_by_user
 
 @bp.route('/events/list', methods=['GET', 'POST'])
 def list():

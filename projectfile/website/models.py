@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(255), nullable=False)
     
     
-    events = db.relationship('Event', backref='owner')
+    events = db.relationship('Event', backref='owner', order_by='Event.id.desc()')
     comments = db.relationship('Comment', backref='user')
     bookings = db.relationship('Booking', backref='user', order_by='Booking.id.desc()')
 
@@ -34,7 +34,7 @@ class GameSystem(db.Model):
     __tablename__ = 'game_systems'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String(100), unique=True)
-    events = db.relationship("Event",backref='game_system')
+    events = db.relationship("Event",backref='game_system', order_by='Event.id.desc()')
     
     
 
@@ -69,6 +69,7 @@ class Event(db.Model):
         if self.remaining_tickets <=0:
             self.remaining_tickets = 0
             self.status_id = 3
+            
     @staticmethod  
     def compare_dates():
         open_status_id = 1
