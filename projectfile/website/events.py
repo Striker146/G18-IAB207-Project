@@ -84,6 +84,11 @@ def creation():
             homebrew = create_event_form.homebrew.data
             open_world = create_event_form.open_world.data
             event = db.session.scalar(db.select(Event).where(Event.title==title and User.id == owner_id))
+            if lower_player_skill_level_id > higher_player_skill_level_id:
+                carry = higher_player_skill_level_id
+                higher_player_skill_level_id = lower_player_skill_level_id
+                lower_player_skill_level_id = carry
+                
             #if event:
             #    flash("You've already made an event with this title, please try another")
             #    
