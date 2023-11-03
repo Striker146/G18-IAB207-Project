@@ -20,11 +20,11 @@ class MultiFileAllowed(object):
         self.message = message
 
     def __call__(self, form, field):
-
         # FileAllowed only expects a single instance of FileStorage
         # if not (isinstance(field.data, FileStorage) and field.data):
         #     return
-
+        if field.data[0].filename == "":
+            return
         # Check that all the items in field.data are FileStorage items
         if not (all(isinstance(item, FileStorage) for item in field.data) and field.data):
             return
@@ -35,6 +35,7 @@ class MultiFileAllowed(object):
             if isinstance(self.upload_set, Iterable):
                 if any(filename.endswith('.' + x) for x in self.upload_set):
                     return
+                flash("Please use an image with a valid file extension")
                 raise StopValidation(self.message or field.gettext(
                     'File does not have an approved extension: {extensions}'
                 ).format(extensions=', '.join(self.upload_set)))
@@ -112,7 +113,6 @@ class EventCreationForm(FlaskForm):
         
         player_skill_level_list = PlayerSkillLevel.query.all()
         result = [(psl.id, psl.name) for psl in player_skill_level_list]
-        print(result)
         self.player_lower_skill_level.choices = result
         self.player_higher_skill_level.choices = result
         
@@ -125,12 +125,10 @@ class EventCreationForm(FlaskForm):
         self.player_lower_skill_level.default = 1
             
 class EventEditForm(EventCreationForm):
-    images =MultipleFileField("Images")
+    images =MultipleFileField("Images", validators=[MultiFileAllowed(['jpg', 'png', 'jpeg', 'tif'])])
     submit = SubmitField("Confirm Edit to Event")
     
-    def validate_image(form, field):
-        if field.data:
-            field.data = re.sub(r'[^a-z0-9_.-]', '_', field.data)
+    
     
     
     
@@ -147,18 +145,11 @@ class SearchForm(FlaskForm):
     search = StringField("Search")
     status = SelectField("Event Status")
     game_system = SelectField("GameSystem")
-    age_group = SelectField("Age Group")
-    campaign_focus = SelectField("Campaign Focus")
-    player_skill_level = SelectField("Lower Player Skill Level")
-    one_shot = BooleanField("Is oneshot")
-    session_zero = BooleanField("Starting from Session Zero")
-    homebrew = BooleanField("Homebrew Rules")
-    open_world = BooleanField("Open World")
     submit = SubmitField("Search")
     
     def set_select_fields(self):
         from .models import EventStatus, GameSystem, AgeGroup, CampaignFocus, PlayerSkillLevel
-        system_lists = [[self.status, EventStatus], [self.game_system,GameSystem], [self.age_group,AgeGroup], [self.player_skill_level,PlayerSkillLevel]]
+        system_lists = [[self.status, EventStatus], [self.game_system,GameSystem]]
         for system_set in system_lists:
             type_list = system_set[1].query.all()
             result = [(element_type.id, element_type.name) for element_type in type_list]

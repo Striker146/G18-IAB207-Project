@@ -13,15 +13,12 @@ bp = Blueprint('auth', __name__)
 # this is a hint for a login function
 @bp.route('/login', methods=['GET', 'POST'])
 def login(): #view function
-    
-     print('In Login View function')
      login_form = LoginForm()
      error=None
      if(login_form.validate_on_submit()==True):
          user_name = login_form.user_name.data
          password = login_form.password.data
          user = db.session.scalar(db.select(User).where(User.username== user_name))
-         print(user)
          if user is None:
             error = 'Incorrect username'#could be a security risk to give this much info away
         #check the password - notice password hash function
