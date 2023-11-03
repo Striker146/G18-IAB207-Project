@@ -1,0 +1,136 @@
+Striker146 (95):
+      Initial commit
+      Initial Commit
+      Updating .gitignore
+      Creating Object Classes and pasted Website for template
+      Create comment.py
+      Created Booking.py and updated event.py
+      Migrating website elements to work with Flask
+      Modified html to intergrate with Flask and appropriated data types for database
+      Allowed users to register and login, adding the elements to the database
+      Made Event Creation send data to database
+      Changed upload folder to be based on project directory
+      Fixed image directrory
+      Gitignores uploads folders contents. Added missing image JPG
+      Moved event Creation site to its own .py
+      Removing useless files
+      Made Show_events page
+      Removing database from existing
+      updating .gitignore to NOT add databases to git
+      Merge pull request #1 from Striker146/login
+      Updated Event Creation, Added new Database Categories
+      Delete creation_old.html
+      Merge pull request #2 from Striker146/Event-Creation
+      Merge pull request #3 from Striker146/main
+      Fixed WTForms submit buttons looking bad
+      Improved Comments on Events Page
+      Made Bookings go into database
+      Made Bookings Page
+      Changed booking form on events page
+      Improved events page
+      Merge pull request #4 from Striker146/Load-db-events
+      Merge pull request #5 from Striker146/Booking
+      Links to events on index
+      Merge pull request #6 from Striker146/Load-db-events
+      Merge pull request #7 from Striker146/forms
+      List Events
+      Merge branch 'main' into List-Events
+      Added All Option to Event sort
+      Changed Update Choices from events to forms.py
+      Revert "latest"
+      Reverting My_events.html
+      Made Events Editable
+      Fixed heading between event edit and event creation
+      Merge pull request #11 from Striker146/deleteevents
+      Removed uncesearry pages
+      Stlyizing the Footer
+      Merge pull request #12 from Striker146/Footer
+      Merge branch 'main' into dropdownmenu
+      Added cancel event to drop down
+      Merge branch 'List-Events'
+      Made my bookings page
+      Merge branch 'main' into My-Bookings
+      Added booking information to bookings page
+      Improved my_bookings.html style
+      Merge pull request #13 from Striker146/My-Bookings
+      Merge branch 'main' into chris-list-events
+      Merge pull request #10 from Striker146/chris-list-events
+      Event filters with all
+      Condtioned ticket purchases, updated row cols
+      my_bookings.html styling
+      Forced all images to be 1x1
+      Merge branch 'main' into My-Bookings
+      Merge pull request #17 from Striker146/My-Bookings
+      Made Dynamic Tags
+      Merge pull request #18 from Striker146/Event-Tags
+      Optimized booking avaialbility
+      Merge pull request #20 from Striker146/Event-Tags
+      Added image validators
+      Merge branch 'main' into chris-list-events
+      Merge pull request #22 from Striker146/chris-list-events
+      Improved Valdiation
+      Fixed bug with updating and creating events
+      Added game system to My Events
+      Merge pull request #23 from Striker146/Validation-Hotfixes
+      Get database from discord! Here are a bunch of images to accompany the database
+      Hotfixes and styling
+      Styling
+      Merge branch 'dropdownmenu' of https://github.com/Striker146/G18-IAB207-Project into dropdownmenu
+      Merge branch 'main' into dropdownmenu
+      Resolving Merge Errors
+      Merge pull request #25 from Striker146/dropdownmenu
+      conditoned cancelling event to only booked out and open events
+      Made badge apply on My bookings
+      Hotfixed Event.compare_dates() function
+      Stylized profile Tab
+      Added owners under event Name
+      Merge branch 'main' into main-copy
+      Fixed search form not exisintg
+      Removed Modal advanced search (Optional feature removed)
+      Made lower player always be the lower item regardless of how form is filled out
+      Fixed bug with categories
+      Fixed bug with categories
+      After event creation reroute to main page
+      Final bug Fix! Reordered my events and my bookings presentation
+      Removed print statements
+      final final bug fix with search bar not working
+
+anand (14):
+      login and logout
+      logout and login function added
+      added 404 page
+      fixed forms and comment section
+      card information fixed
+      login required to purchase tickets
+      edit_event
+      l
+      latest
+      dropdown menu
+      fixed dropdowns and editmenu
+      event status handle
+      event handle
+      event handle
+
+cdaws61 (21):
+      Replacement code for my_events.html
+      Categorisation
+      Delete my_events.html
+      Display User Specific Events
+      Update index.html
+      Merge pull request #8 from Striker146/main
+      Merge branch 'Load-db-events' of https://github.com/Striker146/G18-IAB207-Project into Load-db-events
+      Merge pull request #9 from Striker146/Load-db-events
+      Filter options in list.html working
+      Removal of Game system filter
+      Merge branch 'chris-list-events' of https://github.com/Striker146/G18-IAB207-Project into chris-list-events
+      Merge pull request #14 from Striker146/chris-list-events
+      Merge pull request #15 from Striker146/main
+      Remove index page filter
+      Merge pull request #19 from Striker146/main-copy
+      More events Filter Options Working
+      Merge pull request #21 from Striker146/main-copy
+      adding filters to index page
+      Adding filters to home page
+      Merge branch 'main' of https://github.com/Striker146/G18-IAB207-Project
+      Update index.html
+
