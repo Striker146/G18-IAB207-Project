@@ -204,6 +204,8 @@ def list():
 @login_required
 def edit(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
+    if event == None:
+        return render_template('404.html', error="No Event found")
     edit_event_form = EventEditForm()
     edit_event_form.get_choices()
     if event.owner_id == current_user.id:
@@ -268,6 +270,8 @@ def edit(id):
             edit_event_form.homebrew.data = event_tags.homebrew
             edit_event_form.open_world.data = event_tags.open_world
             return render_template('events/creation.html', form=edit_event_form, event=event, heading='edit_event')
+    else:
+        return render_template('404.html', error="No Event found")
 
     
 

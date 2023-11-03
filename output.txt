@@ -1,4 +1,4 @@
-Striker146 (95):
+Striker146 (93):
       Initial commit
       Initial Commit
       Updating .gitignore
@@ -92,8 +92,6 @@ Striker146 (95):
       Fixed bug with categories
       After event creation reroute to main page
       Final bug Fix! Reordered my events and my bookings presentation
-      Removed print statements
-      final final bug fix with search bar not working
 
 anand (14):
       login and logout
