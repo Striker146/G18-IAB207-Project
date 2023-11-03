@@ -144,31 +144,55 @@ def my_events():
 
 @bp.route('/events/list', methods=['GET', 'POST'])
 def list():
+    search_term = ''
+    try:
+        search_term = request.args.getlist('search')[0]
+    except IndexError:
+        pass
+    game_system_id = request.args.get('game_system')
+    status_id = request.args.get('status')
+    if game_system_id == None:
+        redirect_flag = True
+        game_system_id = "0"
+    if status_id == None:
+        redirect_flag = True
+        status_id = "0"
     Event.compare_dates()
+    print(search_term)
+    print(game_system_id)
+    print(status_id)
     search_form = SearchForm()
     search_form.set_select_fields()
+    search_form.game_system.data = game_system_id
+    search_form.status.data = status_id
+    search_form.game_system.default = game_system_id
+    search_form.status.default = status_id
+    search_form.process()
+    search_form.search.data = search_term
+
+    
     events_query = db.session.query(Event)
+    events = events_query.all()
     
     # If the form is submitted
-    if request.method == 'POST':
-        game_system_id = search_form.game_system.data
-        status_id = search_form.status.data
-
-
-        search_term = search_form.search.data
+    if request.method == 'GET':
         if search_term:
-            events_query = events_query.filter(Event.description.like(f"%{search_term}%"))
+            search = f"%{search_term}%"
+            events_query = events_query.filter(Event.title.like(search))
+            events = events_query.all()
 
 
         if not game_system_id == "0":
             print("Searching Game System")
             print(game_system_id) 
             events_query = events_query.filter_by(game_system_id=game_system_id)
+            events = events_query.all()
 
         if not status_id == "0":
             print("Searching status")
             print(status_id)
             events_query = events_query.filter_by(status_id=search_form.status.data)
+            events = events_query.all()
         # Add more filters as needed...
 
     events = events_query.all()
